@@ -1,0 +1,156 @@
+.content
+  left: 0
+  width: 100%
+
+.editable-text
+  cursor: text
+  div, input, textarea
+    background-color: #0e0e192d
+    border-radius: 2px
+    box-shadow: 0 0 0 1px #3c3c4d3d
+    transition: 0.2s
+    transition-property: box-shadow, background-color
+  &:hover
+    div, input, textarea
+      background-color: #0e0e195d
+  div, input, textarea
+    &:focus, &.focus
+      background-color: #0e0e196d
+      box-shadow: 0 0 0 2px #3c3c4d
+    &.err
+      box-shadow: 0 0 0 2px var(--r)
+
+.card
+  background-color: #3c3c4d5d
+  border-radius: 6px
+  box-shadow: 0 0 0 1px #3c3c4d
+  padding: var(--padding-10)
+  padding-top: 0
+  position: relative
+  transition: 0.2s box-shadow
+  margin-bottom: var(--padding-15)
+  h5
+    font-size: var(--font-12)
+    padding: var(--padding-15) 0
+    margin: 0
+  .input
+    div
+      white-space: nowrap
+      width: var(--menu-w)
+      max-width: 100%
+  .period
+    display: flex
+    width: 100%
+    .input
+      max-width: calc(50% - var(--padding-10))
+      &:first-child
+        margin-right: var(--padding-10)
+      .disabled
+        box-shadow: none
+        background-color: transparent
+  .head
+    display: flex
+    align-items: center
+  .current
+    width: 100%
+    display: flex
+    align-items: center
+    cursor: pointer
+  svg
+    margin-right: var(--padding-5)
+    margin-left: var(--padding-15)
+
+  .delete
+    height: var(--padding-25)
+    width: var(--padding-25)
+    top: var(--padding-15)
+    right: var(--padding-10)
+    position: absolute
+    border-radius: 50%
+    cursor: pointer
+    background-color: #555562
+    opacity: 0.4
+    transition: 0.2s
+    img, svg
+      color: #eef
+      width: var(--padding-10)
+      height: var(--padding-10)
+      margin: 0
+    &:hover
+      opacity: 1
+      background-color: #B74B4B7d
+      svg
+        color: #F15151
+
+
+.place
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  .input
+    margin-bottom: var(--padding-5)
+    width: calc(50% - 5px - 0.25vw)
+
+.new
+  box-shadow: 0 0 0 6px #575da25d, 0 0 0 2px #575da2
+
+.input
+  @extend .editable-text
+  margin-top: var(--padding-10)
+  margin-bottom: calc(2px + 0.1vw)
+  position: relative
+  label
+    position: absolute
+    transition: 0.15s
+    top: 50%
+    left: var(--padding-5)
+    transform: translateY(-50%)
+    font-size: var(--font-10)
+  div, input, textarea
+    width: 100%
+    padding: 0 var(--padding-5)
+    font-size: var(--padding-10)
+    &:focus + label,
+    &.focus + label,
+    &.filled + label,
+    &:not([val=""]):valid + label
+      top: 0
+      font-size: var(--font-7)
+      transform: translateY(-100%)
+      opacity: 0.5
+  div, input
+    height: var(--padding-20)
+    line-height: var(--padding-20)
+
+.checkbox
+  border: calc(2px + 0.1vw) solid #b7b7b7bd
+  stroke: #ffffff
+  stroke-dasharray: 25
+  stroke-dashoffset: 25
+  stroke-linecap: round
+  stroke-width: calc(2px + 0.1vw)
+  border-radius: 3px
+  fill: none
+  cursor: pointer
+  width: var(--padding-15)
+  height: var(--padding-15)
+  transition: background-color 0.3s, border-color 0.25s, stroke-dashoffset 0.4s
+  &.checked
+    background-color: var(--g)
+    border-color: var(--g)
+    stroke-dashoffset: 0
+
+.add
+  cursor: pointer
+  display: flex
+  justify-content: center
+  .btn
+    width: fit-content
+    font-weight: bold
+    background-color: #0000003d
+    padding: 0 var(--padding-15)
+    transition: 0.2s
+    &:hover
+      background-color: #000000ad
+
+

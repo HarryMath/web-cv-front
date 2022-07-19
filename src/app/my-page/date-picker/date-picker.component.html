@@ -1,0 +1,26 @@
+<div class="overlay">
+  <div class="wrapper a-center">
+    <h5>{{title}}</h5>
+    <div class="calendar">
+      <div *ngIf="spec.days">
+        <img src="/assets/icons/arrow.svg" alt="" class="top" (click)="increaseDays()">
+        <img src="/assets/icons/arrow.svg" alt="" class="bottom" (click)="decreaseDays()">
+        <input step="1" class="day" type="number" [(ngModel)]="date.day" (input)="handleDayChange()">
+      </div>
+      <div class="dot" *ngIf="spec.days && (spec.month || spec.year)"> . </div>
+      <div *ngIf="spec.month">
+        <img src="/assets/icons/arrow.svg" alt="" class="top" (click)="increaseMonth()">
+        <img src="/assets/icons/arrow.svg" alt="" class="bottom" (click)="decreaseMonth()">
+        <input step="1" class="month" type="number" [(ngModel)]="date.month" (input)="handleMonthChange()">
+      </div>
+      <div class="dot" *ngIf="spec.month && spec.year"> . </div>
+      <div *ngIf="spec.year">
+        <img src="/assets/icons/arrow.svg" alt="" class="top" (click)="date.year = date.year + 1">
+        <img src="/assets/icons/arrow.svg" alt="" class="bottom" (click)="date.year = date.year - 1">
+        <input step="1" class="year" type="number" [(ngModel)]="date.year" (input)="dateChange.emit(date)">
+      </div>
+    </div>
+    <div class="btn" (click)="submit.emit(date)">ok</div>
+  </div>
+</div>
+

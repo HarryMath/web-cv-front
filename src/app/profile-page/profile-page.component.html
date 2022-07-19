@@ -1,0 +1,21 @@
+<div class="body" *ngIf="isLoaded">
+  <app-menu [profile]="data"></app-menu>
+  <div class="content" (scroll)="menuService.handleScroll(false)">
+    <div class="h"></div>
+    <div class="s-w" id="intro">
+      <h2>What I do</h2>
+      <p [innerHTML]="getIntro()"></p>
+    </div>
+    <div class="s-w" id="experience">
+      <h2>Employment history</h2>
+    </div>
+    <app-skills-block [skills]="this.skills"></app-skills-block>
+    <div class="s-w" id="projects">
+      <h2>projects</h2>
+    </div>
+    <app-education-block [education]="data.education"></app-education-block>
+    <div class="s-w" id="contacts">
+      <h2>Contact me</h2>
+    </div>
+  </div>
+</div>

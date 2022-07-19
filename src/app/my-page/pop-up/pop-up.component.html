@@ -1,0 +1,12 @@
+<div *ngIf="service.displayed" class="overlay" [ngClass]="service.isShown? '' : 'hidden'">
+  <div class="window">
+    <div class="header">{{service.title}}</div>
+    <div class="question">
+      <div *ngFor="let r of service.questionRows">{{r}}</div>
+    </div>
+    <div class="footer">
+      <div class="btn submit" [ngClass]="service.questionClass" (click)="service.answer.next(true)">{{service.submitText}}</div>
+      <div class="btn cancel" (click)="service.answer.next(false)">{{service.cancelText}}</div>
+    </div>
+  </div>
+</div>

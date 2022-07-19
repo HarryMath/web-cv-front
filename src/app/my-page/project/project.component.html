@@ -1,0 +1,31 @@
+<div class="card" [ngClass]="isNew ? 'new' : ''">
+  <div class="labeled delete" (click)="delete()">
+    <svg class="a-center"><use xlink:href="#trash"></use></svg>
+    <div class="l">delete</div>
+  </div>
+  <div class="head">
+    <div class="photo" [style]="getBackgroundPhoto()"></div>
+    <div class="desc">
+      <div class="input">
+        <input required type="text" [(ngModel)]="project.name" (blur)="save()" [ngClass]="project.name.length > 1 ? '' : 'err'">
+        <label>Project title *</label>
+      </div>
+      <div class="input">
+        <input required type="text" [(ngModel)]="project.role" (blur)="save()" [ngClass]="project.role.length > 1 ? '' : 'err'">
+        <label>Your role *</label>
+      </div>
+      <div class="input">
+        <input list="workList" [(ngModel)]="project.place" (blur)="save()">
+        <label>Where you worked</label>
+      </div>
+    </div>
+  </div>
+  <div class="input">
+    <textarea required [(ngModel)]="project.description" (blur)="save()" [style]="getDescriptionMinHeight()" (keyup)="checkDescription()"></textarea>
+    <label>Description of project</label>
+  </div>
+<!--  <div class="input">-->
+<!--    <input required type="text" [(ngModel)]="project.links" (blur)="save()">-->
+<!--    <label>Company site link</label>-->
+<!--  </div>-->
+</div>

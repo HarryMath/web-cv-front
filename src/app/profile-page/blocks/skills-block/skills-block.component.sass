@@ -1,0 +1,62 @@
+.stars
+  color: #0a0a18
+  display: flex
+  flex-direction: row
+  svg
+    width: calc(8px + 0.4vw)
+    height: calc(8px + 0.4vw)
+    margin-right: 5px
+
+.g
+  margin-bottom: var(--padding-15)
+  h4
+    font-weight: 600
+    font-size: var(--font-13)
+  &>div
+    display: flex
+    flex-wrap: wrap
+    max-width: calc(400px + 20vw)
+    justify-content: space-between
+
+.lvl
+  position: absolute
+  right: 0
+  top: 0
+  min-width: calc(65px + 2vw)
+  overflow: hidden
+  color: #ababa7
+  font-size: var(--font-9)
+  opacity: 0
+  transition: 0.15s
+  line-height: var(--padding-15)
+  background-color: #14141d
+  transform: scale(0.5)
+
+.skill
+  position: relative
+  display: flex
+  width: 40%
+  justify-content: space-between
+  align-items: center
+  &:before
+    z-index: -1
+    content: ''
+    position: absolute
+    width: calc(100% + 20px)
+    left: -10px
+    top: 0
+    height: 100%
+    transform: scale(0.8)
+    opacity: 0
+    transition: 0.2s
+    background-color: #0101055d
+  &:hover
+    &:before
+      transform: none
+      opacity: 1
+    .lvl
+      opacity: 1
+      transform: none
+  &>div
+    font-size: var(--font-11)
+    line-height: var(--padding-15)

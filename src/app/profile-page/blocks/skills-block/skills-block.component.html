@@ -1,0 +1,19 @@
+<div class="s-w" id="skills">
+  <h2>Skills</h2>
+  <div class="g" *ngFor="let g of groups">
+    <h4>{{g.name}}</h4>
+    <div>
+      <div class="skill" *ngFor="let s of g.skills">
+        <div>{{s.skillName}}</div>
+        <div class="stars">
+          <div><svg style="color: #FFED76"><use xlink:href="#star"></use></svg></div>
+          <div><svg [style]="s.skillLevel > 1 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+          <div><svg [style]="s.skillLevel > 2 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+          <div><svg [style]="s.skillLevel > 3 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+          <div><svg [style]="s.skillLevel > 4 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+          <div class="lvl">{{getLevelString(s)}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

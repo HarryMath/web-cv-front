@@ -1,0 +1,18 @@
+<div class="s-w" id="education">
+  <h2>Education</h2>
+
+  <div class="edu" *ngFor="let e of institutions">
+    <div class="top">
+      <div>
+        <h4 class="name">{{e.institutionName}}</h4>
+        <div *ngIf="e.label" class="label">{{e.label}}</div>
+      </div>
+      <div class="period">{{getPeriodString(e)}}</div>
+    </div>
+    <div *ngIf="e.description" class="desc">{{e.description}}</div>
+  </div>
+  <div class="end">To be continued...</div>
+
+  <div class="edu-progress"></div>
+
+</div>

@@ -1,0 +1,78 @@
+<app-pop-up></app-pop-up>
+<datalist id="technologies" style="display:none;visibility:hidden;">
+  <option value="Programming languages"></option>
+  <option value="Web technologies"></option>
+  <option value="Mobile technologies"></option>
+  <option value="Infrastructure"></option>
+  <option value="Databases"></option>
+  <option value="Network"></option>
+  <option value="Machine learning"></option>
+  <option value="Big-Data technologies"></option>
+  <option value="Game development"></option>
+</datalist>
+<datalist id="skillsList" style="display:none;visibility:hidden;">
+  <option *ngFor="let s of profile.skills" [value]="s.skillName"></option>
+  <option *ngFor="let s of newSkills" [value]="s.skillName"></option>
+</datalist>
+<datalist id="workList" style="display:none;visibility:hidden;">
+  <option *ngFor="let e of profile.experience" [value]="e.place"></option>
+  <option *ngFor="let e of newExperiences" [value]="e.place"></option>
+</datalist>
+<div class="body" *ngIf="isLoaded">
+  <div class="content">
+    <div class="h"></div>
+    <div class="s-w" id="intro">
+      <h2>What I do</h2>
+      <div class="input">
+        <textarea [(ngModel)]="profile.intro" [attr.val]="profile.intro?profile.intro:''"
+                  (blur)="saveIntro()" (keyup)="checkIntro()"
+                  [style]="getIntroMinHeight()">
+        </textarea>
+        <label>Write about yourself</label>
+      </div>
+<!--      p class="editable-text" [innerHTML]="getIntro()"></p>-->
+    </div>
+    <div class="s-w" id="experience">
+      <h2>Employment history</h2>
+      <app-experience [exp]="e" *ngFor="let e of profile.experience; let i = index"
+                      (onDelete)="profile.experience.splice(i,1)">
+      </app-experience>
+      <app-experience [exp]="e" *ngFor="let e of newExperiences; let i = index" [isNew]="true"
+                      (onDelete)="newExperiences.splice(i, 1)">
+      </app-experience>
+      <div class="add" (click)="addExperience()"><div class="btn">Add experience</div></div>
+    </div>
+    <div class="s-w" id="skills">
+      <h2>Skills</h2>
+      <app-skill [skill]="s" *ngFor="let s of profile.skills; let i = index"
+                 (onDelete)="profile.skills.splice(i, 1)">
+      </app-skill>
+      <app-skill [skill]="s" *ngFor="let s of newSkills; let i = index" [isNew]="true"
+                 (onDelete)="newSkills.splice(i, 1)">
+      </app-skill>
+      <div class="add" (click)="addSkill()"><div class="btn">Add skill</div></div>
+    </div>
+    <div class="s-w" id="projects">
+      <h2>projects</h2>
+    </div>
+    <div class="s-w" id="education">
+      <h2>Education</h2>
+      <app-education [edu]="e" *ngFor="let e of profile.education; let i = index"
+                      (onDelete)="profile.education.splice(i,1)">
+      </app-education>
+      <app-education [edu]="e" *ngFor="let e of newEducations; let i = index" [isNew]="true"
+                      (onDelete)="newEducations.splice(i, 1)">
+      </app-education>
+      <div class="add" (click)="addEducation()"><div class="btn">Add education</div></div>
+    </div>
+    <div class="s-w" id="contacts">
+      <h2>Contact me</h2>
+    </div>
+  </div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="trash">
+    <path fill="currentColor" d="M135.2 17.69C140.6 6.848 151.7 0 163.8 0H284.2C296.3 0 307.4 6.848 312.8 17.69L320 32H416C433.7 32 448 46.33 448 64C448 81.67 433.7 96 416 96H32C14.33 96 0 81.67 0 64C0 46.33 14.33 32 32 32H128L135.2 17.69zM394.8 466.1C393.2 492.3 372.3 512 346.9 512H101.1C75.75 512 54.77 492.3 53.19 466.1L31.1 128H416L394.8 466.1z"/>
+  </symbol>
+</svg>
+

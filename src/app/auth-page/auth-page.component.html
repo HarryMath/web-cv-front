@@ -1,0 +1,33 @@
+<div class="bubbles"><app-bubbles [blub]="bubbleEvent"></app-bubbles></div>
+<form class="a-center">
+  <img class="logo" src="assets/logo.png" alt="web-cv">
+  <p>Sign in to web-cv</p>
+  <div class="inputs">
+    <label for="id">Email Address</label>
+    <div>
+      <input #mail [(ngModel)]="email" autofocus
+             type="email" name="id" id="id"
+             (keydown.enter)="focusPassword()"
+             (blur)="focusPassword()">
+      <div><img class="a-center" src="assets/icons/mail.svg" alt=""></div>
+    </div>
+    <label for="pass">Password</label>
+    <div>
+      <input #pass [(ngModel)]="password"
+             type="password" name="pass" id="pass"
+             (keydown.enter)="signIn()">
+      <div><img class="a-center" src="assets/icons/lock.svg" alt=""></div>
+    </div>
+  </div>
+  <div class="btn"
+       [ngClass]="isLoading?'loading':emailSatisfy()&&passwordSatisfy()?'ready':''"
+       (click)="signIn()">
+    Sign In
+  </div>
+  <div class="sep">or continue with</div>
+  <div class="socials">
+    <div class="google"><img class="a-center" src="/assets/icons/google.svg" alt="google"></div>
+    <div (click)="authService.authWithGithub()" class="github"><img class="a-center" src="/assets/icons/github.svg" alt="github"></div>
+    <div class="linkedin"><img class="a-center" src="/assets/icons/linkedin.svg" alt="linkedin"></div>
+  </div>
+</form>

@@ -1,0 +1,54 @@
+<date-picker
+  *ngIf="startInFocus" [title]="'Admission date'"
+  [(date)]="startDate" [spec]="{days: false, month: true, year: true}"
+  (submit)="saveStartDate()"></date-picker>
+
+<date-picker *ngIf="endInFocus" [title]="'Graduate date'"
+             [(date)]="endDate" [spec]="{days: false, month: true, year: true}"
+             (submit)="saveEndDate()"></date-picker>
+
+<div class="card" [ngClass]="isNew ? 'new' : ''">
+  <div class="head">
+    <h5>Period</h5>
+    <div class="current" (click)="toggleCurrentPosition()">
+      <svg [ngClass]="isCurrentPosition ? 'checked' : ''" class="checkbox" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>I study here at present</div>
+    </div>
+    <div class="labeled delete" (click)="delete()">
+      <svg class="a-center"><use xlink:href="#trash"></use></svg>
+      <div class="l">delete</div>
+    </div>
+  </div>
+  <div class="period">
+    <div class="input">
+      <div [ngClass]="(startInFocus ? 'focus ' : '') + (isValid(startDate) ? 'filled' : 'err')"
+           (click)="startInFocus=true"
+      >{{getStartDateString()}}</div>
+      <label (click)="startInFocus=true">Admission date *</label>
+    </div>
+    <div class="input">
+      <div [ngClass]=" (endInFocus ? 'focus ' : '') + (isCurrentPosition ? 'disabled ' : '') +
+           (isValid(endDate) || isCurrentPosition ? 'filled' : 'err')" (click)="selectEnd()"
+      >{{getEndDateString()}}</div>
+      <label (click)="selectEnd()">Graduate date</label>
+    </div>
+    <div ></div>
+  </div>
+  <h5>Institution</h5>
+  <div class="place">
+    <div class="input">
+      <input required type="text" [(ngModel)]="edu.institutionName" (blur)="save()" [ngClass]="edu.institutionName.length > 2 ? '' : 'err'">
+      <label>Institution name *</label>
+    </div>
+    <div class="input">
+      <input required type="text" [(ngModel)]="edu.label" (blur)="save()" [ngClass]="edu.institutionName.length > 2 ? '' : 'err'">
+      <label>Speciality *</label>
+    </div>
+  </div>
+  <div class="input">
+    <textarea required [(ngModel)]="edu.description" (blur)="save()" [style]="getDescriptionMinHeight()" (keyup)="checkDescription()"></textarea>
+    <label>Your achievements</label>
+  </div>
+</div>

@@ -1,1 +1,194 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap')
+
+\:root
+  --padding-5: calc(5px + 0.25vw)
+  --padding-10: calc(10px + 0.5vw)
+  --padding-15: calc(15px + 0.75vw)
+  --padding-20: calc(20px + 1vw)
+  --padding-25: calc(25px + 1.25vw)
+  --padding-30: calc(30px + 1.5vw)
+  --padding-40: calc(40px + 2vw)
+  --menu-w: calc(150px + 7.5vw)
+  --font-7: calc(7px + 0.35vw)
+  --font-8: calc(8px + 0.4vw)
+  --font-9: calc(9px + 0.45vw)
+  --font-10: calc(10px + 0.5vw)
+  --font-11: calc(11px + 0.55vw)
+  --font-12: calc(12px + 0.6vw)
+  --font-13: calc(13px + 0.65vw)
+  --font-16: calc(15px + 0.75vw)
+  --back-color: #191923
+  --text-color: #ece2d3
+  --accent: #cca133
+  --g: #57a268
+  --r: #b74b4b
+*
+  box-sizing: border-box
+  -webkit-touch-callout: none!important
+  -webkit-user-select: none!important
+  -moz-user-select: none!important
+  -ms-user-select: none!important
+  user-select: none!important
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+html, body, .body
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+  top: 0
+  left: 0
+  margin: 0
+  opacity: 1
+  font-weight: 400
+  width: 100%
+  height: 100%
+  position: fixed
+  background-color: var(--back-color)
+  color: var(--text-color)
+
+.body
+  position: absolute
+  top: var(--padding-10)
+  left: var(--padding-10)
+  width: calc(100% - var(--padding-20))
+  height: calc(100% - var(--padding-20))
+  border-radius: 4px
+  background-color: #7C7C980A
+  box-shadow: 0 0 1px 2px #0000050A
+  overflow: hidden
+
+
+// section-wrapper
+.s-w
+  min-height: 100vh
+  display: flex
+  justify-content: center
+  flex-direction: column
+  width: 100%
+  position: relative
+  padding: var(--padding-15)
+  h2
+    font-weight: bold
+    margin: 0
+    padding: var(--padding-10) 0
+    font-size: var(--padding-15)
+    position: sticky
+    top: 0
+    z-index: 3
+
+input
+  appearance: none
+  outline: none!important
+  font-size: var(--font-10)
+  border: none
+  background-color: unset
+  color: var(--text-color)
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+    visibility: hidden
+
+// tools
+.a-center
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.labeled
+  position: relative
+  width: fit-content
+  .l
+    position: absolute
+    top: 100%
+    left: 50%
+    transform: translate(-50%, -50%) scale(0.1)
+    opacity: 0
+    visibility: hidden
+    background-color: #010102f0
+    width: max-content
+    max-width: calc(200px + 10vw)
+    color: #ece2d3
+    border-radius: 6px
+    padding: var(--padding-5) var(--padding-10)
+    font-size: var(--font-10)
+    z-index: 2
+    font-weight: 400
+    text-transform: none
+    transition: 0.2s
+    &:after
+      content: ''
+      position: absolute
+      bottom: 100%
+      left: calc(50% - 6px)
+      border-width: 6px
+      border-style: solid
+      border-color: transparent transparent #020204e0 transparent
+    &.left
+      left: 0
+      &:after
+        left: 21px
+    &.right
+      right: 0
+      left: unset
+      &:after
+        right: 21px
+        left: unset
+  &:hover
+    .l
+      opacity: 1
+      visibility: visible
+      transform: translateX(-50%)
+      &.left
+        transform: translateX(-15px)
+      &.right
+        transform: translateX(15px)
+
+@keyframes load
+  0%
+    transform: translate(-50%, -50%) rotate(0deg)
+  100%
+    transform: translate(-50%, -50%) rotate(359deg)
+
+// profile styles
+.content
+  position: absolute
+  width: calc(100% - var(--menu-w))
+  overflow-x: hidden
+  overflow-y: scroll
+  right: 0
+  height: 100%
+  &::-webkit-scrollbar
+    width: 0
+
+.h
+  position: sticky
+  top: 0
+  left: 0
+  width: 100%
+  height: calc(60px + 3vw)
+  background: linear-gradient(0deg, transparent 0%, #1d1d289d 30%, #1d1d28 100%)
+  z-index: 3
+
+textarea
+  appearance: none
+  font-family: Poppins, sans-serif
+  width: 100%
+  min-width: 100%
+  max-width: 100%
+  border: none
+  outline: none!important
+  font-size: var(--font-10)
+  background-color: unset
+  color: var(--text-color)
+  &::-webkit-scrollbar
+    width: 0
+
+.btn
+  position: relative
+  height: var(--padding-25)
+  line-height: var(--padding-25)
+  border-radius: 4px
+  text-align: center
+  cursor: pointer
+
+

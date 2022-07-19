@@ -1,0 +1,69 @@
+.overlay
+  position: fixed
+  width: 100vw
+  height: 100vh
+  top: 0
+  left: 0
+  background-color: #0000009d
+  z-index: 12
+  transition: 0.2s
+  .window
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    background-color: #282835
+    border-radius: 3px
+    box-shadow: 0 0 0 1px #3c3c4d
+    transition: 0.2s
+    width: calc(250px + 12.5vw)
+    max-width: calc(100% - var(--padding-30))
+  &.hidden
+    opacity: 0
+    .window
+      transform: translate(-50%, -80vw) scale(0.2)
+
+.header, .question, .footer
+  padding: var(--padding-10)
+
+.question
+  font-size: var(--font-11)
+  color: var(--text-color)
+
+.header
+  font-weight: bold
+  font-size: var(--font-13)
+  box-shadow: 0 1px 0 0 #3b3b42
+  background-color: #3c3c4d3d
+
+.footer
+  display: flex
+  align-items: center
+  justify-content: space-between
+  box-shadow: 0 -1px 0 0 #3b3b42
+  background-color: #3c3c4d3d
+
+.btn
+  font-size: var(--font-11)
+  width: calc(50% - 4px - 0.2vw)
+  font-weight: bold
+  background-color: #0000002d
+  transition: 0.2s
+  &:hover
+    background-color: #0000004d
+  &.default
+    color: #fff
+    background-color: #5456af9d
+    &:hover
+      background-color: #5456af9d
+  &.danger
+    color: #fff
+    background-color: #B74B4B9d
+    &:hover
+      background-color: #B74B4B
+  &.green
+    color: #fff
+    background-color: #57A2689d
+    &:hover
+      background-color: #57A268
+
