@@ -4,10 +4,12 @@
     <div class="l">delete</div>
   </div>
   <div class="head">
-    <div class="photo" [style]="getBackgroundPhoto()"></div>
+    <div class="labeled photo" (click)="selectImage()" [style]="getBackgroundPhoto()">
+      <div class="l">Select another photo</div>
+    </div>
     <div class="desc">
       <div class="input">
-        <input required type="text" [(ngModel)]="project.name" (blur)="save()" [ngClass]="project.name.length > 1 ? '' : 'err'">
+        <input required type="text" [(ngModel)]="project.title" (blur)="save()" [ngClass]="project.title && project.title.length > 1 ? '' : 'err'">
         <label>Project title *</label>
       </div>
       <div class="input">

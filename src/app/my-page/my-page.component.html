@@ -1,4 +1,5 @@
 <app-pop-up></app-pop-up>
+<app-images></app-images>
 <datalist id="technologies" style="display:none;visibility:hidden;">
   <option value="Programming languages"></option>
   <option value="Web technologies"></option>
@@ -19,7 +20,8 @@
   <option *ngFor="let e of newExperiences" [value]="e.place"></option>
 </datalist>
 <div class="body" *ngIf="isLoaded">
-  <div class="content">
+  <app-menu [profile]="profile"></app-menu>
+  <div class="content" (scroll)="menuService.handleScroll(false)">
     <div class="h"></div>
     <div class="s-w" id="intro">
       <h2>What I do</h2>
@@ -54,6 +56,13 @@
     </div>
     <div class="s-w" id="projects">
       <h2>projects</h2>
+      <app-project [project]="p" *ngFor="let p of profile.projects; let i = index"
+                   (onDelete)="profile.projects.splice(i, 1)">
+      </app-project>
+      <app-project [project]="p" *ngFor="let p of newProjects; let i = index" [isNew]="true"
+                   (onDelete)="newProjects.splice(i, 1)">
+      </app-project>
+      <div class="add" (click)="addProject()"><div class="btn">Add project</div></div>
     </div>
     <div class="s-w" id="education">
       <h2>Education</h2>

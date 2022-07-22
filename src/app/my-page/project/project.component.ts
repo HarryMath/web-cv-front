@@ -3,9 +3,10 @@ import { IProject } from '../../shared/models';
 import { MessageService } from '../../shared/message.service';
 import { QuestionService } from '../../shared/question.service';
 import { ProjectsService } from '../../shared/projects.service';
+import {ImagesService} from '../../shared/images.service';
 
 @Component({
-  selector: 'app-projects',
+  selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['../my-page.component.sass', './project.component.sass']
 })
@@ -21,11 +22,13 @@ export class ProjectComponent implements OnInit {
   constructor(
     private message: MessageService,
     private service: ProjectsService,
-    private popup: QuestionService
+    private popup: QuestionService,
+    public imagesService: ImagesService
   ) { }
 
   ngOnInit(): void {
     this.previousDescriptionVersion = this.project.description;
+    this.previousVersion = {...this.project};
   }
 
   getDescriptionMinHeight(): string {
@@ -53,8 +56,8 @@ export class ProjectComponent implements OnInit {
     const submitted = await this.popup.ask(
       'Delete project',
       ['You will not be able to cancel this action.',
-        this.project.name.length > 1 ?
-          'Are you sure you want to delete project "' + this.project.name + '"?':
+        this.project.title.length > 1 ?
+          'Are you sure you want to delete project "' + this.project.title + '"?':
           'Are you sure you want to delete this project?'],
       'delete', 'cancel', 'danger'
     );
@@ -78,7 +81,7 @@ export class ProjectComponent implements OnInit {
 
   async save(): Promise<void> {
     if (
-      this.project.name.length < 2 ||
+      this.project.title.length < 2 ||
       this.project.role.length < 2 ||
       this.equals(this.project, this.previousVersion)
     ) {
@@ -103,7 +106,7 @@ export class ProjectComponent implements OnInit {
   }
 
   private equals(e1: IProject, e2: IProject) {
-    return e1.name === e2.name &&
+    return e1.title === e2.title &&
       e1.links === e2.links &&
       e1.tags === e2.tags &&
       e1.image === e2.image &&
@@ -115,5 +118,14 @@ export class ProjectComponent implements OnInit {
   getBackgroundPhoto(): string {
     return this.project.image && this.project.image.length > 10 ?
       `background-image: url('${this.project.image}')` : '';
+  }
+
+  selectImage(): void {
+    this.imagesService.selectImage().then(value => {
+      if (value) {
+        this.project.image = value.publicUrl;
+        this.save();
+      }
+    })
   }
 }

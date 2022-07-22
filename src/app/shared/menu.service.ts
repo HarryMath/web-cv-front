@@ -61,14 +61,18 @@ export class MenuService {
         this.menuItems[i].state = '';
       }
     }
-    const progress = window.innerWidth > 610 ?
-      100 * (
-        scrolledSections +
-        (this.content.scrollTop - scrolledSectionsTotalHeight + window.innerHeight) / this.sections[scrolledSections].offsetHeight
-      ) / (this.sections.length - 1) :
-      100 * this.content.scrollTop /
-      (this.content.scrollHeight - this.sections[this.sections.length - 1].scrollHeight);
-    this.scrollProgress =	`height: calc(8px + ${progress}%)`;
+    let progress = 0;
+    let scrollTop = this.content.scrollTop;
+    let s;
+    for (let i = 0; i < this.sections.length; i++) {
+      s = this.sections[i];
+      progress += Math.min(1, scrollTop / s.offsetHeight) / (this.sections.length - 0.5);
+      scrollTop -= s.offsetHeight;
+      if (scrollTop <= 0) {
+        break;
+      }
+    }
+    this.scrollProgress =	`height: calc(8px + ${progress * 100}%)`;
   }
 
   goToSection(link: string) {

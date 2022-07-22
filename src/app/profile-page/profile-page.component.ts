@@ -20,7 +20,7 @@ export class ProfilePageComponent implements OnInit {
     birthYear: 0, currentLocation: null, email: '',
     fullName: '', id: 0, login: '', intro: '',
     password: '', role: '', verified: false,
-    education: [], experience: [], skills: []
+    education: [], experience: [], skills: [], projects: []
   }
   skills: ISkillsGroup[] = [];
 

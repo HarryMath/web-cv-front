@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {IEducation, IExperience, ISkill, MyProfile} from '../shared/models';
+import {IEducation, IExperience, IProject, ISkill, MyProfile} from '../shared/models';
 import {MessageService} from "../shared/message.service";
+import {MenuService} from '../shared/menu.service';
 
 @Component({
   selector: 'app-my-page',
@@ -16,10 +17,12 @@ export class MyPageComponent implements OnInit {
   newExperiences: IExperience[] = [];
   newEducations: IEducation[] = [];
   newSkills: ISkill[] = [];
+  newProjects: IProject[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private message: MessageService
+    private message: MessageService,
+    public menuService: MenuService
   ) {
     route.data.subscribe(({profile}) => {
       this.profile = profile;
@@ -102,6 +105,19 @@ export class MyPageComponent implements OnInit {
       skillGroup: '',
       id: 0,
       profileId: this.profile.id
+    })
+  }
+
+  addProject(): void {
+    this.newProjects.push({
+      id: 0,
+      role: '',
+      title: '',
+      description: '',
+      tags: [],
+      image: null,
+      place: null,
+      links: []
     })
   }
 }

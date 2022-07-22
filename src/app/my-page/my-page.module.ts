@@ -11,6 +11,8 @@ import { PopUpComponent } from './pop-up/pop-up.component';
 import { EducationComponent } from './education/education.component';
 import { SkillComponent } from './skill/skill.component';
 import {ProjectComponent} from './project/project.component';
+import {SharedModule} from '../shared/shared.module';
+import {ImagesComponent} from '../images/images.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import {ProjectComponent} from './project/project.component';
     ProjectComponent,
     SkillComponent,
     DatePickerComponent,
-    PopUpComponent
+    PopUpComponent,
+    ImagesComponent
   ],
   providers: [ProfilesService],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
       {path: '', component: MyPageComponent, pathMatch: 'full', resolve: {profile: MyPageResolver}}
     ]),

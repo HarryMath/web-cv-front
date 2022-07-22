@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuService} from "../../shared/menu.service";
-import {IProfile} from "../../shared/models";
+import {MenuService} from "../menu.service";
+import {IProfile} from "../models";
 
 export interface IDate {
   birthYear: number,

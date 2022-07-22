@@ -15,6 +15,7 @@ export interface MyProfile {
   education: IEducation[];
   experience: IExperience[];
   skills: ISkill[];
+  projects: IProject[];
   sendNotifications: boolean;
   lang: 'EN'|'RU';
 }
@@ -39,13 +40,20 @@ export interface IProjectLink {
 }
 export interface IProject {
   id: number,
-  name: string,
+  title: string,
   role: string,
   place: string|null,
   description: string,
   image: string|null,
   links: IProjectLink[],
   tags: string[]
+}
+
+export interface IImage {
+  id: number,
+  publicUrl: string,
+  key: string,
+  profileId: number,
 }
 
 export interface IExperience {
