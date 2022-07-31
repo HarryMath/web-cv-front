@@ -1,0 +1,19 @@
+<div class="overlay" [ngClass]="isShown ? '' : 'hidden'">
+  <div class="window">
+    <div class="header">Create link</div>
+    <div class="question">
+      <label class="input">
+        <input type="text" required [(ngModel)]="link.label" [ngClass]="link.label.length < 2 ? 'err' : ''">
+        <span>Text of link</span>
+      </label>
+      <label class="input">
+        <input type="text" required [(ngModel)]="link.link" [ngClass]="link.link.length < 10 ? 'err' : ''">
+        <span>Url of link</span>
+      </label>
+    </div>
+    <div class="footer">
+      <div class="btn submit default" (click)="select()">save link</div>
+      <div class="btn cancel" (click)="cancel()">cancel</div>
+    </div>
+  </div>
+</div>

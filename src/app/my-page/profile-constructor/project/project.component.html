@@ -1,0 +1,66 @@
+<app-new-link *ngIf="selectingLink" [(link)]="newLink" (linkChange)="saveNewLink(newLink)" (onCancel)="hideLinkWindow()"></app-new-link>
+<app-new-link *ngIf="editingLink" [(link)]="project.links[linkOnEditIndex]" (linkChange)="saveLink()" (onCancel)="hideLinkWindow()"></app-new-link>
+<div class="card" [ngClass]="isNew ? 'new' : ''">
+  <div class="labeled delete" (click)="delete()">
+    <svg class="a-center"><use xlink:href="#trash"></use></svg>
+    <div class="l">delete</div>
+  </div>
+  <div class="head">
+    <div class="labeled photo" (click)="selectImage()" [style]="getBackgroundPhoto()">
+      <div class="l">Select photo</div>
+    </div>
+    <div class="info">
+      <label class="input">
+        <input required type="text" [(ngModel)]="project.title" (blur)="save()" [ngClass]="project.title && project.title.length > 1 ? '' : 'err'">
+        <span>Project title *</span>
+      </label>
+      <label class="input">
+        <input required type="text" [(ngModel)]="project.role" (blur)="save()" [ngClass]="project.role.length > 1 ? '' : 'err'">
+        <span>Your role *</span>
+      </label>
+      <label class="input">
+        <input list="workList" [(ngModel)]="project.place" (blur)="save()">
+        <span>Where you worked</span>
+      </label>
+    </div>
+  </div>
+  <label class="input">
+    <textarea required [(ngModel)]="project.description" (blur)="save()" [style]="getDescriptionMinHeight()" (keyup)="checkDescription()"></textarea>
+    <span>Description of project</span>
+  </label>
+  <div class="links">
+    <h5>Links</h5>
+    <div class="link" *ngFor="let l of project.links; let i = index">
+      <div class="preview labeled">
+        <a [href]="l.link">{{l.label}}</a>
+        <div class="l left">{{l.link}}</div>
+      </div>
+      <div class="edit-link" (click)="editLink(i)">
+        <svg class="a-center"><use xlink:href="#edit"></use></svg>
+      </div>
+      <div class="del-link" (click)="deleteLink(i)">
+        <svg class="a-center"><use xlink:href="#trash"></use></svg>
+      </div>
+    </div>
+    <div class="link link-adder" (click)="addLink()">
+      <div class="add-link">
+        <svg class="a-center"><use xlink:href="#plus"></use></svg>
+      </div>
+    </div>
+  </div>
+  <label class="input" (click)="focusTags()">
+    <div class="tags" [ngClass]="getTagsClass()">
+      <div class="tag" *ngFor="let t of project.tags; let i = index">
+        <div>{{t}}<div class="del" (click)="project.tags.splice(i, 1)">×</div></div>
+      </div>
+      <input #tagInput list="skillsList" class="tag" [(ngModel)]="lastTag"
+             (blur)="addTag(true)"
+             (focus)="tagsOnFocus=true"
+             (keydown.backspace)="handleBackspace($event)"
+             (keydown.tab)="addTag(false)"
+             (keydown.enter)="addTag(false)"
+             [style]="'width: ' + (this.lastTag.length * 1.1 + 4) + 'ch'">
+    </div>
+    <span>Tags</span>
+  </label>
+</div>

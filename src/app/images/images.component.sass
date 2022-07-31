@@ -44,6 +44,7 @@ $padding: calc(2.5px + 0.125vw)
 .selector
   border: 3px dashed #999
   background-color: #edd
+  position: relative
   input
     width: 100%
     height: 100%
@@ -51,6 +52,23 @@ $padding: calc(2.5px + 0.125vw)
     opacity: 0
   svg
     width: 30%
+  &.loading
+    cursor: initial
+    input, svg
+      display: none
+      visibility: hidden
+    &:after
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      content: ""
+      width: var(--padding-10)
+      height: var(--padding-10)
+      border-radius: 50%
+      animation: 1s load linear infinite
+      border: 3px solid #2b2b39
+      border-top-color: transparent
 
 .img
   height: 100%
@@ -59,3 +77,28 @@ $padding: calc(2.5px + 0.125vw)
   cursor: pointer
   background-position: center
 
+h5
+  width: 100%
+  color: #2b2b39
+  font-weight: bold
+  font-size: var(--font-13)
+  margin: var(--padding-5)
+
+.delete
+  position: absolute
+  top: var(--padding-5)
+  right: var(--padding-5)
+  width: var(--padding-25)
+  height: var(--padding-25)
+  border-radius: 50%
+  background-color: #0000005d
+  padding: var(--padding-5)
+  transition: 0.2s
+  color: #efeeee
+  cursor: pointer
+  svg
+    width: var(--padding-10)
+    height: var(--padding-10)
+  &:hover
+    background-color: #3A00008C
+    color: #F15151

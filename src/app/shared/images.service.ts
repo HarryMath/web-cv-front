@@ -9,12 +9,14 @@ export class ImagesService {
   selectWindowShown = false;
   isElementExist = false;
   images: IImage[] = [];
+  title = 'Select photo';
   imageAnswer = new Subject<IImage|false>();
 
   constructor(private http: HttpClient) {}
 
-  selectImage(): Promise<IImage|false> {
+  selectImage(title = 'Select photo'): Promise<IImage|false> {
     this.isElementExist = true;
+    this.title = title;
     setTimeout(() => {this.selectWindowShown = true}, 1);
     return new Promise<IImage | false>(resolve => {
       const subscription = this.imageAnswer.subscribe(next => {
@@ -67,6 +69,23 @@ export class ImagesService {
         }
       })
     });
+  }
+
+  async deleteImage(id: number): Promise<boolean> {
+    return new Promise<boolean>(((resolve) => {
+      this.http.delete<void>(`images?id=${id}`).subscribe({
+        next: () => {
+          const imgIndex = this.images.findIndex(i => i.id === id);
+          if (imgIndex != -1)
+            this.images.splice(imgIndex, 1);
+          resolve(true)
+        },
+        error: e => {
+          console.warn('[deleteImage]', e);
+          resolve(false)
+        }
+      });
+    }));
   }
 
   select(i: IImage): void {

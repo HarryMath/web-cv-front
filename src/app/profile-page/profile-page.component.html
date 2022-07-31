@@ -2,18 +2,88 @@
   <app-menu [profile]="data"></app-menu>
   <div class="content" (scroll)="menuService.handleScroll(false)">
     <div class="h"></div>
+
     <div class="s-w" id="intro">
       <h2>What I do</h2>
       <p [innerHTML]="getIntro()"></p>
     </div>
-    <div class="s-w" id="experience">
+
+    <div class="s-w s-w-e" id="experience">
       <h2>Employment history</h2>
+      <div class="edu" *ngFor="let e of data.experience">
+        <div class="top">
+          <div class="m-i company" [ngClass]="e.link ? 'labeled' : ''" (click)="visitCompanySite(e)">
+            <div *ngIf="e.companyLogo" class="c-logo" [style]="getLogoImage(e)"></div>
+            <div>
+              <h4 class="name">{{e.place}}</h4>
+              <div *ngIf="e.role" class="label">{{e.role}}</div>
+            </div>
+            <div *ngIf="e.link" class="l">{{e.link}}</div>
+          </div>
+          <div class="period">{{dateService.getPeriodString(e)}}</div>
+        </div>
+        <div *ngIf="e.description" class="desc">{{e.description}}</div>
+        <div class="location">
+          <div><svg><use xlink:href="#location"></use></svg></div>
+          <div>{{e.location}}</div>
+        </div>
+      </div>
+      <div class="edu-end">To be continued...</div>
+      <div class="edu-progress"></div>
     </div>
-    <app-skills-block [skills]="this.skills"></app-skills-block>
+
+    <div class="s-w" id="skills">
+      <h2>Skills</h2>
+      <div class="g" *ngFor="let g of skills">
+        <h4>{{g.name}}</h4>
+        <div>
+          <div class="skill" *ngFor="let s of g.skills">
+            <div>{{s.skillName}}</div>
+            <div class="stars">
+              <div><svg style="color: #FFED76"><use xlink:href="#star"></use></svg></div>
+              <div><svg [style]="s.skillLevel > 1 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+              <div><svg [style]="s.skillLevel > 2 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+              <div><svg [style]="s.skillLevel > 3 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+              <div><svg [style]="s.skillLevel > 4 ? 'color: #e0d378' : ''"><use xlink:href="#star"></use></svg></div>
+              <div class="lvl">{{getSkillLevelString(s)}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="s-w" id="projects">
-      <h2>projects</h2>
+      <h2>Projects</h2>
+      <div class="pr-wr">
+        <div class="pr" *ngFor="let p of projects" [style]="getProjectImage(p)" [ngClass]="p.image && p.image.length > 10 ? 'w-i' : ''">
+          <div class="p-i"></div>
+          <div  class="info" [style]="getGradient(p)">
+            <div class="title" [style]="getColor(p.colors.accent)">{{p.title}}</div>
+            <div class="p-desc">{{p.description.substring(0, 70).trim() + '...'}}</div>
+            <div class="tags">
+              <div class="tag" *ngFor="let t of p.tags">{{t}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <app-education-block [education]="data.education"></app-education-block>
+
+    <div class="s-w s-w-e" id="education">
+      <h2>Education</h2>
+      <div class="edu" *ngFor="let e of data.education">
+        <div class="top">
+          <div class="m-i">
+            <h4 class="name">{{e.institutionName}}</h4>
+            <div *ngIf="e.label" class="label">{{e.label}}</div>
+          </div>
+          <div class="period">{{dateService.getPeriodString(e)}}</div>
+        </div>
+        <div *ngIf="e.description" class="desc">{{e.description}}</div>
+      </div>
+      <div class="end">To be continued...</div>
+      <div class="edu-progress"></div>
+    </div>
+
     <div class="s-w" id="contacts">
       <h2>Contact me</h2>
     </div>

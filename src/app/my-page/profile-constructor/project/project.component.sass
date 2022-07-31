@@ -1,0 +1,134 @@
+$photo-width: calc(100px + 5vw)
+
+.head
+  padding: var(--padding-10) 0
+
+.links
+  padding-bottom: var(--padding-10)
+
+.photo
+  width: $photo-width
+  height: $photo-width
+  background-size: cover
+  background-position: center
+  border-radius: 3px
+  background-color: #1e1e2c9d
+  cursor: pointer
+.info
+  width: calc(95% - #{$photo-width} - var(--padding-20))
+
+.card
+  .input
+    height: unset
+    .tags
+      width: 100%
+      display: flex
+      flex-wrap: wrap
+      height: unset
+      padding: calc(1.5px + 0.075vw) var(--padding-5)
+      .tag, .tag> div
+        box-shadow: none
+        background-color: transparent
+        width: fit-content
+        white-space: nowrap
+      .tag
+        padding: calc(1.5px + 0.075vw) calc(3px + 0.15vw) calc(1.5px + 0.075vw) 0
+        &>div
+          height: calc(17px + 0.85vw)
+          line-height: calc(17px + 0.85vw)
+          border-radius: 3px
+          font-size: var(--font-9)
+          padding: 0 var(--padding-5)
+          position: relative
+          background-color: #191926
+          transition: padding-right 0.2s
+          cursor: initial
+          .del
+            position: absolute
+            right: calc(7.5px + 0.35vw)
+            top: 50%
+            opacity: 0
+            transform: translate(50%, -50%) scale(0.1)
+            line-height: calc(11px + 0.55vw)
+            height: var(--padding-10)
+            width: var(--padding-10)
+            border-radius: 50%
+            font-size: var(--font-11)
+            background-color: #000
+            box-shadow: none
+            cursor: pointer
+            transition: 0.2s
+            padding: 0
+            text-align: center
+          &:hover
+            padding-right: var(--padding-15)
+            .del
+              opacity: 1
+              transform: translate(50%, -50%)
+      input
+        appearance: none
+        text-align: left
+        font-size: var(--font-10)
+        font-family: Poppins, sans-serif
+        margin-left: calc(3px + 0.15vw)
+
+h5
+  padding: var(--padding-5) 0!important
+.link
+  display: flex
+  flex-wrap: nowrap
+  width: 100%
+  padding: 0 var(--padding-5)
+  padding-left: var(--padding-40)
+  position: relative
+  line-height: var(--padding-20)
+  height: var(--padding-20)
+  a
+    color: var(--link)
+
+.edit-link, .del-link, .add-link
+  height: var(--padding-15)
+  width: var(--padding-15)
+  position: absolute
+  top: 50%
+  border-radius: 50%
+  cursor: pointer
+  background-color: #555562
+  opacity: 0.4
+  transition: 0.2s
+  transform: translate(0, -50%)
+  img, svg
+    width: var(--padding-10)
+    height: var(--padding-10)
+    margin: 0!important
+    transform: translate(-50%, -50%) scale(0.8)
+  &:hover
+    opacity: 1
+
+.edit-link
+  left: var(--padding-20)
+  img, svg
+    color: #d1d6ff
+  &:hover
+    background-color: #4B5DB77D
+    svg
+      color: #5171f1
+
+.del-link
+  left: 0
+  img, svg
+    color: #ffdbdb
+  &:hover
+    background-color: #B74B4B7d
+    svg
+      color: #F15151
+.add-link
+  left: 0
+  img, svg
+    color: #dfffdb
+  &:hover
+    background-color: rgba(75, 183, 77, 0.49)
+    svg
+      color: #66f151
+.link-adder
+  cursor: pointer

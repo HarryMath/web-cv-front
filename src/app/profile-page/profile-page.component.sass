@@ -1,2 +1,214 @@
+.s-w
+  max-width: calc(700px + 15vw)
+
+// _____________ EDUCATION & EXPERIENCE _______________ //
+$width: calc(500px + 15vw)
+$offset: calc(20px + 1vw)
+.s-w-e
+  max-width: $width
+  padding-right: 0
+.edu
+  background: #2c2c39
+  width: calc(100% - #{$offset} - var(--padding-15))
+  background: linear-gradient(161deg,#2b2b39 70%,#2c2c34 100%)
+  padding: var(--padding-10)
+  margin-bottom: var(--padding-10)
+  font-size: var(--font-10)
+  position: relative
+  &:before
+    content: ''
+    width: var(--padding-10)
+    height: var(--padding-10)
+    background-color: #2c2c34
+    position: absolute
+    right: 0
+    top: 0
+    transform: translate(var(--padding-5), var(--padding-15)) rotate(45deg)
+  &:after
+    content: ''
+    width: var(--padding-10)
+    height: var(--padding-10)
+    border-radius: 50%
+    background-color: #0e0e19
+    box-shadow: 0 0 0 3px var(--accent)
+    position: absolute
+    right: 0
+    top: 0
+    transform: translate(calc(17.5px + 0.875vw), var(--padding-15)) scale(0.7)
+  .top
+    display: flex
+    flex-direction: row
+    align-items: flex-start
+    justify-content: space-between
+    flex-wrap: wrap
+  .name
+    margin: 0
+    max-width: calc(200px + 10vw)
+  .label
+    color: #999999
+    font-style: italic
+    max-width: calc(200px + 10vw)
+  .location
+    display: flex
+    color: #999999
+    svg
+      color: #CC6933A8
+      margin-right: 3px
+      margin-left: -10%
+      height: var(--font-10)
+      width: var(--font-10)
+  .period
+    color: #bbbbbb
+    line-height: 1.8
+    padding: 0 var(--padding-10)
+    border-radius: 40px
+    white-space: nowrap
+    background-color: #20202A
+    margin-bottom: var(--padding-5)
+    box-shadow: inset 0 3px 8px 0 #0F0F1433
+.m-i
+  margin-bottom: var(--padding-10)
+
+.company
+  display: flex
+  align-items: center
+  &.labeled
+    border-radius: 3px
+    transition: background 0.2s, box-shadow 0.2s
+    cursor: pointer
+    &:hover
+      background-color: #0c0c173d
+      box-shadow: 0 0 0 7px #0c0c173d
+
+.c-logo
+  border-radius: 50%
+  width: var(--padding-35)
+  height: var(--padding-35)
+  background: #fff no-repeat center
+  background-size: 90%
+  margin-right: var(--padding-5)
+
+.edu-progress
+  position: absolute
+  top: var(--padding-5)
+  right: $offset
+  z-index: -1
+  background: linear-gradient(180deg, transparent 0%, #090914 calc(5% + 25px), #090914 calc(95% - 25px), transparent 100%)
+  width: var(--padding-5)
+  height: calc(90% - var(--padding-25))
+
+.edu-end
+  width: 100%
+  font-style: italic
+  text-align: right
+  transform: translateX(20px)
+  padding: var(--padding-10)
+  color: #bcbab0
+
+
+
+// __________________ SKILLS ___________________ //
+.stars
+  color: #0a0a18
+  display: flex
+  flex-direction: row
+  svg
+    width: calc(8px + 0.4vw)
+    height: calc(8px + 0.4vw)
+    margin-right: 5px
+
+.g
+  margin-bottom: var(--padding-15)
+  h4
+    font-weight: 600
+    font-size: var(--font-13)
+  &>div
+    column-count: 2
+    display: flex
+    flex-wrap: wrap
+    max-width: $width
+    justify-content: space-between
+
+.lvl
+  position: absolute
+  right: 0
+  top: 0
+  min-width: calc(65px + 2vw)
+  overflow: hidden
+  color: #ababa7
+  font-size: var(--font-9)
+  opacity: 0
+  transition: 0.15s
+  line-height: var(--padding-15)
+  background-color: #14141d
+  transform: scale(0.5)
+
+.skill
+  position: relative
+  display: flex
+  width: 40%
+  justify-content: space-between
+  align-items: center
+  &:before
+    z-index: -1
+    content: ''
+    position: absolute
+    width: calc(100% + 20px)
+    left: -10px
+    top: 0
+    height: 100%
+    transform: scale(0.8)
+    opacity: 0
+    transition: 0.2s
+    background-color: #0101055d
+  &:hover
+    &:before
+      transform: none
+      opacity: 1
+    .lvl
+      opacity: 1
+      transform: none
+  &>div
+    font-size: var(--font-11)
+    line-height: var(--padding-15)
+
+
+
+// _______________ PROJECTS ________________ //
+.pr-wr
+  display: inline-block
+  -moz-column-count: 2
+  -webkit-column-count: 2
+  column-count: 2
+
+.pr
+  display: inline-block
+  border-radius: 4px
+  overflow: hidden
+  background: #2c2c39 left top
+  background-size: cover
+  .info
+    padding: var(--padding-5)
+    background-color: #2b2b332d
+  .tags
+    display: flex
+    flex-wrap: wrap
+  .tag
+    padding: 0 3px
+    background-color: #606c837d
+    color: #efdfcf
+    border-radius: 3px
+    margin-right: 4px
+    margin-top: 3px
+    font-size: var(--font-8)
+  .title
+    font-size: var(--font-13)
+    font-weight: bold
+  &.w-i
+    .info
+      padding-top: var(--padding-40)
+    .p-i
+      width: 100%
+      aspect-ratio: 3 / 1
 
 

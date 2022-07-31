@@ -1,0 +1,61 @@
+<date-picker
+  *ngIf="startInFocus" [title]="'Start work date'"
+  [(date)]="startDate" [spec]="{days: false, month: true, year: true}"
+  (submit)="saveStartDate()"></date-picker>
+
+<date-picker *ngIf="endInFocus" [title]="'End work date'"
+  [(date)]="endDate" [spec]="{days: false, month: true, year: true}"
+  (submit)="saveEndDate()"></date-picker>
+
+<div class="card" [ngClass]="isNew ? 'new' : ''">
+  <div class="head">
+    <h5>Period</h5>
+    <div class="current" (click)="toggleCurrentPosition()">
+      <svg [ngClass]="isCurrentPosition ? 'checked' : ''" class="checkbox" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <div>I work here at present</div>
+    </div>
+    <div class="labeled delete" (click)="delete()">
+      <svg class="a-center"><use xlink:href="#trash"></use></svg>
+      <div class="l">delete</div>
+    </div>
+  </div>
+  <div class="period">
+    <label class="input" (click)="startInFocus=true">
+      <div [ngClass]="(startInFocus ? 'focus ' : '') + (isValid(startDate) ? 'filled' : 'err')"
+      >{{getStartDateString()}}</div>
+      <span>Start work date *</span>
+    </label>
+    <label class="input" (click)="selectEnd()">
+      <div [ngClass]=" (endInFocus ? 'focus ' : '') + (isCurrentPosition ? 'disabled ' : '') +
+           (isValid(endDate) || isCurrentPosition ? 'filled' : 'err')"
+      >{{getEndDateString()}}</div>
+      <span>End work date</span>
+    </label>
+    <div ></div>
+  </div>
+  <h5>Organisation</h5>
+  <div class="place">
+    <label class="input">
+      <input required type="text" [(ngModel)]="experience.place" (blur)="save()" [ngClass]="experience.place.length > 1 ? '' : 'err'">
+      <span>Company name *</span>
+    </label>
+    <label class="input">
+      <input required type="text" [(ngModel)]="experience.role" (blur)="save()" [ngClass]="experience.role.length > 1 ? '' : 'err'">
+      <span>Your position name *</span>
+    </label>
+    <label class="input">
+      <input required type="text" [(ngModel)]="experience.location" (blur)="save()">
+      <span>Office location</span>
+    </label>
+    <label class="input">
+      <input required type="text" [(ngModel)]="experience.link" (blur)="save()">
+      <span>Company site link</span>
+    </label>
+  </div>
+  <label class="input">
+    <textarea required [(ngModel)]="experience.description" (blur)="save()" [style]="getDescriptionMinHeight()" (keyup)="checkDescription()"></textarea>
+    <span>Your responsibilities and achievements</span>
+  </label>
+</div>

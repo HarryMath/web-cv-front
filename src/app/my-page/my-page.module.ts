@@ -5,25 +5,31 @@ import { RouterModule } from '@angular/router';
 import { MyPageResolver } from './my-page.resolver';
 import { ProfilesService } from '../shared/profiles.service';
 import { FormsModule } from '@angular/forms';
-import { ExperienceComponent } from './experience/experience.component';
+import { ExperienceComponent } from './profile-constructor/experience/experience.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
-import { PopUpComponent } from './pop-up/pop-up.component';
-import { EducationComponent } from './education/education.component';
-import { SkillComponent } from './skill/skill.component';
-import {ProjectComponent} from './project/project.component';
+import { PopUpComponent } from '../pop-up/pop-up.component';
+import { EducationComponent } from './profile-constructor/education/education.component';
+import {ProjectComponent} from './profile-constructor/project/project.component';
 import {SharedModule} from '../shared/shared.module';
 import {ImagesComponent} from '../images/images.component';
+import {LinkComponent} from './new-link/link.component';
+import {MyMenuComponent} from './profile-constructor/my-menu/my-menu.component';
+import {ProfileConstructorComponent} from './profile-constructor/profile-constructor.component';
+import {SkillComponent} from './profile-constructor/skill/skill.component';
 
 @NgModule({
   declarations: [
     MyPageComponent,
+    ProfileConstructorComponent,
     ExperienceComponent,
     EducationComponent,
     ProjectComponent,
     SkillComponent,
     DatePickerComponent,
     PopUpComponent,
-    ImagesComponent
+    ImagesComponent,
+    LinkComponent,
+    MyMenuComponent
   ],
   providers: [ProfilesService],
   imports: [

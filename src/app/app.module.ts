@@ -10,13 +10,14 @@ import { MessageComponent } from './message/message.component';
 const routes: Routes = [
   {path: 'me', loadChildren: () => import('./my-page/my-page.module').then(m => m.MyPageModule)},
   {path: 'sign-in', loadChildren: () => import('./auth-page/auth-page.module').then(m => m.AuthPageModule)},
+  {path: 'sign-up', loadChildren: () => import('./auth-page/auth-page.module').then(m => m.AuthPageModule)},
   {path: '**', loadChildren: () => import('./profile-page/profile-page.module').then(m => m.ProfilePageModule)}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessageComponent,
+    MessageComponent
   ],
   imports: [
     HttpClientModule,

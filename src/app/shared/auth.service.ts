@@ -11,7 +11,7 @@ export interface IUser {
 
 export interface IAuthResponse {
   success: boolean,
-  errorMessage?: string;
+  statusCode: number;
 }
 
 const GITHUB_ID = 'b1730c9f1f4f0732ad76';
@@ -38,13 +38,13 @@ export class AuthService {
             this.authInterceptor.setToken(response.token);
             resolve({
               success: true,
-              errorMessage: ''
+              statusCode: 200
             });
           } else {
             console.log('bad response: ', response);
             resolve({
               success: false,
-              errorMessage: ''
+              statusCode: 200
             });
           }
         },
@@ -52,9 +52,28 @@ export class AuthService {
           console.log(error);
           resolve({
             success: false,
-            errorMessage: error.status == 403 ?
-              'Invalid login or password' :
-              'Sorry, something went wrong. We are doing the best tot fix the problem.'
+            statusCode: error.status
+          });
+        }
+      });
+    });
+  }
+
+  public signUp(fullName: string, email: string, password: string): Promise<IAuthResponse> {
+    return new Promise<IAuthResponse>(resolve => {
+      const subscription = this.http.post('profiles', {fullName, email, password}).subscribe({
+        next: () => {
+          subscription.unsubscribe();
+          resolve({
+            success: true,
+            statusCode: 201
+          });
+        },
+        error: (error) => {
+          console.warn(error);
+          resolve({
+            success: false,
+            statusCode: error.status
           });
         }
       });
@@ -72,15 +91,15 @@ export class AuthService {
           subscription.unsubscribe();
           if (response.token && response.token.length > 10) {
             this.authInterceptor.setToken(response.token);
-            resolve({success: true});
+            resolve({success: true, statusCode: 200});
           } else {
             console.log('bad response: ', response);
-            resolve({success: false});
+            resolve({success: false, statusCode: 500});
           }
         },
         error: (error) => {
           console.log(error);
-          resolve({success: false});
+          resolve({success: false, statusCode: error.status});
         }
       })
     });

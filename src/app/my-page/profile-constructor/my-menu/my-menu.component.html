@@ -1,0 +1,27 @@
+<div class="menu">
+  <div class="head">
+    <div class="photo labeled" style="{{getPhotoStyle()}}" (click)="selectPhoto()">
+      <div class="l left">select avatar</div>
+    </div>
+    <h1 class="name">{{profile.fullName}}</h1>
+    <div class="role" [innerHTML]="getRole()"></div>
+  </div>
+  <div class="nav">
+    <div class="progress">
+      <div class="bar">
+        <div [style]="menuService.scrollProgress"></div>
+      </div>
+      <div class="menu-icon" *ngFor="let i of menuService.menuItems">
+        <div class="a-center i" [ngClass]="i.state">
+          <img class="a-center" [src]="i.svg" [alt]="i.name">
+        </div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="menu-item" *ngFor="let i of menuService.menuItems"
+           (click)="menuService.goToSection(i.link)" [ngClass]="i.state">
+        {{i.name}}
+      </div>
+    </div>
+  </div>
+</div>

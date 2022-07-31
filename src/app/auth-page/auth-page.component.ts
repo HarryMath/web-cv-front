@@ -14,9 +14,12 @@ export class AuthPageComponent implements OnInit {
 
   email = '';
   password = '';
+  fullName = '';
   @ViewChild('pass') passField!: ElementRef;
   @ViewChild('mail') mailField!: ElementRef;
+  @ViewChild('name') nameField!: ElementRef;
   isLoading = false;
+  isSignUp = false;
 
   bubbleEvent = new EventEmitter(false);
 
@@ -49,9 +52,10 @@ export class AuthPageComponent implements OnInit {
         }
       }
     }
+    this.isSignUp = url.length > 1 && url[1] === 'sign-up';
   }
 
-  signIn(): void {
+  sign(): void {
     if (this.isLoading) return;
     if (!this.emailSatisfy()) {
       this.message.show('Provide valid email, please.', -1);
@@ -65,15 +69,62 @@ export class AuthPageComponent implements OnInit {
     }
     this.bubbleEvent.emit('center');
     this.passField.nativeElement.blur();
+    this.mailField.nativeElement.blur();
     this.isLoading = true;
+    if (this.isSignUp) {
+      this.signUp();
+      this.nameField.nativeElement.blur();
+    } else {
+      this.signIn();
+    }
+  }
+
+  private signUp(): void {
+    if (!this.nameSatisfy()) {
+      this.message.show('Provide valid full name please.', -1)
+      this.nameField.nativeElement.focus();
+      return;
+    }
+    this.authService.signUp(this.fullName, this.email, this.password).then(res => {
+      if (res.success) {
+        this.message.showLongText([`Activation link was sent to ${this.email} address.`,
+            `Click on it and then sign in with your mail and password.`],
+          1, 60000);
+        this.isSignUp = false;
+      } else {
+        this.isLoading = false;
+        if (res.statusCode === 409) {
+          this.mailField.nativeElement.focus();
+          this.message.show('This email is already taken', -1)
+        } else {
+          console.warn(res);
+          this.message.show(
+            'Sorry, something went wrong. We are doing the best to fix the problem.', -1);
+        }
+      }
+    });
+  }
+
+  private signIn(): void {
     this.authService.signIn(this.email, this.password).then(res => {
       if (res.success) {
         this.router.navigate(['me']);
       } else {
         this.isLoading = false;
-        this.message.show(res.errorMessage!, -1);
+        if (res.statusCode === 403) {
+          this.passField.nativeElement.focus();
+          this.message.show('Invalid login or password', -1);
+        } else {
+          console.warn(res);
+          this.message.show('Sorry, something went wrong. We are doing the best tot fix the problem.', -1);
+        }
       }
     });
+  }
+
+  nameSatisfy(): boolean {
+    const n = this.fullName.trim();
+    return n.length > 4 && n.includes(' ');
   }
 
   emailSatisfy(): boolean {
@@ -92,6 +143,10 @@ export class AuthPageComponent implements OnInit {
     this.passField.nativeElement.focus();
   }
 
+  focusEmail(): void {
+    this.mailField.nativeElement.focus();
+  }
+
   async getParams(): Promise<any> {
     return new Promise((resolve => {
       const subscription = this.route.queryParamMap.subscribe(params => {
@@ -102,5 +157,9 @@ export class AuthPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  satisfy(): boolean {
+    return this.passwordSatisfy() && this.emailSatisfy() && (!this.isSignUp || this.nameSatisfy());
   }
 }

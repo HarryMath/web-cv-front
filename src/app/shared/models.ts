@@ -2,25 +2,30 @@ export interface MyProfile {
   id: number;
   login: string;
   fullName: string;
-  intro: string;
+  intro: string|null;
   email: string;
-  role: string;
-  password: string;
+  role: string|null;
+  // password: string;
   avatar: string|null;
-  birthYear: number;
-  birthMonth: number;
-  birthDay: number;
+  birthYear: number|null;
+  birthMonth: number|null;
+  birthDay: number|null;
   currentLocation: string|null;
-  verified: boolean;
+  // verified: boolean;
   education: IEducation[];
   experience: IExperience[];
   skills: ISkill[];
   projects: IProject[];
+  isPublic: boolean;
   sendNotifications: boolean;
   lang: 'EN'|'RU';
 }
 
-export type IProfile = Omit<MyProfile, 'sendNotifications'|'lang'>;
+export type IProfile = Omit<MyProfile, 'sendNotifications'|'lang'|'isPublic'>;
+
+export type IProfileRefresh = Omit<MyProfile, 'id'|'login'|'email'|'verified'|'education'|'experience'|'skills'|'projects'>;
+
+export type IProfileUpdate = Partial<IProfileRefresh>;
 
 export interface IEducation {
   id: number;
@@ -64,6 +69,7 @@ export interface IExperience {
   endYear: number;
   role: string;
   place: string;
+  companyLogo?: string|null
   description: string;
   location: string;
   link: string | null;

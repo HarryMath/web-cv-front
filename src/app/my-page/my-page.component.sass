@@ -1,5 +1,61 @@
+$photo-width: calc(100px + 5vw)
+
+.body-wrapper
+  transition: transform 0.4s
+  width: 300vw
+  height: 100%
+  position: relative
+  left: 50%
+  transform: translate(-50%)
+.body
+  width: calc(100vw - var(--padding-20))
+  left: calc(100vw + var(--padding-10))
+.body-left
+  left: var(--padding-10)
+.body-right
+  left: unset
+  right: var(--padding-10)
+
+.buttons
+  position: absolute
+  left: 50%
+  transform: translateX(-50%)
+  bottom: var(--padding-15)
+  padding: var(--padding-5)
+  display: flex
+  background-color: #343444
+  box-shadow: 1px 3px 20px 5px #0000005d
+  border-radius: 300px
+  .btn
+    width: var(--padding-25)
+    border-radius: 50%
+    margin: 0 var(--padding-5)
+    position: relative
+    transition: color 0.2s
+    color: rgba(255, 244, 237, 0.89)
+    &:hover
+      color: #fff
+    &.statistics
+      margin-left: 0
+    &.settings
+      margin-right: 0
+  svg
+    width: var(--font-13)
+    height: var(--font-13)
+
+.under
+  position: absolute
+  top: var(--padding-5)
+  left: var(--padding-5)
+  width: var(--padding-25)
+  height: var(--padding-25)
+  transition: transform 0.2s cubic-bezier(0.02, 0.93, 0.25, 1.24)
+  border-radius: 50%
+  background-color: #0000009d
+
 .editable-text
   cursor: text
+  display: block
   div, input, textarea
     background-color: #0e0e192d
     border-radius: 2px
@@ -16,6 +72,24 @@
     &.err
       box-shadow: 0 0 0 2px var(--r)
 
+.intro-head
+  display: flex
+  align-items: center
+  padding: var(--padding-10) 0
+  .input
+    margin-bottom: var(--padding-5)
+.info
+  padding-bottom: var(--padding-5)
+  padding-left: var(--padding-10)
+.avatar
+  width: $photo-width
+  height: $photo-width
+  background-size: cover
+  background-position: center
+  border-radius: 3px
+  background-color: #1e1e2c9d
+  cursor: pointer
+
 .card
   background-color: #3c3c4d5d
   border-radius: 6px
@@ -28,6 +102,7 @@
   h5
     font-size: var(--font-12)
     padding: var(--padding-15) 0
+    padding-bottom: var(--padding-5)
     margin: 0
   .input
     div
@@ -47,6 +122,8 @@
   .head
     display: flex
     align-items: center
+    h5
+      padding: var(--padding-15) 0
   .current
     width: 100%
     display: flex
@@ -84,7 +161,6 @@
   flex-wrap: wrap
   justify-content: space-between
   .input
-    margin-bottom: var(--padding-5)
     width: calc(50% - 5px - 0.25vw)
 
 .new
@@ -92,13 +168,14 @@
 
 .input
   @extend .editable-text
-  margin-top: var(--padding-10)
+  margin-top: var(--padding-15)
   margin-bottom: calc(2px + 0.1vw)
   position: relative
-  label
+  span
     position: absolute
     transition: 0.15s
     top: 50%
+    cursor: text
     left: var(--padding-5)
     transform: translateY(-50%)
     font-size: var(--font-10)
@@ -106,10 +183,10 @@
     width: 100%
     padding: 0 var(--padding-5)
     font-size: var(--padding-10)
-    &:focus + label,
-    &.focus + label,
-    &.filled + label,
-    &:not([val=""]):valid + label
+    &:focus + span,
+    &.focus + span,
+    &.filled + span,
+    &:not([val=""]):valid + span
       top: 0
       font-size: var(--font-7)
       transform: translateY(-100%)
