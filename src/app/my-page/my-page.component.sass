@@ -1,5 +1,21 @@
 $photo-width: calc(100px + 5vw)
 
+.input
+  div, input, textarea
+    background-color: #0e0e192d
+    border-radius: 2px
+    box-shadow: 0 0 0 1px #3c3c4d3d
+  &:hover
+    div, input, textarea
+      background-color: #0e0e193d
+  div, input
+    height: var(--padding-20)
+    line-height: var(--padding-20)
+  div, input, textarea
+    &:focus, &.focus
+      background-color: #0e0e196d
+      box-shadow: 0 0 0 2px #3c3c4d
+
 .body-wrapper
   transition: transform 0.4s
   width: 300vw
@@ -8,13 +24,7 @@ $photo-width: calc(100px + 5vw)
   left: 50%
   transform: translate(-50%)
 .body
-  width: calc(100vw - var(--padding-20))
   left: calc(100vw + var(--padding-10))
-.body-left
-  left: var(--padding-10)
-.body-right
-  left: unset
-  right: var(--padding-10)
 
 .buttons
   position: absolute
@@ -52,25 +62,6 @@ $photo-width: calc(100px + 5vw)
   transition: transform 0.2s cubic-bezier(0.02, 0.93, 0.25, 1.24)
   border-radius: 50%
   background-color: #0000009d
-
-.editable-text
-  cursor: text
-  display: block
-  div, input, textarea
-    background-color: #0e0e192d
-    border-radius: 2px
-    box-shadow: 0 0 0 1px #3c3c4d3d
-    transition: 0.2s
-    transition-property: box-shadow, background-color
-  &:hover
-    div, input, textarea
-      background-color: #0e0e195d
-  div, input, textarea
-    &:focus, &.focus
-      background-color: #0e0e196d
-      box-shadow: 0 0 0 2px #3c3c4d
-    &.err
-      box-shadow: 0 0 0 2px var(--r)
 
 .intro-head
   display: flex
@@ -166,34 +157,7 @@ $photo-width: calc(100px + 5vw)
 .new
   box-shadow: 0 0 0 6px #575da25d, 0 0 0 2px #575da2
 
-.input
-  @extend .editable-text
-  margin-top: var(--padding-15)
-  margin-bottom: calc(2px + 0.1vw)
-  position: relative
-  span
-    position: absolute
-    transition: 0.15s
-    top: 50%
-    cursor: text
-    left: var(--padding-5)
-    transform: translateY(-50%)
-    font-size: var(--font-10)
-  div, input, textarea
-    width: 100%
-    padding: 0 var(--padding-5)
-    font-size: var(--padding-10)
-    &:focus + span,
-    &.focus + span,
-    &.filled + span,
-    &:not([val=""]):valid + span
-      top: 0
-      font-size: var(--font-7)
-      transform: translateY(-100%)
-      opacity: 0.5
-  div, input
-    height: var(--padding-20)
-    line-height: var(--padding-20)
+
 
 .checkbox
   border: calc(2px + 0.1vw) solid #b7b7b7bd

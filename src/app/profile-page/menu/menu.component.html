@@ -3,9 +3,13 @@
     <div class="photo" style="{{getPhotoStyle()}}"></div>
     <h1 class="name">{{profile.fullName}}</h1>
     <div class="role" [innerHTML]="getRole()"></div>
+    <div class="loc" *ngIf="profile.currentLocation && profile.currentLocation.length > 0">
+      <svg><use xlink:href="#location"></use></svg> {{profile.currentLocation}}
+    </div>
+    <div class="labeled age" *ngIf="isAgeSpecified">{{age}}<div class="l">{{birthDate}}</div></div>
   </div>
   <div class="nav">
-    <div class="progress">
+    <div class="progress" [style]="menuService.progressHeight">
       <div class="bar">
         <div [style]="menuService.scrollProgress"></div>
       </div>

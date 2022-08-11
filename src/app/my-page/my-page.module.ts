@@ -16,6 +16,8 @@ import {LinkComponent} from './new-link/link.component';
 import {MyMenuComponent} from './profile-constructor/my-menu/my-menu.component';
 import {ProfileConstructorComponent} from './profile-constructor/profile-constructor.component';
 import {SkillComponent} from './profile-constructor/skill/skill.component';
+import {ViewsComponent} from './views/views.component';
+import {SettingsComponent} from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -29,9 +31,14 @@ import {SkillComponent} from './profile-constructor/skill/skill.component';
     PopUpComponent,
     ImagesComponent,
     LinkComponent,
-    MyMenuComponent
+    MyMenuComponent,
+    ViewsComponent,
+    SettingsComponent
   ],
   providers: [ProfilesService],
+  exports: [
+    ProjectComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,

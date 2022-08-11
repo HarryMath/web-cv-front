@@ -19,6 +19,7 @@ export class DateService {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear()
   }
+  private readonly currentDaySince1970 = Math.floor(new Date().getTime() / 86400000);
 
   getDateString(d: Partial<ISelectDate>, short = false): string {
     let result = '';
@@ -54,6 +55,28 @@ export class DateService {
     return age;
   }
 
+  getMonthDuration(e: IPeriod): string {
+    let years = (e.endYear != 0 ? e.endYear: this.currentDate.year) - e.startYear;
+    let months = (e.endMonth != 0 ? e.endMonth: this.currentDate.month) - e.startMonth;
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+    let result = '';
+    if (years > 0){
+      result += years;
+      result += years % 10 === 1 ? ' year' : ' years';
+    }
+    if (months > 0) {
+      if (years > 0) {
+        result += ', '
+      }
+      result += months;
+      result += months === 1 ? ' month' : ' months';
+    }
+    return result;
+  }
+
   private getEndDateString(e: IPeriod): string {
     return e.endYear == 0 && e.endMonth == 0 ? 'present days' :
       this.months[e.endMonth - 1] + ' ' + e.endYear;
@@ -65,5 +88,14 @@ export class DateService {
 
   getPeriodString(e: IPeriod): string {
     return this.getStartDateString(e) + ' - ' + this.getEndDateString(e);
+  }
+
+  getDateByDaysAgo(number: number): string {
+    // TODO return date String
+    return '';
+  }
+
+  getDaysPassed(timestamp: number): number {
+    return this.currentDaySince1970 - Math.floor(timestamp / 86400000);
   }
 }

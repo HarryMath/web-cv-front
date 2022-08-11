@@ -21,6 +21,8 @@ export interface MyProfile {
   lang: 'EN'|'RU';
 }
 
+export type ProfileDTO = Omit<MyProfile, 'skills'|'projects'|'education'|'experience'>;
+
 export type IProfile = Omit<MyProfile, 'sendNotifications'|'lang'|'isPublic'>;
 
 export type IProfileRefresh = Omit<MyProfile, 'id'|'login'|'email'|'verified'|'education'|'experience'|'skills'|'projects'>;
@@ -85,9 +87,4 @@ export interface ISkill {
   skillName: string;
   skillLevel: number;
   profileId: number;
-}
-
-export interface ISkillsGroup {
-  name: string;
-  skills: ISkill[];
 }

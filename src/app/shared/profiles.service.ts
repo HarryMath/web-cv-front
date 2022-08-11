@@ -1,6 +1,15 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {IProfile, IProfileRefresh, IProfileUpdate, MyProfile} from './models';
+import {
+  IEducation,
+  IExperience, IImage,
+  IProfile,
+  IProfileRefresh,
+  IProfileUpdate,
+  IProject, ISkill,
+  MyProfile,
+  ProfileDTO
+} from './models';
 
 @Injectable({providedIn: 'root'})
 export class ProfilesService {
@@ -9,7 +18,25 @@ export class ProfilesService {
 
   getMyProfile(): Promise<MyProfile> {
     return new Promise<MyProfile>((resolve, reject) => {
-      this.http.get<MyProfile>('profiles/me/view').subscribe({
+      this.http.get<ProfileDTO>('profiles/me/view').subscribe({
+        next: async (p) => {
+          const profile: MyProfile = {
+            ...p,
+            experience: await this.getProfilePart<IExperience>('experiences'),
+            projects: await this.getProfilePart<IProject>('projects'),
+            education: await this.getProfilePart<IEducation>('educations'),
+            skills: await this.getProfilePart<ISkill>('skills'),
+          }
+          resolve(profile)
+        },
+        error: e => reject(e)
+      });
+    });
+  }
+
+  getProfilePart<Entity>(entityName: string): Promise<Entity[]> {
+    return new Promise<Entity[]>((resolve, reject) => {
+      this.http.get<Entity[]>(entityName).subscribe({
         next: p => resolve(p),
         error: e => reject(e)
       });

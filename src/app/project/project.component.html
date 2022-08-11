@@ -1,0 +1,35 @@
+<div class="pr">
+  <div #el class="pr-b">
+    <div class="d">
+      <div class="t">{{p.title}}<span class="pl" *ngIf="p.place && p.place.length > 1">({{p.place}})</span></div>
+      <div class="desc">{{p.description.substring(0, 70).trim() + '...'}}</div>
+      <div class="btn view" (click)="openFullScreen()">view details</div>
+    </div>
+  </div>
+</div>
+
+<div class="pr-b" [style]="getRectStyle() " (click)="collapse()"
+     [ngClass]="(isVisible ? 'max ' : '') + (isFullScreen ? 'full ' : '') + (isOpened ? 'open' : '')">
+    <div class="inf">
+      <div>
+        <img *ngIf="p.image && p.image.length > 10" src="{{p.image}}" alt="{{p.title}}">
+        <h4>Environment</h4>
+        <div class="tags">
+          <div class="tag" *ngFor="let t of p.tags">{{t}}</div>
+        </div>
+        <h4>Links</h4>
+        <div class="links">
+          <div *ngFor="let l of p.links">
+            <a class="a" [href]="l.link" target="_blank">{{l.label}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="b">
+      <div class="d">
+        <div class="t" [style]="getTitleColor()">{{p.title}}<span class="pl" *ngIf="p.place && p.place.length > 1">({{p.place}})</span></div>
+        <div class="role">{{p.role}}</div>
+        <div class="p-desc">{{p.description}}</div>
+      </div>
+    </div>
+</div>

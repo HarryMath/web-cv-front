@@ -1,10 +1,5 @@
 import {Injectable} from '@angular/core';
 
-export interface Color {
-  hsl: HSL;
-  isLight: boolean;
-}
-
 export interface RGB {
   r: number;
   g: number;
@@ -17,103 +12,64 @@ export interface HSL {
   l: number;
 }
 
-export interface IPalette {
-  dominant: Color,
-  accent: Color
-}
-
 interface IColorStats {
   color: RGB,
   metTimes: number
+}
+
+export interface IPalette {
+  dominantLight: HSL,
+  dominantDark: HSL
 }
 
 @Injectable({providedIn: 'root'})
 export class ColorService {
 
   public defaultColors: IPalette = {
-    dominant: {hsl: {h: 240, s: 14, l: 15}, isLight: false},
-    accent: {hsl: this.rgbaToHsla({r: 255, g: 255, b: 255}), isLight: true}
+    dominantDark: {h: 240, s: 14, l: 15},
+    dominantLight: {h: 240, s: 11, l: 40}
   }
 
   async getPalette(imageURL: string): Promise<IPalette> {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext && canvas.getContext('2d');
     return new Promise(resolve => {
-      if (!context) {
-        resolve(this.defaultColors)
-      } else {
-        const blockSize = 30;
-        const maxColorDistance = 0.02;
-        let dominantColors: IColorStats[] = [];
-        let current: RGB;
-        let nearest: IColorStats|undefined;
-        const imageElement = new Image();
-        imageElement.onload = (): void => {
-          context.drawImage(imageElement, 0, 0);
-          const height = canvas.height = imageElement.naturalHeight || 140;
-          const width = canvas.width = imageElement.naturalWidth || 140;
-          context.fillStyle = 'rgb(249,250,254)';
-          context.fillRect(0, 0, width, height);
-          context.drawImage(imageElement, 0, 0);
-          try {
-            const data = context.getImageData(0, 0, width, height);
-            const length = data.data.length;
-            let i = 0;
-            let r; let g; let b;
-            let count = 0;
-            while ( i < length ) {
-              r = data.data[i];
-              g = data.data[i + 1];
-              b = data.data[i + 2];
-              current = {r, g, b};
-              if (!this.isTransparent(r, g, b)) {
-                nearest = dominantColors
-                  .find(c => this.colorDistance(c.color, current) < maxColorDistance);
-                if (nearest) {
-                  nearest.metTimes++;
-                } else {
-                  dominantColors.push({ color: current, metTimes: 1 });
-                }
-                count++;
-              }
-              i += blockSize * 4;
-            }
-            dominantColors = dominantColors.sort((c1, c2) => c2.metTimes - c1.metTimes);
-            const dominant = dominantColors[0].color;
-            const isDominantLight = this.getLightness(dominant) > 0.5;
-            let accent: RGB;
-            const contrastColors = dominantColors
-              .filter(c => {
-                const isLight = this.getLightness(c.color) > 0.5;
-                return isDominantLight ? !isLight : isLight;
-              });
-            if (contrastColors.length > 0) {
-              accent = contrastColors[0].color;
-            } else {
-              dominantColors = dominantColors.sort((c1, c2) => {
-                return this.colorDistance(c2.color, dominant) - this.colorDistance(c1.color, dominant);
-              });
-              accent = dominantColors[0].color;
-            }
-            resolve({
-              dominant: {
-                hsl: this.exchangeColor(this.rgbaToHsla(dominant), isDominantLight, isDominantLight ? 0 : 0.5),
-                isLight: isDominantLight
-              },
-              accent: {
-                hsl: this.exchangeColor(this.rgbaToHsla(accent), !isDominantLight, isDominantLight? 1.5 : 0.3),
-                isLight: !isDominantLight
-              }
-            });
-          } catch (e) {
-            console.log('error parsing image: ', e);
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext && canvas.getContext('2d');
+      if (typeof Worker == 'undefined' || !context) {
+        resolve(this.defaultColors);
+        return;
+      }
+      const imageElement = new Image();
+      imageElement.crossOrigin = 'Anonymous';
+      imageElement.src = imageURL;
+      imageElement.onload = (): void => {
+        context.drawImage(imageElement, 0, 0);
+        const height = canvas.height = imageElement.naturalHeight || 240;
+        const width = canvas.width = imageElement.naturalWidth || 240;
+        context.fillStyle = 'rgb(249,250,254)';
+        context.fillRect(0, 0, width, height);
+        context.drawImage(imageElement, 0, 0);
+        const data = context.getImageData(0, 0, width, height);
+        // const worker = new Worker(new URL('./image.worker', import.meta.url));
+        const worker = new Worker(new URL('http://localhost:4200/assets/image.worker.js'));
+        worker.postMessage(data);
+        worker.onmessage = ({data}) => {
+          if (data && data.dominantDark) {
+            resolve(data as IPalette);
+          } else {
             resolve(this.defaultColors);
           }
-        };
-        imageElement.crossOrigin = 'Anonymous';
-        imageElement.src = imageURL;
+        }
       }
     });
+  }
+
+  createGray(c: HSL): HSL {
+    const l = c.l > 40 ? c.l - 20 : c.l + 15;
+    return {
+      h: c.h,
+      s: c.s / (1.1 + (90 - l) * 0.02),
+      l
+    };
   }
 
   isTransparent(r: number, g: number, b: number): boolean {
@@ -134,15 +90,15 @@ export class ColorService {
     return {h, s, l};
   }
 
-  isGray(r: number, g: number, b: number, grayScale: number): boolean {
-    const rR = Math.floor(r / grayScale);
-    const rG = Math.floor(g / grayScale);
-    const rB = Math.floor(b / grayScale);
-    return rR === rG && rG === rB && r < 235 && r > 10;
+  isGray(c: RGB, grayScale: number = 30): boolean {
+    const rR = Math.floor(c.r / grayScale);
+    const rG = Math.floor(c.g / grayScale);
+    const rB = Math.floor(c.b / grayScale);
+    return rR === rG && rG === rB;
   }
 
   getLightness(rgb: RGB): number {
-    return Math.sqrt(rgb.r * rgb.r + rgb.g * rgb.g + rgb.b + rgb.b) / 255;
+    return Math.hypot(rgb.r, rgb.g, rgb.b) / 255;
   }
 
   rgbaToHsla(rgba: RGB): HSL {
@@ -171,10 +127,11 @@ export class ColorService {
   }
 
   exchangeColor(hsla: HSL, isLight: boolean, power: number): HSL {
-    hsla.s = hsla.s * (1 + power) + 2 * power;
     if (isLight) {
+      hsla.s = hsla.s * (1 + power) + 2 * power;
       hsla.l = (hsla.l + 100 * power) / (1 + power);
     } else {
+      hsla.s = hsla.s * ((1 + power * 0.5) + 0.5 * power);
       hsla.l = hsla.l / (1 + power);
     }
     if (hsla.s > 100) { hsla.s = 100; }

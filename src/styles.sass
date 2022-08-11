@@ -45,15 +45,15 @@ html, body, .body
   position: fixed
   background-color: var(--back-color)
   color: var(--text-color)
-  font-size: var(--font-11)
+  font-size: var(--font-10)
 
 .body
   position: absolute
   top: var(--padding-10)
   left: var(--padding-10)
-  width: calc(100% - var(--padding-20))
+  width: calc(100vw - var(--padding-20))
   height: calc(100% - var(--padding-20))
-  border-radius: 4px
+  border-radius: 5px
   background-color: #7C7C980A
   box-shadow: 0 0 1px 2px #0000050A
   overflow: hidden
@@ -66,13 +66,13 @@ html, body, .body
   flex-direction: column
   width: 100%
   position: relative
-  padding: var(--padding-15)
+  padding: var(--padding-40) var(--padding-15)
   h2
     font-weight: bold
     margin: 0
     padding: var(--padding-10) 0
     font-size: var(--padding-15)
-    position: sticky
+    //position: sticky
     top: 0
     z-index: 3
 
@@ -89,12 +89,22 @@ input
     margin: 0
     visibility: hidden
 
-// tools
+// ________________ TOOLS ________________ //
 .a-center
   position: absolute
   top: 50%
   left: 50%
   transform: translate(-50%, -50%)
+.flex
+  display: flex
+.wrap
+  flex-wrap: wrap
+.a
+  text-decoration: underline
+  cursor: pointer
+  color: var(--link)
+  flex-wrap: wrap
+  font-size: var(--font-10)
 
 .labeled
   position: relative
@@ -145,11 +155,59 @@ input
       &.right
         transform: translateX(15px)
 
+
 @keyframes load
   0%
     transform: translate(-50%, -50%) rotate(0deg)
   100%
     transform: translate(-50%, -50%) rotate(359deg)
+
+.input
+  cursor: text
+  display: block
+  margin-top: var(--padding-15)
+  margin-bottom: calc(2px + 0.1vw)
+  position: relative
+  span
+    position: absolute
+    transition: 0.15s
+    top: 50%
+    cursor: text
+    left: var(--padding-5)
+    transform: translateY(-50%)
+    font-size: var(--font-10)
+  div, input, textarea
+    background-color: #272733
+    border-radius: 4px
+    box-shadow: inset 0 0 0 30px #272733, 0 0 0 1px #5555619d
+    transition: box-shadow 0.2s, background 0.2s
+    width: 100%
+    padding: 0 var(--padding-5)
+    font-size: var(--padding-10)
+    &:focus + span,
+    &.focus + span,
+    &.filled + span,
+    &:not([val=""]):valid + span
+      top: 0
+      font-size: var(--font-7)
+      transform: translateY(-100%)
+      opacity: 0.5
+  &:hover
+    div, input, textarea
+      box-shadow: inset 0 0 0 30px #252531, 0 0 0 1px #5555619d
+      background-color: #252531
+  div, input
+    height: var(--padding-25)
+    line-height: var(--padding-25)
+  div, input, textarea
+    -webkit-text-fill-color: #bbc!important
+    &:focus, &.focus
+      background-color: #252531
+      box-shadow: inset 0 0 0 30px #252531, 0 0 0 2px #ffc63c
+      color: #bbc
+    &.err
+      box-shadow: 0 0 0 2px var(--r)!important
+
 
 // profile styles
 .content
@@ -192,5 +250,43 @@ textarea
   border-radius: 4px
   text-align: center
   cursor: pointer
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: clip
+
+.prime
+  position: relative
+  width: 100%
+  height: var(--padding-25)
+  line-height: var(--padding-25)
+  border-radius: 4px
+  background-color: #ffc63c
+  color: #2b2b39
+  font-weight: bold
+  font-size: var(--font-12)
+  text-align: center
+  opacity: 0.5
+  cursor: initial
+  &.ready
+    opacity: 1
+    cursor: pointer
+    transition: 0.2s
+    &:hover
+      background-color: #ffcb4f
+  &.loading
+    opacity: 1
+    color: transparent
+    &:after
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      content: ""
+      width: var(--padding-10)
+      height: var(--padding-10)
+      border-radius: 50%
+      animation: 1s load linear infinite
+      border: 3px solid #2b2b39
+      border-top-color: transparent
 
 

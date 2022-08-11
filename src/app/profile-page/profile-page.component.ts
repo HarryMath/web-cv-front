@@ -2,13 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {MenuService} from '../shared/menu.service';
 import {Title} from '@angular/platform-browser';
-import {IExperience, IProfile, IProject, ISkill, ISkillsGroup} from '../shared/models';
+import {IEducation, IExperience, IProfile, IProject, ISkill} from '../shared/models';
 import {ProfilesService} from '../shared/profiles.service';
 import {MessageService} from '../shared/message.service';
 import {DateService} from '../shared/date.service';
-import {Color, ColorService, HSL, IPalette} from '../shared/color.service';
+import {ColorService, IPalette} from '../shared/color.service';
 
-type IProjectView = IProject & {colors: IPalette};
+
+type ISkillsGroup = {name: string, skills: ISkill[]};
+type IProjectView = IProject & {colors: IPalette, parsed: boolean};
+type IExperienceView = IExperience & {duration: string, period: string};
+type IEducationView = IEducation & {period: string};
+type IProfileView = Omit<IProfile, 'education'|'experience'|'skills'|'projects'> & {
+  introHTML: string,
+  education: IEducationView[],
+  experience: IExperienceView[],
+  skills: ISkillsGroup[],
+  projects: IProjectView[]
+};
 
 @Component({
   selector: 'app-profile-page',
@@ -18,16 +29,12 @@ type IProjectView = IProject & {colors: IPalette};
 export class ProfilePageComponent implements OnInit {
 
   isLoaded = false;
-  data: IProfile = {
-    avatar: null, birthDay: 0, birthMonth: 0,
-    birthYear: 0, currentLocation: null, email: '',
-    fullName: '', id: 0, login: '',
-    intro: '', role: '',
-    education: [], experience: [], skills: [], projects: []
+  data: IProfileView = {
+    avatar: '', birthDay: 0, birthMonth: 0, birthYear: 0, currentLocation: '',
+    fullName: '', login: '', email: '', role: '', introHTML: '', intro: '', id: 0,
+    education: [], experience: [], projects: [], skills: []
   }
   private readonly levels = ['Basic awareness', 'Occasionally usage', 'Experienced', 'Strong knowledge', 'Expert level']
-  skills: ISkillsGroup[] = [];
-  projects: IProjectView[] = [];
 
   constructor(
     private router: Router,
@@ -42,23 +49,29 @@ export class ProfilePageComponent implements OnInit {
     this.reloadData(login);
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private async afterLoad(p: IProfile): Promise<void> {
-    console.log(p);
-    this.data = p;
-    this.title.setTitle(p.fullName);
-    this.skills = this.aggregateSkills(p.skills);
-    this.projects = p.projects.map(pr => {
-      return {...pr, colors: this.colorService.defaultColors};
-    });
-    this.isLoaded = true;
-    for (let pr of this.projects) {
+    this.data = {...p,
+      introHTML: this.getIntroHTML(p.intro),
+      skills: this.aggregateSkills(p.skills),
+      experience: p.experience.map(e => {
+        return {...e, period: this.dateService.getPeriodString(e), duration: this.dateService.getMonthDuration(e)};
+      }),
+      education: p.education.map(e => {
+        return {...e, period: this.dateService.getPeriodString(e)};
+      }),
+      projects: p.projects.map(pr => {
+        return {...pr, colors: this.colorService.defaultColors, parsed: false};
+      })
+    };
+    for (let pr of this.data.projects) {
       if (pr.image && pr.image.length > 10) {
         pr.colors = await this.colorService.getPalette(pr.image);
       }
     }
+    this.title.setTitle(p.fullName);
+    this.isLoaded = true;
   }
 
   private aggregateSkills(skills: ISkill[]): ISkillsGroup[] {
@@ -81,13 +94,14 @@ export class ProfilePageComponent implements OnInit {
     return result.reverse();
   }
 
-  getIntro(): string {
+  private getIntroHTML(intro: string|null): string {
     let introHTML = '';
-    const introAbstracts = this.data.intro?.split('\n') || [];
+    const introAbstracts = intro?.split('\n') || [];
     for (let p of introAbstracts) {
-      introHTML += `<div>${p.trim()}</div>`
+      p = p.trim();
+      introHTML += p.length == 0 ? '<br>' : `<div>${p.trim()}</div>`
     }
-    return introHTML
+    return introHTML;
   }
 
   async reloadData(login: string): Promise<void> {
@@ -113,19 +127,5 @@ export class ProfilePageComponent implements OnInit {
     if (e.link && e.link?.length > 5) {
       window.open(e.link, '_blank')?.focus();
     }
-  }
-
-  getProjectImage(p: IProject): string {
-    return p.image ? `background-image: url('${p.image}')` : '';
-  }
-
-  getGradient(p: IProjectView): string {
-    const c = p.colors.dominant;
-    return p.image && p.image.length > 10 ?
-      `background: linear-gradient(0deg, hsl(${c.hsl.h}deg ${c.hsl.s}% ${c.hsl.l}%) 50%, transparent 100%)` : ''
-  }
-
-  getColor(c: Color) {
-    return `color: hsl(${c.hsl.h}deg ${c.hsl.s}% ${c.hsl.l}%);`;
   }
 }

@@ -1,0 +1,21 @@
+<h2>Contact me</h2>
+<div class="w">
+  <div class="txt">Reach out me using contacts int the left bottom corner of the screen.<br> Or just send me a message and I will contact you.</div>
+  <div class="f">
+    <label class="input">
+      <input required [(ngModel)]="body.name" #name type="text" name="name" (keydown.enter)="contact.focus()">
+      <span>Your name*</span>
+    </label>
+    <label class="input">
+      <input #contact [(ngModel)]="body.contact" type="text" name="id" required (keydown.enter)="message.focus()">
+      <span>Your contact*</span>
+    </label>
+    <label class="input">
+      <textarea #message [(ngModel)]="body.text" required></textarea>
+      <span>Your message</span>
+    </label>
+    <div class="btn prime" [ngClass]="isLoading?'loading':satisfy()?'ready':''" (click)="send()">
+      Send
+    </div>
+  </div>
+</div>

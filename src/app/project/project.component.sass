@@ -1,0 +1,133 @@
+.pr
+  display: inline-block
+  position: relative
+  margin-right: 2px
+  margin-bottom: var(--padding-15)
+
+.t
+  line-height: 1.1
+  margin-bottom: var(--padding-10)
+  font-size: var(--font-11)
+  font-weight: bold
+  color: var(--text-color)
+.pl
+  color: var(--text-color)
+  opacity: 0.5
+  font-weight: 500
+  font-size: var(--font-9)
+  margin-left: var(--padding-5)
+
+.pr-b
+  border-radius: 5px
+  overflow: hidden
+  background: #22222e
+  box-shadow: 0 0 0 1px #34374b
+  img
+    width: 100%
+    aspect-ratio: 2/1
+    object-fit: cover
+    object-position: top left
+  .d
+    padding: var(--padding-10)
+  .view
+    background-color: #5455697D
+    padding: 0 var(--padding-10)
+    transition: 0.3s
+    border-radius: 5px
+    width: fit-content
+    margin-top: var(--padding-10)
+    &:hover
+      background-color: #5455699D
+      color: #fff
+
+.p-i
+  background: #2c2c39 left top
+  background-size: cover
+  position: absolute
+  width: 100%
+  height: 100%
+  z-index: -1
+
+.max
+  position: fixed
+  top: var(--padding-10)
+  left: var(--padding-10)
+  width: calc(100% - var(--padding-20))
+  height: calc(100% - var(--padding-20))
+  z-index: 14
+  transition: 0.3s
+  display: flex
+  .role
+    line-height: 0
+    overflow: hidden
+    transition: line-height 0.2s, transform 0.2s
+  .t
+    transition: font-size 0.3s, color 0.3s
+    font-weight: bold
+  .b
+    width: 100%
+    max-width: calc(700px + 15vw)
+    transition: width 0.3s
+    padding-right: var(--padding-10)
+    height: 100%
+    overflow-x: hidden
+    overflow-y: scroll
+    &::-webkit-scrollbar
+      width: 0
+  .inf
+    transition: width 0.3s, background 0.3s
+    overflow: hidden
+    height: 0
+    width: 0
+    &>div
+      width: var(--menu-w)
+      padding: var(--padding-10)
+  img
+    width: 100%
+    border-radius: 5px
+  .tag
+    font-size: var(--font-9)
+
+.full
+  background-color: #1d1d28
+  box-shadow: none
+  .b
+    width: calc(100% - var(--menu-w))
+    padding: var(--padding-10)
+  .inf
+    background: #22222e
+    width: var(--menu-w)
+    height: 100%
+    overflow: hidden
+  .t
+    font-size: var(--padding-15)
+
+.open
+  .role
+    transform: translateY(-60%)
+    line-height: 1.4
+
+
+
+.p-i
+  background: #2c2c39 left top
+  background-size: cover
+  position: absolute
+  width: 100%
+  height: 100%
+  z-index: -1
+
+
+.links, .tags
+  padding-left: var(--padding-5)
+.tags
+  display: flex
+  flex-wrap: wrap
+.tag
+  padding: 0 5px
+  background-color: #606c837d
+  color: #efdfcf
+  border-radius: 3px
+  margin-right: 4px
+  margin-top: 3px
+  font-size: var(--font-8)

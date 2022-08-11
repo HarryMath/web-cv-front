@@ -10,7 +10,7 @@ import {AuthInterceptor} from "../auth.interceptor";
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.sass']
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent {
 
   email = '';
   password = '';
@@ -154,9 +154,6 @@ export class AuthPageComponent implements OnInit {
         resolve(params);
       });
     }));
-  }
-
-  ngOnInit(): void {
   }
 
   satisfy(): boolean {

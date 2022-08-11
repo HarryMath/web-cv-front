@@ -1,11 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MenuService} from "../../shared/menu.service";
-import {IProfile} from "../../shared/models";
+import {MenuService} from '../../shared/menu.service';
+import {DateService} from '../../shared/date.service';
 
-export interface IDate {
+type IMenuProfile = {
   birthYear: number|null,
   birthMonth: number|null,
   birthDay: number|null,
+  avatar: string|null,
+  role: string|null,
+  fullName: string,
+  currentLocation: string|null,
 }
 
 @Component({
@@ -15,44 +19,34 @@ export interface IDate {
 })
 export class MenuComponent implements OnInit {
 
+  @Input() profile!: IMenuProfile;
+
   isAgeSpecified = false;
-  age: number = 0;
+  age: string = '';
   birthDate: string = '';
 
-  @Input() profile!: IProfile;
-
-  constructor(public menuService: MenuService) { }
+  constructor(
+    public menuService: MenuService,
+    private dateService: DateService
+  ) { }
 
   ngOnInit(): void {
-    this.profile.birthYear = this.profile.birthYear || 0;
-    this.profile.birthMonth = this.profile.birthMonth || 0;
-    this.profile.birthDay = this.profile.birthDay || 0;
     this.menuService.findSections();
-    this.isAgeSpecified = this.profile.birthYear! > 1900 &&
-        this.profile.birthMonth! > 0 &&
-        this.profile.birthDay! > 0;
+    this.setUpBirthDate(this.profile);
+  }
+
+  private setUpBirthDate(p: IMenuProfile): void {
+    p.birthYear = p.birthYear || 0;
+    p.birthMonth = p.birthMonth || 0;
+    p.birthDay = p.birthDay || 0;
+    this.isAgeSpecified = p.birthYear! > 1900 && p.birthMonth! > 0 && p.birthDay! > 0;
     if (this.isAgeSpecified) {
-      this.age = this.getAge(this.profile);
-      this.birthDate = this.dateToString(this.profile);
+      const date = {year: p.birthYear, month: p.birthMonth, day: p.birthDay};
+      this.age = this.dateService.getAge(date) + ' years';
+      this.birthDate = this.dateService.getDateString(date);
     }
   }
 
-  private dateToString(date: IDate): string {
-    return (date.birthDay! > 9 ? date.birthDay : '0' + date.birthDay) + '.' +
-      (date.birthMonth! > 9 ? date.birthMonth : '0' + date.birthMonth) + '.' +
-      date.birthYear;
-  }
-
-  private getAge(birthDate: IDate): number {
-    const date = new Date();
-    let years = date.getFullYear() - birthDate.birthYear!;
-    const months = date.getMonth() - birthDate.birthMonth!;
-    const days = date.getDate() - birthDate.birthDay!;
-    if (months >= 0 && days >= 0) {
-      years++;
-    }
-    return years;
-  }
 
   getPhotoStyle(): string {
     return this.profile.avatar ?

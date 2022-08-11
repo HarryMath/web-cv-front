@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MenuService} from '../../../shared/menu.service';
 import {IProfile} from '../../../shared/models';
-import {IDate} from '../../../profile-page/menu/menu.component';
 import {ImagesService} from '../../../shared/images.service';
 
 @Component({
@@ -35,13 +34,13 @@ export class MyMenuComponent implements OnInit {
     }
   }
 
-  private dateToString(date: IDate): string {
+  private dateToString(date: IProfile): string {
     return (date.birthDay! > 9 ? date.birthDay : '0' + date.birthDay) + '.' +
       (date.birthMonth! > 9 ? date.birthMonth : '0' + date.birthMonth) + '.' +
       date.birthYear;
   }
 
-  private getAge(birthDate: IDate): number {
+  private getAge(birthDate: IProfile): number {
     const date = new Date();
     let years = date.getFullYear() - birthDate.birthYear!;
     const months = date.getMonth() - birthDate.birthMonth!;

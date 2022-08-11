@@ -1,6 +1,6 @@
 $header-h: calc(140px + 7vw)
 $icon-size: calc(19px + 0.95vw)
-$item-h: calc(#{$icon-size} + var(--padding-5))
+$item-h: calc(24px + 1.2vw)
 
 .menu
   width: var(--menu-w)
@@ -15,7 +15,7 @@ $item-h: calc(#{$icon-size} + var(--padding-5))
 .head
   position: absolute
   width: 100%
-  height: $header-h
+  min-height: $header-h
   display: flex
   align-items: center
   justify-content: center
@@ -25,6 +25,9 @@ $item-h: calc(#{$icon-size} + var(--padding-5))
   box-shadow: 0 1px 2px 0 #0000020d
   text-align: center
   color: #fefefe
+  svg
+    width: var(--font-9)
+    height: var(--font-8)
 
 .photo
   width: calc(50px + 2.5vw)
@@ -47,15 +50,20 @@ $item-h: calc(#{$icon-size} + var(--padding-5))
 
 .name
   font-weight: bold
-  font-size: var(--font-10)
+  font-size: var(--font-11)
   margin-top: 0
-  margin-bottom: var(--padding-5)
+  margin-bottom: 0
 
-.role
+.role, .loc, .age
   font-weight: 400
   font-size: var(--font-9)
   opacity: 0.55
-  line-height: 1.1
+  line-height: 1.2
+
+.role
+  font-size: var(--font-10)
+  margin-bottom: var(--padding-5)
+  opacity: 0.7
 
 .nav
   position: absolute

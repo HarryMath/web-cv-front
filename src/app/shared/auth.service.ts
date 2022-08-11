@@ -21,7 +21,7 @@ const GITHUB_SCOPE = 'read:user%20user:email'
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
-  user: IUser = {id: -1, login: '', fullName: '', email: ''}
+  isSignedIn = false;
 
   constructor(
     private authInterceptor: AuthInterceptor,

@@ -12,7 +12,7 @@ export class MenuService {
 
   sections: NodeListOf<any> = document.querySelectorAll('.s-w');
   content: any;
-  menuItems: MenuItem[] = [
+  private readonly defaultItems: MenuItem[] = [
     {svg: 'assets/icons/user.svg', name: 'About me', link: 'intro', state: ''},
     {svg: 'assets/icons/experience.svg', name: 'Experience', link: 'experience', state: ''},
     {svg: 'assets/icons/code.svg', name: 'Skills', link: 'skills', state: ''},
@@ -20,10 +20,12 @@ export class MenuService {
     {svg: 'assets/icons/edu.svg', name: 'Education', link: 'education', state: ''},
     {svg: 'assets/icons/message.svg', name: 'Contacts', link: 'contacts', state: ''},
   ];
+  menuItems: MenuItem[] = [];
   lastPosition = 0;
   scrollProgress = '';
   menuActive = false;
   screenHeight = 'min-height: 100vh';
+  progressHeight = '';
 
   toggleMenu(): void {
     this.menuActive = !this.menuActive;
@@ -32,8 +34,15 @@ export class MenuService {
   findSections(): void {
     this.screenHeight = 'min-height:' + window.innerHeight + 'px';
     this.sections = document.querySelectorAll('.s-w');
+    this.menuItems = [];
+    this.sections.forEach(s => {
+      const item = this.defaultItems.find(i => i.link == s.getAttribute('id'));
+      if (item) this.menuItems.push(item);
+    });
     this.content = document.querySelector('.content');
     this.handleScroll(true);
+    const h = {px: 24 * this.menuItems.length, vw: 1.2 * this.menuItems.length};
+    this.progressHeight = `height: calc(${h.px}px + ${h.vw}vw)`;
   }
 
   async handleScroll(rewrite: boolean): Promise<void> {

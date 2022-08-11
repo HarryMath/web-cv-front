@@ -1,5 +1,13 @@
 .s-w
   max-width: calc(700px + 15vw)
+.hi
+  font-weight: bold
+  font-size: var(--padding-15)
+  color: var(--accent)
+.me
+  font-weight: bold
+  font-size: var(--padding-20)
+  margin-bottom: var(--padding-10)
 
 // _____________ EDUCATION & EXPERIENCE _______________ //
 $width: calc(500px + 15vw)
@@ -15,6 +23,7 @@ $offset: calc(20px + 1vw)
   margin-bottom: var(--padding-10)
   font-size: var(--font-10)
   position: relative
+  border-radius: 4px
   &:before
     content: ''
     width: var(--padding-10)
@@ -36,27 +45,24 @@ $offset: calc(20px + 1vw)
     top: 0
     transform: translate(calc(17.5px + 0.875vw), var(--padding-15)) scale(0.7)
   .top
-    display: flex
     flex-direction: row
     align-items: flex-start
     justify-content: space-between
-    flex-wrap: wrap
   .name
     margin: 0
     max-width: calc(200px + 10vw)
-  .label
+    font-size: var(--font-11)
+  .lbl
     color: #999999
-    font-style: italic
     max-width: calc(200px + 10vw)
-  .location
-    display: flex
-    color: #999999
     svg
-      color: #CC6933A8
+      opacity: 0.8
       margin-right: 3px
-      margin-left: -10%
-      height: var(--font-10)
-      width: var(--font-10)
+      height: var(--font-9)
+      width: var(--font-7)
+  .comp
+    font-weight: 500
+    color: #bbbbbb
   .period
     color: #bbbbbb
     line-height: 1.8
@@ -72,8 +78,8 @@ $offset: calc(20px + 1vw)
 .company
   display: flex
   align-items: center
+  border-radius: 1px
   &.labeled
-    border-radius: 3px
     transition: background 0.2s, box-shadow 0.2s
     cursor: pointer
     &:hover
@@ -81,12 +87,12 @@ $offset: calc(20px + 1vw)
       box-shadow: 0 0 0 7px #0c0c173d
 
 .c-logo
-  border-radius: 50%
-  width: var(--padding-35)
-  height: var(--padding-35)
+  border-radius: 5%
+  width: var(--padding-40)
+  height: var(--padding-40)
   background: #fff no-repeat center
   background-size: 90%
-  margin-right: var(--padding-5)
+  margin-right: var(--padding-10)
 
 .edu-progress
   position: absolute
@@ -177,38 +183,6 @@ $offset: calc(20px + 1vw)
 // _______________ PROJECTS ________________ //
 .pr-wr
   display: inline-block
-  -moz-column-count: 2
-  -webkit-column-count: 2
-  column-count: 2
-
-.pr
-  display: inline-block
-  border-radius: 4px
-  overflow: hidden
-  background: #2c2c39 left top
-  background-size: cover
-  .info
-    padding: var(--padding-5)
-    background-color: #2b2b332d
-  .tags
-    display: flex
-    flex-wrap: wrap
-  .tag
-    padding: 0 3px
-    background-color: #606c837d
-    color: #efdfcf
-    border-radius: 3px
-    margin-right: 4px
-    margin-top: 3px
-    font-size: var(--font-8)
-  .title
-    font-size: var(--font-13)
-    font-weight: bold
-  &.w-i
-    .info
-      padding-top: var(--padding-40)
-    .p-i
-      width: 100%
-      aspect-ratio: 3 / 1
-
-
+  -moz-column-count: 3
+  -webkit-column-count: 3
+  column-count: 3
