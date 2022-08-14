@@ -18,6 +18,7 @@ import {ProfileConstructorComponent} from './profile-constructor/profile-constru
 import {SkillComponent} from './profile-constructor/skill/skill.component';
 import {ViewsComponent} from './views/views.component';
 import {SettingsComponent} from './settings/settings.component';
+import {DaysChartComponent} from './views/days-chart/days-chart.component';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,8 @@ import {SettingsComponent} from './settings/settings.component';
     LinkComponent,
     MyMenuComponent,
     ViewsComponent,
-    SettingsComponent
-  ],
-  providers: [ProfilesService],
-  exports: [
-    ProjectComponent
+    SettingsComponent,
+    DaysChartComponent
   ],
   imports: [
     CommonModule,

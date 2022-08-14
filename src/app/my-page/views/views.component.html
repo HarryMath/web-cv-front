@@ -1,4 +1,31 @@
 <div class="body body-left">
-  <p>views works!</p>
-  <canvas #canvas style="width: 90%; height: 50%; border-radius: 4px; background: #1d1d28"></canvas>
+  <div class="charts">
+    <h2>Statistics</h2>
+    <h3>Daily visits</h3>
+    <div *ngIf="!isLoading" style="position: relative">
+      <app-days-chart [stats]="stats"></app-days-chart>
+    </div>
+    <h3>Visits by country</h3>
+  </div>
+  <div class="history-wrapper">
+    <div class="history">
+      <h2>History</h2>
+      <div class="day" *ngFor="let d of visits">
+        <div class="date">{{d.date}},<br>{{d.day}}</div>
+        <div class="visitors">
+          <div class="visitor" *ngFor="let v of d.visitors">
+            <div class="info">
+              <a class="a name" *ngIf="v.login" [href]="appLink + v.login">{{v.login}}</a>
+              <div class="ip" *ngIf="v.ip.length > 6">ip: {{v.ip}}</div>
+              <div class="location" *ngIf="hasLocation(v)">
+                <svg><use xlink:href="#location"></use></svg>
+                {{getLocation(v)}}
+              </div>
+            </div>
+            <div class="visits">{{getVisits(v)}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

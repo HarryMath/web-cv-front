@@ -1,2 +1,63 @@
 .body
   left: var(--padding-10)
+  display: flex
+.charts, .history
+  overflow-x: hidden
+  overflow-y: scroll
+  height: 100%
+  &::-webkit-scrollbar
+    width: 0
+.charts
+  width: calc(100% - 300px - 15vw)
+  overflow-x: visible
+.history-wrapper
+  width: calc(300px + 15vw)
+  padding: var(--padding-10)
+  height: 100%
+.history
+  width: 100%
+  border-radius: 6px
+  background-color: #282834
+  padding: var(--padding-10)
+  padding-top: 0
+  h2
+    font-size: var(--padding-15)
+    margin: 0
+    padding: var(--padding-10) 0
+    padding-top: var(--padding-15)
+    background-color: #282834
+    position: sticky
+    top: 0
+
+.day
+  display: flex
+  padding: var(--padding-5) 0
+  box-shadow: 0 1px 0 0 #36353aab
+.date
+  padding-right: var(--padding-10)
+  width: calc(80px + 4vw)
+  min-width: calc(80px + 4vw)
+  overflow: hidden
+.visitors
+  width: 100%
+.visitor
+  display: flex
+  margin-bottom: var(--padding-5)
+.info
+  padding-right: var(--padding-10)
+.visits
+  display: flex
+  flex-wrap: wrap
+.svg
+  width: var(--font-8)
+  height: var(--font-7)
+.ip, .location
+  color: #888
+  white-space: nowrap
+  font-size: var(--font-8)
+
+.charts
+  padding: var(--padding-10)
+  padding-right: 0
+
+

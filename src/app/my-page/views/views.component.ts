@@ -1,19 +1,29 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DateService} from '../../shared/date.service';
+import {IStats, IValue} from './days-chart/days-chart.component';
 
-interface IVisitor {
-  ip: string;
-  visitorLogin: string|undefined|null;
-  country: string|undefined|null;
-  city: string|undefined|null;
-  timestamp: number;
+interface IVisit {
+  ip: string,
+  visitorLogin: string|undefined|null,
+  country: string|undefined|null,
+  city: string|undefined|null,
+  timestamp: number,
 }
 
-interface IVisitStats {
-  daysPassed: number;
-  date: string;
-  visits: number;
+interface IVisitor {
+  ip: string,
+  login: string|undefined|null,
+  country: string|undefined|null,
+  city: string|undefined|null,
+  visits: string[]
+}
+
+interface IDayStats {
+  date: string,
+  day: string,
+  daysAgo: number,
+  visitors: IVisitor[]
 }
 
 @Component({
@@ -24,105 +34,109 @@ interface IVisitStats {
 export class ViewsComponent implements OnInit {
 
   isLoading = true;
-  visits: IVisitor[] = [];
-  @ViewChild('canvas', {static: true}) canvas!: ElementRef<HTMLCanvasElement>;
-  private readonly maxDays = 33;
+  visits: IDayStats[] = [];
+  stats: IStats = { name: 'visits', maxValue: 0, values: [] };
+  readonly appLink = 'https://web-cv.web.app/';
 
   constructor(
     private http: HttpClient,
-    private dateService: DateService
+    public dateService: DateService,
   ) { }
 
   ngOnInit(): void {
-    this.loadVisits();
-  }
-
-  afterLoad(v: IVisitor[]): void {
-    this.drawChart(v.reverse());
-  }
-
-  private drawChart(visits: IVisitor[]): void {
-    console.log('vis: ', visits);
-    const c = this.canvas.nativeElement.getContext('2d');
-    if (!c) return;
-    const W = this.canvas.nativeElement.width;
-    const H = this.canvas.nativeElement.height;
-    const padding = W / 50 + H / 100;
-    const visitsStats: IVisitStats[] = [];
-    let lastDay = -1;
-    let lastDate = '';
-    let maxVisits = 0;
-    for (let v of visits) {
-      const daysPassed = this.dateService.getDaysPassed(v.timestamp);
-      if (daysPassed !== lastDay) {
-        for (let i = 1; i < (daysPassed - lastDay); i++) {
-          if (lastDay + i > this.maxDays)
-            break;
-          visitsStats.unshift({
-            daysPassed: lastDay + i,
-            date: this.dateService.getDateByDaysAgo(lastDay + i),
-            visits: 0
-          });
-        }
-        if (daysPassed > this.maxDays)
-          break;
-        lastDay = daysPassed;
-        lastDate = this.dateService.getDateByDaysAgo(daysPassed);
-        visitsStats.unshift({
-          daysPassed,
-          date: lastDate,
-          visits: 1
-        });
-      } else {
-        visitsStats[0].visits++;
-        if (maxVisits < visitsStats[0].visits) {
-          maxVisits = visitsStats[0].visits;
-        }
-      }
-    }
-    const xStep = (W - padding * 2) / visitsStats.length;
-    const yStep = (H - padding * 3) / maxVisits;
-    c.beginPath();
-    c.strokeStyle = "rgba(131, 199, 127, 0.97)";
-    c.lineWidth = 1 + Math.round(W / 250 + H / 350);
-    c.moveTo(padding, padding * 1.5);
-    for (let i = 1; i < visitsStats.length; i++) {
-      c.lineTo(padding + i * xStep, H - padding * 1.5 - visitsStats[i].visits * yStep);
-    }
-    c.stroke();
-    c.closePath();
-    c.fillStyle = "rgba(131, 199, 127, 1)";
-    const pointSize = 2 + W / 150 + H / 250;
-    let v;
-    for (let i = 0; i < visitsStats.length; i++) {
-      v = visitsStats[i];
-      // TODO test without beginPath() for each point
-      c.beginPath();
-      c.arc(padding + i * xStep, H - padding * 1.5 - v.visits * yStep, pointSize,0, Math.PI * 2);
-      c.fill();
-      c.closePath();
-    }
-    // visitsStats.forEach(v => {
-    //   // TODO test without beginPath() for each point
-    //   c.beginPath();
-    //   c.arc(W - padding - v.daysPassed * xStep, v.visits * yStep, pointSize,0, Math.PI * 2);
-    //   c.fill();
-    //   c.closePath();
-    // });
-
-  }
-
-  loadVisits(): void {
-    this.http.get<IVisitor[]>('profiles/me/visits').subscribe({
-      next: v => {
-        this.afterLoad(v);
-        this.isLoading = false;
-      },
-      error: e => {
-        this.isLoading = false;
-        console.warn(e);
-      }
+    this.loadVisits().then(v => {
+      this.visits = this.aggregateData(v);
+      this.stats = this.prepareVisitsForChart(this.visits);
+      this.isLoading = false;
     });
   }
 
+  aggregateData(visits: IVisit[]): IDayStats[] {
+    let lastDay = -1;
+    const daysStats: IDayStats[] = [];
+    visits = visits.sort((v1, v2) => v1.timestamp - v2.timestamp);
+    for (let v of visits) {
+      const daysAgo = this.dateService.getDaysPassed(v.timestamp);
+      if (daysAgo != lastDay) {
+        daysStats.unshift({
+          daysAgo,
+          day: this.dateService.getWeekDayByDaysAgo(daysAgo),
+          date: this.dateService.getDateByDaysAgo(daysAgo),
+          visitors: []
+        });
+        lastDay = daysAgo;
+      }
+      let isNewVisitor = true;
+      for (let visitor of daysStats[0].visitors) {
+        if (visitor.ip === v.ip) {
+          isNewVisitor = false;
+          visitor.visits.push(this.dateService.getTime(v.timestamp));
+          visitor.login = visitor.login || v.visitorLogin;
+          break;
+        }
+      }
+      if (isNewVisitor) {
+        daysStats[0].visitors.push({
+          ip: v.ip,
+          login: v.visitorLogin,
+          country: v.country,
+          city: v.city,
+          visits: [this.dateService.getTime(v.timestamp)]
+        });
+      }
+    }
+    return daysStats;
+  }
+
+  private prepareVisitsForChart(visits: IDayStats[]): IStats {
+    const values: IValue[] = [];
+    let max = 0;
+    let lastDay = -1;
+    for (let v of visits) {
+      if (v.daysAgo !== lastDay) {
+        for (let i = 1; i < (v.daysAgo - lastDay); i++) {
+          values.unshift({
+            label: this.dateService.getDateByDaysAgo(lastDay + i),
+            value: 0
+          });
+        }
+      }
+      lastDay = v.daysAgo;
+      values.unshift({
+        label: this.dateService.getWeekDayByDaysAgo(lastDay, true) + ', ' +
+          this.dateService.getDateByDaysAgo(lastDay, true),
+        value: v.visitors.reduce((total, v0) => total + v0.visits.length, 0)
+      });
+      if (values[0].value > max) {
+        max = values[0].value;
+      }
+    }
+    return { name: 'visits', maxValue: max, values };
+  }
+
+  loadVisits(): Promise<IVisit[]> {
+    this.isLoading = true;
+    return new Promise<IVisit[]>((resolve, reject) => {
+      this.http.get<IVisit[]>('profiles/me/visits').subscribe({
+        next: v => resolve(v),
+        error: e => reject(e)
+      });
+    })
+  }
+
+  hasLocation(v: IVisitor): boolean {
+    return !!v.country && v.country != 'null';
+  }
+
+  getLocation(v: IVisitor): string {
+    return `${v.city ? v.city + ', ' : ''}${v.country}`;
+  }
+
+  getVisits(v: IVisitor): string {
+    if (v.visits.length > 5) {
+      return `visited ${v.visits.length} times since ${v.visits[0]}`
+    } else {
+      return 'at ' + v.visits.join(', ');
+    }
+  }
 }

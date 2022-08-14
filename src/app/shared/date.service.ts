@@ -14,6 +14,7 @@ export interface IPeriod {
 export class DateService {
 
   private readonly months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  private readonly days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   private readonly currentDate: ISelectDate = {
     day: new Date().getDate(),
     month: new Date().getMonth() + 1,
@@ -90,12 +91,38 @@ export class DateService {
     return this.getStartDateString(e) + ' - ' + this.getEndDateString(e);
   }
 
-  getDateByDaysAgo(number: number): string {
-    // TODO return date String
-    return '';
+  getDateByDaysAgo(d: number, short = false): string {
+    if (d === 0) {
+      return 'Today';
+    }
+    if (d === 1) {
+      return 'Yesterday';
+    }
+    const date = new Date(this.currentDate.year, this.currentDate.month - 1, this.currentDate.day - d);
+    return this.getDateString({
+      year: undefined,
+      month: date.getMonth() + 1,
+      day: date.getDate()
+    }, short);
   }
 
-  getDaysPassed(timestamp: number): number {
-    return this.currentDaySince1970 - Math.floor(timestamp / 86400000);
+  getWeekDayByDaysAgo(d: number, short = false): string {
+    const date = new Date(this.currentDate.year, this.currentDate.month - 1, this.currentDate.day - d);
+    return short ? this.days[date.getDay()].substring(0, 3) : this.days[date.getDay()];
+  }
+
+  getDaysPassed(timestamp: number|string): number {
+    return this.currentDaySince1970 - Math.floor(parseInt('' +timestamp) / 86400000);
+  }
+
+  getTime(timestamp: number|string): string {
+    const d = new Date(parseInt(timestamp + ''));
+    let hours = d.getHours();
+    const minutes = d.getMinutes();
+    const isPM = hours > 12;
+    if (isPM) {
+      hours = hours - 12;
+    }
+    return `${hours > 9 ? hours : '0' + hours}:${minutes > 9 ? minutes : '0' + minutes} ${isPM ? 'pm' : 'am'}`
   }
 }

@@ -12,10 +12,6 @@ export interface HSL {
   l: number;
 }
 
-interface IColorStats {
-  color: RGB,
-  metTimes: number
-}
 
 export interface IPalette {
   dominantLight: HSL,
