@@ -16,14 +16,14 @@
         <input #mail [(ngModel)]="email" autofocus
                type="email" name="id" id="id"
                (keydown.enter)="focusPassword()">
-        <div><img class="a-center" src="assets/icons/mail.svg" alt=""></div>
+        <div><svg class="a-center"><use xlink:href="#mail"></use></svg></div>
       </div>
       <label for="pass">Password</label>
       <div>
         <input #pass [(ngModel)]="password"
                type="password" name="pass" id="pass"
                (keydown.enter)="sign()">
-        <div><img class="a-center" src="assets/icons/lock.svg" alt=""></div>
+        <div><svg class="a-center"><use xlink:href="#lock"></use></svg></div>
       </div>
     </div>
     <div class="btn prime"
@@ -34,8 +34,8 @@
     <div class="sep">or continue with</div>
     <div class="socials">
       <div class="google"><img class="a-center" src="/assets/icons/google.svg" alt="google"></div>
-      <div (click)="authService.authWithGithub()" class="github"><img class="a-center" src="/assets/icons/github.svg" alt="github"></div>
-      <div class="linkedin"><img class="a-center" src="/assets/icons/linkedin.svg" alt="linkedin"></div>
+      <div (click)="authService.authWithGithub()" class="github"><svg class="a-center"><use xlink:href="#git"></use></svg></div>
+      <div class="linkedin"><svg class="a-center"><use xlink:href="#linkedI"></use></svg></div>
     </div>
   </form>
   <div class="switch" *ngIf="!isSignUp">
@@ -49,10 +49,13 @@
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="userI">
     <path fill="#889" d="M256 288c79.5 0 144-64.5 144-144S335.5 0 256 0 112 64.5 112 144s64.5 144 144 144zm128 32h-55.1c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16H128C57.3 320 0 377.3 0 448v16c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48v-16c0-70.7-57.3-128-128-128z"/>
   </symbol>
-  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mailI">
-    <path fill="currentColor" d="M362.7 19.32C387.7-5.678 428.3-5.678 453.3 19.32L492.7 58.75C517.7 83.74 517.7 124.3 492.7 149.3L444.3 197.7L314.3 67.72L362.7 19.32zM421.7 220.3L188.5 453.4C178.1 463.8 165.2 471.5 151.1 475.6L30.77 511C22.35 513.5 13.24 511.2 7.03 504.1C.8198 498.8-1.502 489.7 .976 481.2L36.37 360.9C40.53 346.8 48.16 333.9 58.57 323.5L291.7 90.34L421.7 220.3z"/>
-  </symbol>
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="passI">
+    <path fill="#889" d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="linkedI">
+    <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="lock">
     <path fill="#889" d="M80 192V144C80 64.47 144.5 0 224 0C303.5 0 368 64.47 368 144V192H384C419.3 192 448 220.7 448 256V448C448 483.3 419.3 512 384 512H64C28.65 512 0 483.3 0 448V256C0 220.7 28.65 192 64 192H80zM144 192H304V144C304 99.82 268.2 64 224 64C179.8 64 144 99.82 144 144V192z"/>
   </symbol>
 </svg>

@@ -52,6 +52,7 @@ export class ProfilePageComponent implements OnInit {
   ngOnInit(): void {}
 
   private async afterLoad(p: IProfile): Promise<void> {
+    this.isLoaded = true;
     this.data = {...p,
       introHTML: this.getIntroHTML(p.intro),
       skills: this.aggregateSkills(p.skills),

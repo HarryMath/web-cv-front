@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BubblesComponent } from './bubbles/bubbles.component';
+import {MenuComponent} from './menu/menu.component';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [BubblesComponent],
-  exports: [BubblesComponent]
+  declarations: [MenuComponent],
+  exports: [MenuComponent]
 })
 export class SharedModule {}

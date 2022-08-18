@@ -1,0 +1,43 @@
+<div class="menu">
+  <div class="head">
+    <div class="photo" style="{{getPhotoStyle()}}"></div>
+    <h1 class="name">{{p.fullName}}</h1>
+    <div class="role" [innerHTML]="getRole()"></div>
+    <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
+      <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
+    </div>
+    <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
+  </div>
+  <div class="nav">
+    <div class="progress" [style]="menuService.progressHeight">
+      <div class="bar">
+        <div [style]="menuService.scrollProgress"></div>
+      </div>
+      <div class="menu-icon" *ngFor="let i of menuService.menuItems">
+        <div class="a-center i" [ngClass]="i.state">
+          <img class="a-center" [src]="i.svg" [alt]="i.name">
+        </div>
+      </div>
+    </div>
+    <div class="items">
+      <div class="menu-item" *ngFor="let i of menuService.menuItems"
+           (click)="menuService.goToSection(i.link)" [ngClass]="i.state">
+        {{i.name}}
+      </div>
+    </div>
+  </div>
+  <div class="links">
+    <a *ngIf="p.linkedin && p.linkedin.length > 10" href="{{p.linkedin}}">
+      <svg><use xlink:href="#linked"></use></svg>
+    </a>
+    <a [href]="'mailto:' + p.email">
+      <svg><use xlink:href="#mail"></use></svg>
+    </a>
+    <a *ngIf="p.telegram && p.telegram.length > 10" href="{{p.telegram}}">
+      <svg><use xlink:href="#tg"></use></svg>
+    </a>
+    <a *ngIf="p.github && p.github.length > 10" href="{{p.github}}">
+      <svg><use xlink:href="#git"></use></svg>
+    </a>
+  </div>
+</div>

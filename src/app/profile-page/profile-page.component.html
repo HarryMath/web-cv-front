@@ -36,7 +36,7 @@
       <h2>Skills</h2>
       <div class="g" *ngFor="let g of data.skills">
         <h4>{{g.name}}</h4>
-        <div>
+        <div [ngClass]="g.skills.length > 3 ? 'flex' : ''">
           <div class="skill" *ngFor="let s of g.skills">
             <div>{{s.skillName}}</div>
             <div class="stars">
@@ -80,6 +80,5 @@
     </div>
 
   </div>
-
   <app-menu [profile]="data"></app-menu>
 </div>

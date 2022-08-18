@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
 import { RouterModule, Routes } from '@angular/router';
 import { MessageComponent } from './message/message.component';
+import {SharedModule} from './shared/shared.module';
 
 const routes: Routes = [
   {path: 'me', loadChildren: () => import('./my-page/my-page.module').then(m => m.MyPageModule)},

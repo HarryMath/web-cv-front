@@ -92,7 +92,7 @@ export class ProfileConstructorComponent implements OnInit {
     this.profile.birthYear = this.birthDate.year;
     this.profile.birthMonth = this.birthDate.month;
     this.profile.birthDay = this.birthDate.day;
-    // TODO this.save();
+    this.save();
   }
 
   getBirthDateString(): string {

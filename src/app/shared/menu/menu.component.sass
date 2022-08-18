@@ -1,33 +1,50 @@
-$header-h: calc(140px + 7vw)
-$icon-size: calc(19px + 0.95vw)
-$item-h: calc(24px + 1.2vw)
+$icon-size: calc(18px + 0.9vw)
+$item-h: calc(23px + 1.15vw)
 
 .menu
   width: var(--menu-w)
   position: absolute
   left: 0
   top: 0
+  display: flex
+  flex-direction: column
+  justify-content: space-between
   background-color: #8888910e
   box-shadow: 1px 0 2px 0 #0000020d
   height: 100%
   overflow: hidden
 
-.head
-  position: absolute
+.head, .links
   width: 100%
-  min-height: $header-h
   display: flex
+  background-color: #8888910f
+  color: #fefefe
+
+.links
+  padding: var(--padding-10)
+  justify-content: center
+a
+  opacity: 0.4
+  cursor: pointer
+  height: var(--f-11)
+  &:hover
+    opacity: 0.8
+  svg
+    width: var(--f-11)
+    height: var(--f-11)
+    margin: 0 calc(4px + 0.2vw)
+
+
+.head
   align-items: center
   justify-content: center
   flex-direction: column
-  padding: var(--padding-20) var(--padding-10)
-  background-color: #8888910f
+  padding: var(--padding-15) var(--padding-10)
   box-shadow: 0 1px 2px 0 #0000020d
   text-align: center
-  color: #fefefe
   svg
-    width: var(--font-9)
-    height: var(--font-8)
+    width: var(--f-9)
+    height: var(--f-8)
 
 .photo
   width: calc(50px + 2.5vw)
@@ -50,41 +67,33 @@ $item-h: calc(24px + 1.2vw)
 
 .name
   font-weight: bold
-  font-size: var(--font-11)
+  font-size: var(--f-11)
   margin-top: 0
   margin-bottom: 0
 
 .role, .loc, .age
   font-weight: 400
-  font-size: var(--font-9)
+  font-size: var(--f-9)
   opacity: 0.55
   line-height: 1.2
 
 .role
-  font-size: var(--font-10)
+  font-size: var(--f-10)
   margin-bottom: var(--padding-5)
   opacity: 0.7
 
 .nav
-  position: absolute
-  bottom: 0
-  left: 0
-  width: 100%
-  height: calc(100% - #{$header-h})
+  position: relative
 
-.m
+.progress
   position: absolute
   top: 50%
   right: 0
   transform: translateY(-50%)
-
-.progress
-  @extend .m
   z-index: -1
   height: calc(#{$item-h} * 6)
 
 .items
-  @extend .m
   width: 100%
   text-align: right
   padding-right: calc(#{$icon-size} + var(--padding-25))
@@ -97,7 +106,7 @@ $item-h: calc(24px + 1.2vw)
   cursor: pointer
   font-weight: bold
   color: #0c0c17
-  font-size: var(--font-13)
+  font-size: var(--f-13)
   transition: 0.15s
   &:hover
     transform: scale(1.1)

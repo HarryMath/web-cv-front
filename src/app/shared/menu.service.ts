@@ -41,7 +41,7 @@ export class MenuService {
     });
     this.content = document.querySelector('.content');
     this.handleScroll(true);
-    const h = {px: 24 * this.menuItems.length, vw: 1.2 * this.menuItems.length};
+    const h = {px: 23 * this.menuItems.length, vw: 1.15 * this.menuItems.length};
     this.progressHeight = `height: calc(${h.px}px + ${h.vw}vw)`;
   }
 

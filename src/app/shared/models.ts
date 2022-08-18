@@ -17,6 +17,9 @@ export interface MyProfile {
   skills: ISkill[];
   projects: IProject[];
   isPublic: boolean;
+  linkedin?: string|null,
+  github?: string|null,
+  telegram?: string|null
   sendNotifications: boolean;
   lang: 'EN'|'RU';
 }

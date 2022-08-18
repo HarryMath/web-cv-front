@@ -13,7 +13,6 @@ import {ProjectComponent} from './profile-constructor/project/project.component'
 import {SharedModule} from '../shared/shared.module';
 import {ImagesComponent} from '../images/images.component';
 import {LinkComponent} from './new-link/link.component';
-import {MyMenuComponent} from './profile-constructor/my-menu/my-menu.component';
 import {ProfileConstructorComponent} from './profile-constructor/profile-constructor.component';
 import {SkillComponent} from './profile-constructor/skill/skill.component';
 import {ViewsComponent} from './views/views.component';
@@ -32,7 +31,6 @@ import {DaysChartComponent} from './views/days-chart/days-chart.component';
     PopUpComponent,
     ImagesComponent,
     LinkComponent,
-    MyMenuComponent,
     ViewsComponent,
     SettingsComponent,
     DaysChartComponent
