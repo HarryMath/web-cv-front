@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {HostListener, Injectable} from '@angular/core';
 
 export interface MenuItem {
   svg: string;
@@ -22,16 +22,19 @@ export class MenuService {
   ];
   menuItems: MenuItem[] = [];
   lastPosition = 0;
+  scroll: number = 0;
+  progressStyle = '';
   scrollProgress = '';
   menuActive = false;
+  isMobile = false;
   screenHeight = 'min-height: 100vh';
-  progressHeight = '';
 
   toggleMenu(): void {
     this.menuActive = !this.menuActive;
   }
 
-  findSections(): void {
+  init(): void {
+    this.isMobile = window.innerWidth <= 640;
     this.screenHeight = 'min-height:' + window.innerHeight + 'px';
     this.sections = document.querySelectorAll('.s-w');
     this.menuItems = [];
@@ -42,12 +45,17 @@ export class MenuService {
     this.content = document.querySelector('.content');
     this.handleScroll(true);
     const h = {px: 23 * this.menuItems.length, vw: 1.15 * this.menuItems.length};
-    this.progressHeight = `height: calc(${h.px}px + ${h.vw}vw)`;
+    this.progressStyle = this.isMobile ? 'height: calc(2px + 0.1vw)' : `height: calc(${h.px}px + ${h.vw}vw)`;
   }
 
-  async handleScroll(rewrite: boolean): Promise<void> {
+  handleScroll(rewrite: boolean): void {
+    this.scroll = this.content.scrollTop;
+    if (this.isMobile) {
+      this.scrollProgress =	`width: ${this.scroll / (this.content.scrollHeight - window.innerHeight) * 100}%`;
+      return;
+    }
     const shouldRewriteClasses = Math.abs(
-      this.lastPosition - this.content.scrollTop / this.content.scrollHeight
+      this.lastPosition - this.scroll / this.content.scrollHeight
     ) > 0.01 || rewrite;
     let scrolledSections = 0;
     let scrolledSectionsTotalHeight = 0;
@@ -56,7 +64,7 @@ export class MenuService {
       if (shouldRewriteClasses) {
         this.menuItems[i].state = 'passed';
       }
-      if ( scrolledSectionsTotalHeight - window.innerHeight * 0.5  >= this.content.scrollTop) {
+      if ( scrolledSectionsTotalHeight - window.innerHeight * 0.5  >= this.scroll) {
         if (shouldRewriteClasses) {
           this.menuItems[i].state = 'active';
         }
@@ -65,13 +73,13 @@ export class MenuService {
       scrolledSections++;
     }
     if (shouldRewriteClasses) {
-      this.lastPosition = this.content.scrollTop / this.content.scrollHeight;
+      this.lastPosition = this.scroll / this.content.scrollHeight;
       for (let i = scrolledSections + 1; i < this.sections.length; i++) {
         this.menuItems[i].state = '';
       }
     }
     let progress = 0;
-    let scrollTop = this.content.scrollTop;
+    let scrollTop = this.scroll;
     let s;
     for (let i = 0; i < this.sections.length; i++) {
       s = this.sections[i];

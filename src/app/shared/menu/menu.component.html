@@ -1,15 +1,17 @@
-<div class="menu">
+<div class="menu" [style]="getMenuStyle()">
   <div class="head">
     <div class="photo" style="{{getPhotoStyle()}}"></div>
-    <h1 class="name">{{p.fullName}}</h1>
-    <div class="role" [innerHTML]="getRole()"></div>
-    <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
-      <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
+    <div class="inf">
+      <h1 class="name">{{p.fullName}}</h1>
+      <div class="role" [innerHTML]="getRole()"></div>
+      <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
+        <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
+      </div>
+      <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
     </div>
-    <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
   </div>
   <div class="nav">
-    <div class="progress" [style]="menuService.progressHeight">
+    <div class="progress" [style]="menuService.progressStyle">
       <div class="bar">
         <div [style]="menuService.scrollProgress"></div>
       </div>
@@ -27,16 +29,16 @@
     </div>
   </div>
   <div class="links">
-    <a *ngIf="p.linkedin && p.linkedin.length > 10" href="{{p.linkedin}}">
+    <a *ngIf="p.linkedin && p.linkedin.length > 10" href="{{p.linkedin}}" target="_blank">
       <svg><use xlink:href="#linked"></use></svg>
     </a>
-    <a [href]="'mailto:' + p.email">
+    <a [href]="'mailto:' + p.email" target="_blank">
       <svg><use xlink:href="#mail"></use></svg>
     </a>
-    <a *ngIf="p.telegram && p.telegram.length > 10" href="{{p.telegram}}">
+    <a *ngIf="p.telegram && p.telegram.length > 10" href="{{p.telegram}}" target="_blank">
       <svg><use xlink:href="#tg"></use></svg>
     </a>
-    <a *ngIf="p.github && p.github.length > 10" href="{{p.github}}">
+    <a *ngIf="p.github && p.github.length > 10" href="{{p.github}}" target="_blank">
       <svg><use xlink:href="#git"></use></svg>
     </a>
   </div>
