@@ -39,7 +39,7 @@ export class MyPageComponent implements OnInit {
   }
 
   getSlideButtonPosition(): string {
-    return this.slide === 'profile' ? 'transform: translateX(calc(35px + 1.75vw))' :
-      this.slide === 'settings' ? 'transform: translateX(calc(70px + 3.5vw))' : '';
+    return this.slide === 'profile' ? 'transform: translateX(3.5rem)' :
+      this.slide === 'settings' ? 'transform: translateX(7rem)' : '';
   }
 }

@@ -1,0 +1,30 @@
+.legend
+  padding: 1rem
+  &>div
+    display: flex
+    align-items: center
+canvas
+  display: block
+  width: 30rem
+  max-width: calc(90% - 80px - 4vw)
+  min-height: 10rem
+  height: 100%
+.color
+  width: .7rem
+  height: .7rem
+  margin-right: .7rem
+  border-radius: 1px
+.wrapper
+  width: 100%
+  display: flex
+  align-items: center
+
+@media screen and (max-width: 500px)
+  canvas
+    max-width: unset
+    width: 100%
+    height: calc(50vw + 10px)
+    min-height: unset
+  .wrapper
+    display: block
+    margin-bottom: 1rem

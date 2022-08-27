@@ -1,10 +1,10 @@
-$photo-width: calc(100px + 5vw)
+$photo-width: 10rem
 
 .head
-  padding: var(--padding-10) 0
+  padding: 1rem 0
 
 .links
-  padding-bottom: var(--padding-10)
+  padding-bottom: 1rem
 
 .photo
   width: $photo-width
@@ -15,7 +15,7 @@ $photo-width: calc(100px + 5vw)
   background-color: #1e1e2c9d
   cursor: pointer
 .info
-  width: calc(95% - #{$photo-width} - var(--padding-20))
+  width: calc(95% - #{$photo-width} - 2rem)
 
 .card
   .input
@@ -25,88 +25,87 @@ $photo-width: calc(100px + 5vw)
       display: flex
       flex-wrap: wrap
       height: unset
-      padding: calc(1.5px + 0.075vw) var(--padding-5)
+      padding: .15rem .5rem
       .tag, .tag> div
         box-shadow: none
         background-color: transparent
         width: fit-content
         white-space: nowrap
       .tag
-        padding: calc(1.5px + 0.075vw) calc(3px + 0.15vw) calc(1.5px + 0.075vw) 0
+        padding: .15rem .3rem .15rem 0
         &>div
-          height: calc(17px + 0.85vw)
-          line-height: calc(17px + 0.85vw)
+          height: 1.7rem
+          line-height: 1.7rem
           border-radius: 3px
-          font-size: var(--f-9)
-          padding: 0 var(--padding-5)
+          font-size: .9rem
+          padding: 0 .5rem
           position: relative
           background-color: #191926
-          transition: padding-right 0.2s
+          transition: padding-right .2s
           cursor: initial
           .del
             position: absolute
-            right: calc(7.5px + 0.35vw)
+            right: .75rem
             top: 50%
             opacity: 0
-            transform: translate(50%, -50%) scale(0.1)
-            line-height: calc(11px + 0.55vw)
-            height: var(--padding-10)
-            width: var(--padding-10)
+            transform: translate(50%, -50%) scale(.1)
+            line-height: 1.1rem
+            height: 1rem
+            width: 1rem
             border-radius: 50%
-            font-size: var(--f-11)
+            font-size: 1.1rem
             background-color: #000
             box-shadow: none
             cursor: pointer
-            transition: 0.2s
+            transition: .2s
             padding: 0
             text-align: center
           &:hover
-            padding-right: var(--padding-15)
+            padding-right: 1.5rem
             .del
               opacity: 1
               transform: translate(50%, -50%)
       input
         appearance: none
         text-align: left
-        font-size: var(--f-10)
+        font-size: 1rem
         font-family: Poppins, sans-serif
-        margin-left: calc(3px + 0.15vw)
+        margin-left: .3rem
 
 h5
-  padding: var(--padding-5) 0!important
+  padding: .5rem 0!important
 .link
   display: flex
   flex-wrap: nowrap
   width: 100%
-  padding: 0 var(--padding-5)
-  padding-left: var(--padding-40)
+  padding: 0 .5rem 0 4rem
   position: relative
-  line-height: var(--padding-20)
-  height: var(--padding-20)
+  line-height: 2rem
+  height: 2rem
   a
     color: var(--link)
 
 .edit-link, .del-link, .add-link
-  height: var(--padding-15)
-  width: var(--padding-15)
+  height: 1.5rem
+  width: 1.5rem
   position: absolute
   top: 50%
   border-radius: 50%
   cursor: pointer
   background-color: #555562
-  opacity: 0.4
-  transition: 0.2s
+  opacity: .4
+  transition: .2s
   transform: translate(0, -50%)
-  img, svg
-    width: var(--padding-10)
-    height: var(--padding-10)
+  svg
+    width: 1rem
+    height: 1rem
     margin: 0!important
-    transform: translate(-50%, -50%) scale(0.8)
+    transform: translate(-50%, -50%) scale(.8)
   &:hover
     opacity: 1
 
 .edit-link
-  left: var(--padding-20)
+  left: 2rem
   img, svg
     color: #d1d6ff
   &:hover
@@ -127,7 +126,7 @@ h5
   img, svg
     color: #dfffdb
   &:hover
-    background-color: rgba(75, 183, 77, 0.49)
+    background-color: #4BB74D7C
     svg
       color: #66f151
 .link-adder

@@ -22,16 +22,12 @@ export class MenuService {
   ];
   menuItems: MenuItem[] = [];
   lastPosition = 0;
-  scroll: number = 0;
   progressStyle = '';
   scrollProgress = '';
-  menuActive = false;
-  isMobile = false;
   screenHeight = 'min-height: 100vh';
-
-  toggleMenu(): void {
-    this.menuActive = !this.menuActive;
-  }
+  scroll: number = 0;
+  isMobile = false;
+  isCollapsed = false;
 
   init(): void {
     this.isMobile = window.innerWidth <= 640;
@@ -44,42 +40,79 @@ export class MenuService {
     });
     this.content = document.querySelector('.content');
     this.handleScroll(true);
-    const h = {px: 23 * this.menuItems.length, vw: 1.15 * this.menuItems.length};
-    this.progressStyle = this.isMobile ? 'height: calc(2px + 0.1vw)' : `height: calc(${h.px}px + ${h.vw}vw)`;
+    const h = 2.3 * this.menuItems.length;
+    this.progressStyle = this.isMobile ? 'height: 0.25rem' : `height: calc(${h}rem)`;
   }
 
   handleScroll(rewrite: boolean): void {
     this.scroll = this.content.scrollTop;
-    if (this.isMobile) {
-      this.scrollProgress =	`width: ${this.scroll / (this.content.scrollHeight - window.innerHeight) * 100}%`;
-      return;
-    }
     const shouldRewriteClasses = Math.abs(
       this.lastPosition - this.scroll / this.content.scrollHeight
-    ) > 0.01 || rewrite;
+    ) > 0.01;
+    if (this.isMobile) {
+      this.handleMobileScroll(this.scroll, shouldRewriteClasses);
+    } else  {
+      this.handleDesktopScroll(this.scroll, shouldRewriteClasses || rewrite);
+    }
+  }
+
+  handleMobileScroll(scroll: number, rewrite: boolean): void {
+    this.scrollProgress =	`width: ${scroll / (this.content.scrollHeight - window.innerHeight) * 100}%`;
+    const togglePoint = 35 + window.innerWidth * 0.0175 // (35/20)wv
+    if (this.isCollapsed) {
+      if (scroll < togglePoint) {
+        this.isCollapsed = false;
+      }
+    } else if (scroll >= togglePoint) {
+      this.isCollapsed = true;
+    }
     let scrolledSections = 0;
     let scrolledSectionsTotalHeight = 0;
     for (let i = 0; i < this.sections.length; i++) {
       scrolledSectionsTotalHeight += this.sections[i].offsetHeight;
-      if (shouldRewriteClasses) {
+      if (rewrite) {
         this.menuItems[i].state = 'passed';
       }
-      if ( scrolledSectionsTotalHeight - window.innerHeight * 0.5  >= this.scroll) {
-        if (shouldRewriteClasses) {
+      if ( scrolledSectionsTotalHeight - window.innerHeight * 0.5  >= scroll) {
+        if (rewrite) {
           this.menuItems[i].state = 'active';
         }
         break;
       }
       scrolledSections++;
     }
-    if (shouldRewriteClasses) {
-      this.lastPosition = this.scroll / this.content.scrollHeight;
+    if (rewrite) {
+      this.lastPosition = scroll / this.content.scrollHeight;
+      for (let i = scrolledSections + 1; i < this.sections.length; i++) {
+        this.menuItems[i].state = '';
+      }
+    }
+  }
+
+  handleDesktopScroll(scroll: number, rewrite: boolean): void {
+    let scrolledSections = 0;
+    let scrolledSectionsTotalHeight = 0;
+    for (let i = 0; i < this.sections.length; i++) {
+      scrolledSectionsTotalHeight += this.sections[i].offsetHeight;
+      if (rewrite) {
+        this.menuItems[i].state = 'passed';
+      }
+      if ( scrolledSectionsTotalHeight - window.innerHeight * 0.5  >= scroll) {
+        if (rewrite) {
+          this.menuItems[i].state = 'active';
+        }
+        break;
+      }
+      scrolledSections++;
+    }
+    if (rewrite) {
+      this.lastPosition = scroll / this.content.scrollHeight;
       for (let i = scrolledSections + 1; i < this.sections.length; i++) {
         this.menuItems[i].state = '';
       }
     }
     let progress = 0;
-    let scrollTop = this.scroll;
+    let scrollTop = scroll;
     let s;
     for (let i = 0; i < this.sections.length; i++) {
       s = this.sections[i];

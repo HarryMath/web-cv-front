@@ -26,6 +26,13 @@ interface IDayStats {
   visitors: IVisitor[]
 }
 
+interface IPiePiece {
+  label: string,
+  value: number,
+  part: number,
+  color: string,
+}
+
 @Component({
   selector: 'app-views',
   templateUrl: './views.component.html',
@@ -36,7 +43,10 @@ export class ViewsComponent implements OnInit {
   isLoading = true;
   visits: IDayStats[] = [];
   stats: IStats = { name: 'visits', maxValue: 0, values: [] };
-  readonly appLink = 'https://web-cv.web.app/';
+  countryStats: IPiePiece[] = [];
+  readonly appLink = 'https://dev-cv.web.app/';
+  dateWidth = '';
+  infoWidth = '';
 
   constructor(
     private http: HttpClient,
@@ -47,11 +57,26 @@ export class ViewsComponent implements OnInit {
     this.loadVisits().then(v => {
       this.visits = this.aggregateData(v);
       this.stats = this.prepareVisitsForChart(this.visits);
+      this.countryStats = this.prepareCountries(this.visits);
       this.isLoading = false;
+      setTimeout(() => {
+        this.dateWidth = this.getMaxWidth('.day .date') + 'px';
+        this.infoWidth = this.getMaxWidth('.day .info') + 'px'
+      }, 200)
     });
   }
 
-  aggregateData(visits: IVisit[]): IDayStats[] {
+  private getMaxWidth(query: string): number {
+    let max = 0;
+    document.querySelectorAll<HTMLDivElement>(query).forEach(el => {
+      if (el.offsetWidth > max) {
+        max = el.offsetWidth;
+      }
+    });
+    return max;
+  }
+
+  private aggregateData(visits: IVisit[]): IDayStats[] {
     let lastDay = -1;
     const daysStats: IDayStats[] = [];
     visits = visits.sort((v1, v2) => v1.timestamp - v2.timestamp);
@@ -114,7 +139,42 @@ export class ViewsComponent implements OnInit {
     return { name: 'visits', maxValue: max, values };
   }
 
-  loadVisits(): Promise<IVisit[]> {
+  private prepareCountries(stats: IDayStats[]): IPiePiece[] {
+    const result: IPiePiece[] = [];
+    let visitor: IVisitor;
+    let totalVisitors = 0;
+    stats.forEach(d => d.visitors.forEach(v => {
+      visitor = v;
+      totalVisitors += 1;
+      if (visitor.country == null) {
+        visitor.country = 'Undefined region';
+      }
+      const country = result.find(c => c.label === visitor.country);
+      if (country) {
+        country.value++;
+      } else {
+        result.push({
+          label: visitor.country,
+          value: 2,
+          color: this.generateColor(visitor.country),
+          part: 0
+        });
+      }
+    }));
+    result.forEach(c => c.part = c.value / totalVisitors);
+    return result;
+  }
+
+  private generateColor(text: string): string {
+    let textValue = text.split('').reduce(
+      (val, symbol) => val + symbol.charCodeAt(0), 50);
+    const h = textValue % 360;
+    const s = 65 + textValue % 21;
+    const l = 55 + textValue % 19;
+    return `hsl(${h}, ${s}%, ${l}%)`;
+  }
+
+  private loadVisits(): Promise<IVisit[]> {
     this.isLoading = true;
     return new Promise<IVisit[]>((resolve, reject) => {
       this.http.get<IVisit[]>('profiles/me/visits').subscribe({
@@ -125,7 +185,7 @@ export class ViewsComponent implements OnInit {
   }
 
   hasLocation(v: IVisitor): boolean {
-    return !!v.country && v.country != 'null';
+    return !!v.country && v.country != 'null' && !v.country.includes('undefined');
   }
 
   getLocation(v: IVisitor): string {
@@ -133,7 +193,7 @@ export class ViewsComponent implements OnInit {
   }
 
   getVisits(v: IVisitor): string {
-    if (v.visits.length > 5) {
+    if (v.visits.length > 3) {
       return `visited ${v.visits.length} times since ${v.visits[0]}`
     } else {
       return 'at ' + v.visits.join(', ');

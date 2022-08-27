@@ -18,6 +18,7 @@ import {SkillComponent} from './profile-constructor/skill/skill.component';
 import {ViewsComponent} from './views/views.component';
 import {SettingsComponent} from './settings/settings.component';
 import {DaysChartComponent} from './views/days-chart/days-chart.component';
+import {PieChartComponent} from './views/pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {DaysChartComponent} from './views/days-chart/days-chart.component';
     LinkComponent,
     ViewsComponent,
     SettingsComponent,
-    DaysChartComponent
+    DaysChartComponent,
+    PieChartComponent
   ],
   imports: [
     CommonModule,

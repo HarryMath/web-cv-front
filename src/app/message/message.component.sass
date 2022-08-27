@@ -1,18 +1,17 @@
 .msg
   position: fixed
   left: 50%
-  bottom: var(--padding-15)
+  bottom: 1.5rem
   z-index: 100
-  min-width: calc(200px + 10vw)
-  max-width: calc(100% - var(--padding-20))
-  padding: var(--padding-5) var(--padding-10)
-  padding-right: var(--padding-5)
+  min-width: 20rem
+  max-width: calc(100% - 2rem)
+  padding: .5rem .5rem .5rem 1rem
   border-radius: 6px
   color: #444
   background-color: #E3E2E1
   box-shadow: 2px 6px 15px 7px #01011A9A
-  transition: 0.35s
-  transform: translate(-50%, 200%) scale(0.1)
+  transition: .35s
+  transform: translate(-50%, 200%) scale(.1)
   display: flex
   align-items: center
   justify-content: space-between
@@ -21,14 +20,14 @@
 
 .close
   position: relative
-  width: var(--padding-25)
-  height: var(--padding-25)
-  line-height: var(--padding-25)
-  transition: 0.2s
+  width: 2.5rem
+  height: 2.5rem
+  line-height: 2.5rem
+  transition: .2s
   text-align: center
-  font-size: var(--padding-15)
+  font-size: 1.5rem
   cursor: pointer
-  opacity: 0.5
+  opacity: .5
   &:after
     content: ''
     left: 0
@@ -38,8 +37,8 @@
     height: 100%
     border-radius: 50%
     background-color: #b3bdff57
-    opacity: 0.5
-    transition: 0.2s
+    opacity: .5
+    transition: .2s
     transform: scale(0)
   &:hover
     opacity: 1
@@ -49,6 +48,11 @@
 
 
 .txt
-  width: calc(100% - var(--padding-30))
-  font-size: var(--f-10)
+  width: calc(100% - 3rem)
+  font-size: 1rem
   font-weight: 400
+
+@media screen and (max-width: 500px)
+  .msg
+    width: 100%
+    padding: 1rem 1.5rem

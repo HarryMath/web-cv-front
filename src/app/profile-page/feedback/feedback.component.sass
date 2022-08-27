@@ -3,14 +3,21 @@
   align-items: center
   justify-content: space-between
 .txt
-  max-width: calc(300px + 15vw)
+  max-width: 30rem
+  margin-bottom: 1.5rem
 .f
-  width: calc(200px + 10vw)
+  width: 20rem
   max-width: calc(350px + 5vw)
   border-radius: 5px
   background-color: #2c2c39
-  padding: var(--padding-10)
-  padding-top: 0
+  padding: 0 1rem 1rem
   box-shadow: 5px 10px 20px 5px #0000005d
 .btn
-  margin-top: var(--padding-10)
+  margin-top: 1rem
+
+@media screen and (max-width: 640px)
+  .w
+    flex-wrap: wrap
+  .f
+    width: 100%
+    max-width: unset

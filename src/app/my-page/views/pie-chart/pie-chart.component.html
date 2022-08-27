@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <canvas #canvas></canvas>
+  <div class="legend">
+    <div *ngFor="let c of data">
+      <div class="color" [style.background-color]="c.color"></div>
+      <div class="label">{{c.label}}: {{c.value}} visits</div>
+    </div>
+  </div>
+</div>

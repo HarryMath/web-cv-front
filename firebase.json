@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "dev-cv",
+    "public": "dist/cv-front",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

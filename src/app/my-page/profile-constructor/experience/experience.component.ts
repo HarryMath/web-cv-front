@@ -123,7 +123,7 @@ export class ExperienceComponent implements OnInit {
       .reduce((prev: number, next: string) => {
         return prev + Math.floor(next.length / 200)
       }, 0);
-    return `min-height: calc(${linesAmount * 16}px + ${linesAmount * 0.75}vw)`
+    return `min-height: calc(${linesAmount * 1.6}rem)`
   }
 
   checkDescription(): void {

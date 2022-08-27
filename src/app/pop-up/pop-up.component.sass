@@ -7,7 +7,7 @@
   transform: translateX(-50%)
   background-color: #0000009d
   z-index: 17
-  transition: 0.2s
+  transition: .2s
   .window
     position: absolute
     top: 50%
@@ -16,24 +16,24 @@
     background-color: #282835
     border-radius: 3px
     box-shadow: 0 0 0 1px #3c3c4d
-    transition: 0.2s
-    width: calc(250px + 12.5vw)
-    max-width: calc(100% - var(--padding-30))
+    transition: .2s
+    width: 25rem
+    max-width: calc(100% - 3rem)
   &.hidden
     opacity: 0
     .window
-      transform: translate(-50%, -80vw) scale(0.2)
+      transform: translate(-50%, -80vw) scale(.2)
 
 .header, .question, .footer
-  padding: var(--padding-10)
+  padding: 1rem
 
 .question
-  font-size: var(--f-11)
+  font-size: 1.1rem
   color: var(--text-color)
 
 .header
   font-weight: bold
-  font-size: var(--f-13)
+  font-size: 1.3rem
   box-shadow: 0 1px 0 0 #3b3b42
   background-color: #3c3c4d3d
 
@@ -45,11 +45,11 @@
   background-color: #3c3c4d3d
 
 .btn
-  font-size: var(--f-11)
-  width: calc(50% - 4px - 0.2vw)
+  font-size: 1.1rem
+  width: calc(50% - 4px - .2vw)
   font-weight: bold
   background-color: #0000002d
-  transition: 0.2s
+  transition: .2s
   &:hover
     background-color: #0000004d
   &.default

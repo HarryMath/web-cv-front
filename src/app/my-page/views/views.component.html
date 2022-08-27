@@ -1,26 +1,25 @@
 <div class="body body-left">
   <div class="charts">
-    <h2>Statistics</h2>
-    <h3>Daily visits</h3>
+    <h2>Daily visits</h2>
     <div *ngIf="!isLoading" style="position: relative">
       <app-days-chart [stats]="stats"></app-days-chart>
     </div>
-    <h3>Visits by country</h3>
+    <h2>Visits by country</h2>
+    <div *ngIf="!isLoading" class="pie">
+      <pie-chart [data]="countryStats"></pie-chart>
+    </div>
   </div>
   <div class="history-wrapper">
     <div class="history">
       <h2>History</h2>
       <div class="day" *ngFor="let d of visits">
-        <div class="date">{{d.date}},<br>{{d.day}}</div>
+        <div class="date" [style.min-width]="dateWidth">{{d.date}}<br><span>{{d.day}}</span></div>
         <div class="visitors">
           <div class="visitor" *ngFor="let v of d.visitors">
-            <div class="info">
+            <div class="info" [style.min-width]="infoWidth">
               <a class="a name" *ngIf="v.login" [href]="appLink + v.login">{{v.login}}</a>
               <div class="ip" *ngIf="v.ip.length > 6">ip: {{v.ip}}</div>
-              <div class="location" *ngIf="hasLocation(v)">
-                <svg><use xlink:href="#location"></use></svg>
-                {{getLocation(v)}}
-              </div>
+              <div class="location" *ngIf="hasLocation(v)">{{getLocation(v)}}</div>
             </div>
             <div class="visits">{{getVisits(v)}}</div>
           </div>

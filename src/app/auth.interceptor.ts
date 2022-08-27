@@ -12,7 +12,8 @@ import {Observable, tap} from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class AuthInterceptor implements HttpInterceptor {
 
-  private readonly endpoint = 'http://localhost:80/api/';
+  private readonly endpoint = 'https://your-cv.herokuapp.com/api/';
+  // private readonly endpoint = 'http://localhost:80/api/';
   private token: string;
 
   constructor() {

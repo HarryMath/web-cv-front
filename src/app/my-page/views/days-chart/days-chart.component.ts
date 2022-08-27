@@ -101,8 +101,8 @@ export class DaysChartComponent implements OnInit {
 
   private drawCurrentValue(ctx: CanvasRenderingContext2D, info: ICanvasInfo): void {
     ctx.strokeStyle = '#5c5c5c'
-    ctx.lineWidth = 1;
-    ctx.setLineDash([1, 4]);
+    ctx.lineWidth = 2;
+    ctx.setLineDash([1, 8]);
     ctx.beginPath();
     ctx.moveTo(this.labelX, info.H - info.grid.bottom);
     ctx.lineTo(this.labelX, info.grid.top);
@@ -111,8 +111,9 @@ export class DaysChartComponent implements OnInit {
     ctx.setLineDash([]);
     const y = info.H - info.curve.bottom - this.currentValue.value * this.yStep;
     const pointSize = 2 + info.W / 170;
-    this.drawPoint(ctx, this.labelX, y, pointSize * 1.2, '#1010155d');
-    this.drawPoint(ctx, this.labelX, y, pointSize, '#ffc751');
+    this.drawPoint(ctx, this.labelX, y, pointSize * 1.7, '#1010153d');
+    this.drawPoint(ctx, this.labelX, y, pointSize * 1.3, '#1010154d');
+    this.drawPoint(ctx, this.labelX, y, pointSize, '#ffb842');
     this.drawPoint(ctx, this.labelX, y, pointSize * 0.7, '#101015');
   }
 
@@ -174,6 +175,10 @@ export class DaysChartComponent implements OnInit {
   }
 
   getLegendPosition(): string {
-    return `top: 50%; left: ${this.labelX / this.ratio}px`;
+    let pos = `top: 50%; left: ${this.labelX / this.ratio}px;`;
+    if (this.labelX > this.canvas.nativeElement.width * 0.8) {
+      pos += 'transform: translateX(-101%)'
+    }
+    return pos;
   }
 }

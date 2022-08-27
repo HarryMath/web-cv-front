@@ -1,11 +1,11 @@
-$padding: calc(2.5px + 0.125vw)
+$padding: .25rem
 .overlay
   position: fixed
   width: 100vw
   height: 100vh
   background-color: #0000009d
   opacity: 0
-  transition: opacity 0.3s
+  transition: opacity .3s
   z-index: 14
   &.visible
     opacity: 1
@@ -13,11 +13,11 @@ $padding: calc(2.5px + 0.125vw)
 .frame
   position: fixed
   bottom: 0
-  width: calc(400px + 20vw)
+  width: 40rem
   overflow-x: hidden
   overflow-y: scroll
   max-height: 70%
-  max-width: calc(100% - var(--padding-20))
+  max-width: calc(100% - 2rem)
   left: 50%
   transform: translate(-50%, 105%)
   background-color: #fcf3ef
@@ -27,12 +27,12 @@ $padding: calc(2.5px + 0.125vw)
   flex-wrap: wrap
   padding: $padding
   z-index: 15
-  transition: transform 0.3s
+  transition: transform .3s
   &.visible
     transform: translate(-50%, 0)
   &>div
     position: relative
-    width: calc(33% - var(--padding-5))
+    width: calc(33% - .5rem)
     aspect-ratio: 1 / 1
     justify-content: space-between
     border-radius: 4px
@@ -61,8 +61,8 @@ $padding: calc(2.5px + 0.125vw)
       left: 50%
       transform: translate(-50%, -50%)
       content: ""
-      width: var(--padding-10)
-      height: var(--padding-10)
+      width: 1rem
+      height: 1rem
       border-radius: 50%
       animation: 1s load linear infinite
       border: 3px solid #2b2b39
@@ -79,24 +79,24 @@ h5
   width: 100%
   color: #2b2b39
   font-weight: bold
-  font-size: var(--f-13)
-  margin: var(--padding-5)
+  font-size:  1.3rem
+  margin: .5rem
 
 .delete
   position: absolute
-  top: var(--padding-5)
-  right: var(--padding-5)
-  width: var(--padding-25)
-  height: var(--padding-25)
+  top: .5rem
+  right: .5rem
+  width: 2.5rem
+  height: 2.5rem
   border-radius: 50%
   background-color: #0000005d
-  padding: var(--padding-5)
-  transition: 0.2s
+  padding: .5rem
+  transition: .2s
   color: #efeeee
   cursor: pointer
   svg
-    width: var(--padding-10)
-    height: var(--padding-10)
+    width: 1rem
+    height: 1rem
   &:hover
     background-color: #3A00008C
     color: #F15151

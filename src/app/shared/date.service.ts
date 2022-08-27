@@ -14,7 +14,7 @@ export interface IPeriod {
 export class DateService {
 
   private readonly months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  private readonly days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  private readonly days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   private readonly currentDate: ISelectDate = {
     day: new Date().getDate(),
     month: new Date().getMonth() + 1,

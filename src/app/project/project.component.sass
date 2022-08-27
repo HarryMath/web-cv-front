@@ -2,20 +2,20 @@
   display: inline-block
   position: relative
   margin-right: 2px
-  margin-bottom: var(--padding-15)
+  margin-bottom: 1.5rem
 
 .t
   line-height: 1.1
-  margin-bottom: var(--padding-10)
-  font-size: var(--f-11)
+  margin-bottom: 1rem
+  font-size: 1.1rem
   font-weight: bold
   color: var(--text-color)
 .pl
   color: var(--text-color)
-  opacity: 0.5
+  opacity: .5
   font-weight: 500
-  font-size: var(--f-9)
-  margin-left: var(--padding-5)
+  font-size: .9rem
+  margin-left: .5rem
 
 .pr-b
   border-radius: 5px
@@ -28,14 +28,14 @@
     object-fit: cover
     object-position: top left
   .d
-    padding: var(--padding-10)
+    padding: 1rem
   .view
     background-color: #5455697D
-    padding: 0 var(--padding-10)
-    transition: 0.3s
+    padding: 0 1rem
+    transition: .3s
     border-radius: 5px
     width: fit-content
-    margin-top: var(--padding-10)
+    margin-top: 1rem
     &:hover
       background-color: #5455699D
       color: #fff
@@ -50,55 +50,55 @@
 
 .max
   position: fixed
-  top: var(--padding-10)
-  left: var(--padding-10)
-  width: calc(100% - var(--padding-20))
-  height: calc(100% - var(--padding-20))
+  top: 1rem
+  left: 1rem
+  width: calc(100% - 2rem)
+  height: calc(100% - 2rem)
   z-index: 14
-  transition: 0.3s
+  transition: .3s
   display: flex
   .role
     line-height: 0
     overflow: hidden
-    transition: line-height 0.2s, transform 0.2s
+    transition: line-height .3s, transform .3s
   .t
-    transition: font-size 0.3s, color 0.3s
+    transition: font-size .3s, color .3s
     font-weight: bold
   .b
     width: 100%
     max-width: calc(700px + 15vw)
-    transition: width 0.3s
-    padding-right: var(--padding-10)
+    transition: width .3s
+    padding-right: 1rem
     height: 100%
     overflow-x: hidden
     overflow-y: scroll
   .inf
-    transition: width 0.3s, background 0.3s
+    transition: width .3s, background .3s
     overflow: hidden
     height: 0
     width: 0
     &>div
       width: var(--menu-w)
-      padding: var(--padding-10)
+      padding: 1rem
   img
     width: 100%
     border-radius: 5px
   .tag
-    font-size: var(--f-9)
+    font-size: .9rem
 
 .full
   background-color: #1d1d28
   box-shadow: none
   .b
     width: calc(100% - var(--menu-w))
-    padding: var(--padding-10)
+    padding: 1rem
   .inf
     background: #22222e
     width: var(--menu-w)
     height: 100%
     overflow: hidden
   .t
-    font-size: var(--padding-15)
+    font-size: 1.5rem
 
 .open
   .role
@@ -117,7 +117,7 @@
 
 
 .links, .tags
-  padding-left: var(--padding-5)
+  padding-left: .5rem
 .tags
   display: flex
   flex-wrap: wrap
@@ -128,4 +128,8 @@
   border-radius: 3px
   margin-right: 4px
   margin-top: 3px
-  font-size: var(--f-8)
+  font-size: .9rem
+
+@media screen and (max-width: 500px)
+  .pr
+    width: 100%

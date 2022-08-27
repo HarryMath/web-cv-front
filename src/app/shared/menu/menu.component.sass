@@ -1,5 +1,5 @@
-$icon-size: calc(18px + 0.9vw)
-$item-h: calc(23px + 1.15vw)
+$icon-size: 1.9rem
+$item-h: 2.3rem
 
 .menu
   width: var(--menu-w)
@@ -9,7 +9,7 @@ $item-h: calc(23px + 1.15vw)
   display: flex
   flex-direction: column
   justify-content: space-between
-  background-color: #8888910e
+  background-color: #22222e
   box-shadow: 1px 0 2px 0 #0000020d
   height: 100%
   overflow: hidden
@@ -21,38 +21,39 @@ $item-h: calc(23px + 1.15vw)
   color: #fefefe
 
 .links
-  padding: var(--padding-10)
+  padding: 1rem
   justify-content: center
 a
-  opacity: 0.4
+  opacity: .4
   cursor: pointer
-  height: var(--f-11)
+  height: 1.1rem
   &:hover
-    opacity: 0.8
+    opacity: .8
   svg
-    width: var(--f-11)
-    height: var(--f-11)
-    margin: 0 calc(4px + 0.2vw)
+    width: 1.1rem
+    height: 1.1rem
+    margin: 0 .4rem
 
 
 .head
   align-items: center
   justify-content: center
   flex-direction: column
-  padding: var(--padding-15) var(--padding-10)
+  padding: 1.5rem 1rem
   box-shadow: 0 1px 2px 0 #0000020d
   text-align: center
   svg
-    width: var(--f-9)
-    height: var(--f-8)
+    width: .9rem
+    height: .8rem
 
 .photo
-  width: calc(50px + 2.5vw)
-  height: calc(50px + 2.5vw)
+  width: 5rem
+  height: 5rem
   border-radius: 50%
   position: relative
   background-color: #fff
-  margin-bottom: var(--padding-10)
+  background-size: cover
+  margin-bottom: 1rem
   &:before
     content: ''
     width: 118%
@@ -67,24 +68,25 @@ a
 
 .name
   font-weight: bold
-  font-size: var(--f-11)
+  font-size: 1.1rem
   margin-top: 0
   margin-bottom: 0
 
 .role, .loc, .age
   font-weight: 400
-  font-size: var(--f-9)
-  opacity: 0.55
+  font-size: .9rem
+  opacity: .55
   width: 100%
   line-height: 1.2
 
 .role
-  font-size: var(--f-10)
-  margin-bottom: var(--padding-5)
-  opacity: 0.7
+  font-size: 1rem
+  margin-bottom: .5rem
+  opacity: .7
 
 .nav
   position: relative
+  z-index: 0
 
 .progress
   position: absolute
@@ -97,7 +99,7 @@ a
 .items
   width: 100%
   text-align: right
-  padding-right: calc(#{$icon-size} + var(--padding-25))
+  padding-right: calc(#{$icon-size} + 2.5rem)
 
 .menu-icon, .menu-item
   height: $item-h
@@ -105,10 +107,11 @@ a
 
 .menu-item
   cursor: pointer
+  white-space: nowrap
   font-weight: bold
   color: #0c0c17
-  font-size: var(--f-13)
-  transition: 0.15s
+  font-size: 1.3rem
+  transition: .15s
   &:hover
     transform: scale(1.1)
     color: #000001
@@ -117,7 +120,7 @@ a
 
 
 .menu-icon
-  width: calc(#{$icon-size} + var(--padding-25))
+  width: calc(#{$icon-size} + 2.5rem)
   position: relative
 
 .i
@@ -125,20 +128,19 @@ a
   height: $icon-size
   border-radius: 50%
   transition-property: opacity, transform, color
-  transition: 0.15s
-  transform: translate(-50%, -50%) scale(0.5)
+  transition: .15s
+  transform: translate(-50%, -50%) scale(.5)
   color: transparent
   *
     opacity: 0
     width: 100%
     height: 100%
-    padding: calc(5px + 0.2vw)
-    transition-property: opacity
-    transition: 0.15s
+    padding: .5rem
+    transition: opacity .15s
   &.passed
-    background-color: #080813
+    background-color: #0c0c17
   &.active
-    background-color: #080813
+    background-color: #0c0c17
     transform: translate(-50%, -50%)
     *
       opacity: 1
@@ -147,8 +149,8 @@ a
   z-index: -1
   position: absolute
   width: 6px
-  top: var(--padding-10)
-  height: calc(100% - var(--padding-10) * 2)
+  top: 1rem
+  height: calc(100% - 2rem)
   right: 50%
   transform: translateX(3px)
   div
@@ -159,48 +161,94 @@ a
     border-radius: 6px
 
 
-@media screen and (max-width: 660px)
+@media screen and (max-width: 640px)
+  .links, .head, .menu
+    background: none
+    box-shadow: none
   .menu
     width: 100%
     position: absolute
     top: 0
-    height: var(--mob-menu)
-    transition: height 0.2s
-    z-index: 4
-    overflow: visible
-  .links, .name
-    display: none
-    visibility: hidden
+    // padding15 + photoHeight + padding15 + links-height + padding15 + navbar
+    // 15 +        80 +         15 +         30 +           15 +        30
+    // height: padding40 + navbar
+    height: 18.5rem
+    transition: .2s ease-in-out
+    transition-property: background, height, box-shadow
+    z-index: 5
+  .name
+    font-size: 1.3rem
+    line-height: 2.5rem
+    opacity: .3
+    transform: translateY(-110%)
+    transition: opacity .2s ease-in-out, transform .2s ease-in-out
   .head
     padding: 0
-    background: none
-    box-shadow: none
-  .inf, .photo
+  .inf, .photo, name, .role, .links
     position: absolute
-    width: calc(70px + 3.5vw)
-    max-width: calc(60vw - 10px)
-    transition: 0.2s
-    bottom: 0
-    left: 50%
+    transition: .2s ease-in-out
+  .role
+    position: unset
+    font-size: 1.4rem
+    opacity: .9
   .inf
     white-space: nowrap
     text-align: left
-    transform: translate(5%)
+    overflow: hidden
+    left: 50%
+    top: 1.5rem
+    transform: translate(5%, 10%)
+    height: 5rem
     svg
       display: none
+  .lbl, .items
+    transition: opacity .2s ease-in-out
   .photo
+    width: 8rem
+    height: 8rem
+    left: 0
+    top: 0
     margin: 0
+    z-index: 5
     border-radius: 17%
-    width: calc(70px + 3.5vw)
-    height: calc(70px + 3.5vw)
-    max-width: calc(60vw - 10px)
-    max-height: calc(60vw - 10px)
-    box-shadow: 3px 10px 15px 5px #04050d91
-    transform: translate(-105%, 30%)
+    box-shadow: #04050C5E 3px 10px 18px 8px
+    transform: translate(calc(50vw - 105%), calc(15px + .75vw))
     &:before
       content: none
+  .links
+    align-items: flex-end
+    overflow: hidden
+    top: 11rem
+    height: 3rem
+    padding: 0 1rem
+    a
+      width: 100%
+      border-radius: 5px
+      background-color: rgb(40, 40, 52)
+      height: 3rem
+      margin: 0 .5rem
+      display: flex
+      align-items: center
+      justify-content: center
+      opacity: 1
+    svg
+      width: 1.5rem
+      height: 1.5rem
+
   .items
-    display: none
+    position: absolute
+    bottom: 0
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 0
+    height: 3rem
+    overflow-x: scroll
+    opacity: 0
+  .menu-item
+    margin: 0 .5rem
+    font-size: 1rem
+    font-weight: 500
   .progress
     transform: none
     width: 100%
@@ -217,16 +265,34 @@ a
     right: unset
     width: 100%
     div
-      height: calc(2px + 0.1vw)
+      height: .2rem
   .menu-icon
     display: none
     visibility: hidden
 
-.min
-  height: var(--padding-40)
-  .photo
-    transform: translate(-30%,50%) scale(0.4)
-    border-radius: 50%
-    box-shadow: none
-    left: var(--padding-10)
-    bottom: 50%
+  .min
+    background-color: #282834
+    box-shadow: 0 2px 0 0 #0A0B11
+    height: 7.5rem
+    .photo
+      border-radius: 50%
+      box-shadow: 0 0 0 0 transparent
+      transform: translate(-14%, calc(.9rem - 33%)) scale(.4)
+    .name
+      opacity: 1
+      transform: translateY(10%)
+    .inf
+      top: 2.5rem
+      height: 1.5rem
+      transform: translate(-50%, 0)
+    .lbl
+      opacity: 0
+    .role
+      opacity: .5
+      font-size: 1rem
+    .items
+      opacity: 1
+    .links
+      opacity: 0
+      height: 0
+      top: 3rem

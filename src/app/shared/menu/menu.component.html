@@ -1,13 +1,15 @@
-<div class="menu" [style]="getMenuStyle()">
+<div class="menu" [ngClass]="menuService.isCollapsed?'min':''">
   <div class="head">
-    <div class="photo" style="{{getPhotoStyle()}}"></div>
+    <div class="photo" [style]="getPhotoStyle()"></div>
+    <h1 class="name">{{p.fullName}}</h1>
     <div class="inf">
-      <h1 class="name">{{p.fullName}}</h1>
       <div class="role" [innerHTML]="getRole()"></div>
-      <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
-        <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
+      <div class="lbl">
+        <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
+          <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
+        </div>
+        <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
       </div>
-      <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
     </div>
   </div>
   <div class="nav">
