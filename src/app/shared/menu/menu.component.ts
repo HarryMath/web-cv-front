@@ -14,6 +14,7 @@ type IMenuProfile = {
   linkedin?: string|null,
   telegram?: string|null,
   fullName: string,
+  login: string
   currentLocation: string|null,
 }
 
@@ -205,10 +206,16 @@ export class MenuComponent implements OnInit {
   copyMail(): void {
     navigator.clipboard.writeText(this.p.email)
       .then(() => {
-        this.messageService.show('email copied to clipboard.');
+        this.messageService.show('Email copied to clipboard.');
       })
       .catch(() => {
-        this.messageService.show('email not copied', -1);
+        this.messageService.show('Email not copied', -1);
       });
+  }
+
+  shareProfile(): void {
+    navigator.share({text: 'Share profile', url: `https://dev-cv.web.app/${this.p.login}`}).catch(() => {
+        this.messageService.show('Unavailable to share', -1);
+    })
   }
 }

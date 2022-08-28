@@ -172,7 +172,7 @@ a
     // padding15 + photoHeight + padding15 + links-height + padding15 + navbar
     // 1.4 +        7.5 +         1.4 +        7.75 +           1.5 +        30
     // height: padding40 + navbar
-    height: 23rem
+    height: 26rem
     transition: .3s ease-in-out
     transition-property: background, height, box-shadow
     z-index: 5
@@ -218,7 +218,7 @@ a
     width: 100%
     overflow: hidden
     top: 13rem
-    height: 7.25rem
+    height: 10.45rem
   .links
     padding: 0 .5rem
     align-items: flex-end
@@ -233,18 +233,19 @@ a
       justify-content: center
       opacity: 1
     svg
-      color: var(--a)
+      color: var(--a-dark)
       width: 1.5rem
       height: 1.5rem
-  .eml
+  .eu
     margin: 0.75rem 0.75rem 0
-    padding: 0.25rem 1rem 0.25rem 0.75rem
-    height: 3.2rem
     background: #272730
     border-radius: 6px
-    display: flex
-    align-items: center
-    justify-content: space-between
+    &>div
+      display: flex
+      align-items: center
+      padding: 0.25rem 1rem 0.25rem 0.75rem
+      justify-content: space-between
+      height: 3.2rem
     svg
       width: 1.4rem
       height: 1.4rem
@@ -256,7 +257,7 @@ a
     font-size: 1.125rem
     font-weight: 600
     font-family: monospace
-    color: var(--a)
+    color: var(--a-dark)
 
   .items
     position: absolute
