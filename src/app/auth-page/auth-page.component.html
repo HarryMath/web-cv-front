@@ -1,4 +1,4 @@
-<div class="bubbles"><app-bubbles [blub]="bubbleEvent"></app-bubbles></div>
+<div class="bubbles" *ngIf="!isMobile"><app-bubbles [blub]="bubbleEvent"></app-bubbles></div>
 <div class="a-center">
   <form>
     <img class="logo" src="assets/logo.png" alt="web-cv">

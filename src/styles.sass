@@ -2,9 +2,12 @@
 
 \:root
   --menu-w: 15rem
-  --back-color: #191923
+  --back-color: #181820
   --text-color: #ece2d3
-  --accent: #cca133
+  --a-dark: #ad792a
+  --a: #cca133
+  --a-bright: #ffc63c
+  --a-l: #ffd029
   --g: #57a268
   --r: #b74b4b
   --link: #3b8ad9
@@ -21,7 +24,7 @@
     height: 0
 
 html
-  font-size: .9rem
+  font-size: calc(10px + 0.5vw)
 
 html, body, .body
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
@@ -282,14 +285,15 @@ textarea
 @media screen and (max-width: 640px)
   .content
     width: 100%
-    height: calc(100% - 7.5rem)
+    height: 100%
+    padding-top: 20rem
     top: unset
     bottom: 0
     transition: height .2s
 
 @media screen and (max-width: 500px)
   html
-    font-size: 15px
+    font-size: 16px
   .body
     top: 0
     left: 0

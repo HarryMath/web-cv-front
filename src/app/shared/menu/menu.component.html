@@ -2,14 +2,12 @@
   <div class="head">
     <div class="photo" [style]="getPhotoStyle()"></div>
     <h1 class="name">{{p.fullName}}</h1>
+    <div class="role" [innerHTML]="getRole()"></div>
     <div class="inf">
-      <div class="role" [innerHTML]="getRole()"></div>
-      <div class="lbl">
-        <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
-          <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
-        </div>
-        <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
+      <div class="loc" *ngIf="p.currentLocation && p.currentLocation.length > 0">
+        <svg><use xlink:href="#location"></use></svg> {{p.currentLocation}}
       </div>
+      <div class="labeled age" *ngIf="isAgeSpecified(p)">{{getAge(p)}}<div class="l">{{getBirthDate(p)}}</div></div>
     </div>
   </div>
   <div class="nav">
@@ -30,18 +28,27 @@
       </div>
     </div>
   </div>
-  <div class="links">
-    <a *ngIf="p.linkedin && p.linkedin.length > 10" href="{{p.linkedin}}" target="_blank">
-      <svg><use xlink:href="#linked"></use></svg>
-    </a>
-    <a [href]="'mailto:' + p.email" target="_blank">
-      <svg><use xlink:href="#mail"></use></svg>
-    </a>
-    <a *ngIf="p.telegram && p.telegram.length > 10" href="{{p.telegram}}" target="_blank">
-      <svg><use xlink:href="#tg"></use></svg>
-    </a>
-    <a *ngIf="p.github && p.github.length > 10" href="{{p.github}}" target="_blank">
-      <svg><use xlink:href="#git"></use></svg>
-    </a>
+  <div class="cont">
+    <div class="links">
+      <a *ngIf="p.linkedin && p.linkedin.length > 10" href="{{p.linkedin}}" target="_blank">
+        <svg><use xlink:href="#linked"></use></svg>
+      </a>
+      <a [href]="'mailto:' + p.email" target="_blank">
+        <svg><use xlink:href="#mail"></use></svg>
+      </a>
+      <a *ngIf="p.telegram && p.telegram.length > 10" href="{{p.telegram}}" target="_blank">
+        <svg><use xlink:href="#tg"></use></svg>
+      </a>
+      <a *ngIf="p.github && p.github.length > 10" href="{{p.github}}" target="_blank">
+        <svg><use xlink:href="#git"></use></svg>
+      </a>
+    </div>
+    <div *ngIf="menuService.isMobile" class="eml">
+      <div>
+        <div class="lbl">email</div>
+        <div class="val">{{p.email}}</div>
+      </div>
+      <div (click)="copyMail()"><svg><use xlink:href="#copy"></use></svg></div>
+    </div>
   </div>
 </div>

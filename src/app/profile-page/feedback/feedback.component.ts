@@ -18,6 +18,8 @@ export class FeedbackComponent {
     contact: '',
     text: '',
   };
+  nameError = false;
+  contactError = false;
   isLoading = false;
 
   constructor(
@@ -26,7 +28,20 @@ export class FeedbackComponent {
   ) { }
 
   async send(): Promise<void> {
+    if (this.body.name.length < 2) {
+      this.message.show('Specify your name, please', -1);
+      this.nameEl.nativeElement.focus();
+      this.nameError = true;
+      return;
+    }
+    if (this.body.contact.length < 5) {
+      this.message.show('Specify the contact, please', -1);
+      this.contactEl.nativeElement.focus();
+      this.contactError = true;
+      return;
+    }
     this.isLoading = true;
+    this.nameError = this.contactError = false;
     this.http.post(`profiles/${this.profileId}/feedback`, this.body).subscribe({
       next: () => {
         this.isLoading = false;

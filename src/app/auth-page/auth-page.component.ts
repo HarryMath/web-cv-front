@@ -22,6 +22,7 @@ export class AuthPageComponent {
   isSignUp = false;
 
   bubbleEvent = new EventEmitter(false);
+  isMobile = true;
 
   constructor(
     public authService: AuthService,
@@ -53,6 +54,7 @@ export class AuthPageComponent {
       }
     }
     this.isSignUp = url.length > 1 && url[1] === 'sign-up';
+    this.isMobile = window.innerWidth <= 500;
   }
 
   sign(): void {

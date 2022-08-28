@@ -1,6 +1,7 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {MenuService} from '../menu.service';
 import {DateService} from '../date.service';
+import {MessageService} from '../message.service';
 
 type IMenuProfile = {
   birthYear: number|null,
@@ -155,7 +156,8 @@ export class MenuComponent implements OnInit {
 
   constructor(
     public menuService: MenuService,
-    private dateService: DateService
+    private dateService: DateService,
+    private messageService: MessageService
   ) { }
 
   @HostListener('window:resize')
@@ -198,5 +200,15 @@ export class MenuComponent implements OnInit {
     return this.p.role && this.p.role.length > 3 ?
       this.p.role.trim().replace(', ', '<br>') :
       ''
+  }
+
+  copyMail(): void {
+    navigator.clipboard.writeText(this.p.email)
+      .then(() => {
+        this.messageService.show('email copied to clipboard.');
+      })
+      .catch(() => {
+        this.messageService.show('email not copied', -1);
+      });
   }
 }

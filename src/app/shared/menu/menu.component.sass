@@ -170,70 +170,93 @@ a
     position: absolute
     top: 0
     // padding15 + photoHeight + padding15 + links-height + padding15 + navbar
-    // 15 +        80 +         15 +         30 +           15 +        30
+    // 1.4 +        7.5 +         1.4 +        7.75 +           1.5 +        30
     // height: padding40 + navbar
-    height: 18.5rem
-    transition: .2s ease-in-out
+    height: 23rem
+    transition: .3s ease-in-out
     transition-property: background, height, box-shadow
     z-index: 5
   .name
-    font-size: 1.3rem
-    line-height: 2.5rem
+    font-size: 1.4rem
+    line-height: 2.4rem
     opacity: .3
     transform: translateY(-110%)
-    transition: opacity .2s ease-in-out, transform .2s ease-in-out
+    transition: opacity .3s ease-in-out, transform .3s ease-in-out
   .head
     padding: 0
-  .inf, .photo, name, .role, .links
+  .inf, .photo, name, .role, .cont
     position: absolute
-    transition: .2s ease-in-out
+    transition: .3s ease-in-out
   .role
-    position: unset
+    top: 10rem
     font-size: 1.4rem
-    opacity: .9
+    opacity: 1
+    color: #fff
   .inf
     white-space: nowrap
     text-align: left
     overflow: hidden
-    left: 50%
+    left: calc(50vw + 3rem)
     top: 1.5rem
-    transform: translate(5%, 10%)
+    transform: translateY(50%)
     height: 5rem
     svg
       display: none
-  .lbl, .items
-    transition: opacity .2s ease-in-out
   .photo
-    width: 8rem
-    height: 8rem
+    width: 7.5rem
+    height: 7.5rem
     left: 0
     top: 0
     margin: 0
     z-index: 5
     border-radius: 17%
     box-shadow: #04050C5E 3px 10px 18px 8px
-    transform: translate(calc(50vw - 105%), calc(15px + .75vw))
+    transform: translate(calc(50vw - 70%), 1.4rem)
     &:before
       content: none
-  .links
-    align-items: flex-end
+  .cont
+    width: 100%
     overflow: hidden
-    top: 11rem
-    height: 3rem
+    top: 13rem
+    height: 7.25rem
+  .links
     padding: 0 .5rem
+    align-items: flex-end
     a
       width: 100%
-      border-radius: 5px
-      background-color: rgb(40, 40, 52)
-      height: 3rem
+      border-radius: 6px
+      background: #272730
+      height: 3.2rem
       margin: 0 .25rem
       display: flex
       align-items: center
       justify-content: center
       opacity: 1
     svg
+      color: var(--a)
       width: 1.5rem
       height: 1.5rem
+  .eml
+    margin: 0.75rem 0.75rem 0
+    padding: 0.25rem 1rem 0.25rem 0.75rem
+    height: 3.2rem
+    background: #272730
+    border-radius: 6px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    svg
+      width: 1.4rem
+      height: 1.4rem
+      color: var(--a)
+  .lbl
+    font-size: 0.75rem
+    opacity: 0.8
+  .val
+    font-size: 1.125rem
+    font-weight: 600
+    font-family: monospace
+    color: var(--a)
 
   .items
     position: absolute
@@ -242,13 +265,18 @@ a
     justify-content: space-between
     align-items: center
     padding: 0
-    height: 3rem
+    height: 2.5rem
     overflow-x: scroll
     opacity: 0
+    transition: opacity .3s ease-in-out
   .menu-item
     margin: 0 .5rem
-    font-size: 1rem
+    font-size: 0.9rem
     font-weight: 500
+    color: #7d7d8c
+    transition: none
+  .active
+    border-bottom: 2px solid #fff
   .progress
     transform: none
     width: 100%
@@ -266,14 +294,15 @@ a
     width: 100%
     div
       height: .2rem
+      background: var(--a)
   .menu-icon
     display: none
     visibility: hidden
 
   .min
-    background-color: #282834
-    box-shadow: 0 2px 0 0 #0A0B11
-    height: 7.5rem
+    background-color: #151518
+    box-shadow: 0 1px 0 0 #000
+    height: 6.5rem
     .photo
       border-radius: 50%
       box-shadow: 0 0 0 0 transparent
@@ -282,17 +311,15 @@ a
       opacity: 1
       transform: translateY(10%)
     .inf
-      top: 2.5rem
-      height: 1.5rem
-      transform: translate(-50%, 0)
-    .lbl
+      height: 0
       opacity: 0
     .role
+      top: 2.5rem
       opacity: .5
       font-size: 1rem
     .items
       opacity: 1
-    .links
+    .cont
       opacity: 0
       height: 0
       top: 3rem
