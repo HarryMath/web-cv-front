@@ -44,19 +44,19 @@
       </a>
     </div>
     <div *ngIf="menuService.isMobile" class="eu">
-      <div>
+      <div (click)="copyMail()">
         <div>
           <div class="lbl">email</div>
           <div class="val">{{p.email}}</div>
         </div>
-        <div (click)="copyMail()"><svg><use xlink:href="#copy"></use></svg></div>
+        <div><svg><use xlink:href="#copy"></use></svg></div>
       </div>
-      <div>
+      <div (click)="shareProfile()">
         <div>
           <div class="lbl">username</div>
           <div class="val">@{{p.login}}</div>
         </div>
-        <div (click)="shareProfile()"><svg><use xlink:href="#share"></use></svg></div>
+        <div><svg><use xlink:href="#share"></use></svg></div>
       </div>
     </div>
   </div>

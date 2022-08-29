@@ -28,6 +28,7 @@ type IProfileView = Omit<IProfile, 'education'|'experience'|'skills'|'projects'>
 })
 export class ProfilePageComponent implements OnInit {
 
+  loadingProgress = 0;
   isLoaded = false;
   data: IProfileView = {
     avatar: '', birthDay: 0, birthMonth: 0, birthYear: 0, currentLocation: '',
@@ -46,13 +47,13 @@ export class ProfilePageComponent implements OnInit {
     private title: Title
   ) {
     const login = router.url.split('/')[1];
-    this.reloadData(login);
+    this.reloadData(login).then(p => p && this.afterLoad(p));
   }
 
   ngOnInit(): void {}
 
   private async afterLoad(p: IProfile): Promise<void> {
-    this.isLoaded = true;
+    this.loadingProgress = 50;
     this.data = {...p,
       introHTML: this.getIntroHTML(p.intro),
       skills: this.aggregateSkills(p.skills),
@@ -69,9 +70,17 @@ export class ProfilePageComponent implements OnInit {
     for (let pr of this.data.projects) {
       if (pr.image && pr.image.length > 10) {
         pr.colors = await this.colorService.getPalette(pr.image);
+        if (!this.isLoaded) {
+          this.loadingProgress = (this.loadingProgress + 10) * 0.5 + 50;
+          if (this.loadingProgress > 100)  {
+            this.loadingProgress = 100;
+            this.isLoaded = true;
+          }
+        }
       }
     }
     this.title.setTitle(p.fullName);
+    this.loadingProgress = 100;
     this.isLoaded = true;
   }
 
@@ -105,14 +114,21 @@ export class ProfilePageComponent implements OnInit {
     return introHTML;
   }
 
-  async reloadData(login: string): Promise<void> {
+  async reloadData(login: string, attempt = 1): Promise<IProfile|void> {
+    this.loadingProgress = (attempt - 1) * 0.1;
     try {
-      const profile = await this.profilesService.getProfile(login);
-      this.afterLoad(profile);
-    } catch (e) {
+      return await this.profilesService.getProfile(login);
+    } catch (e: any) {
       console.log(e);
-      this.message.show('This profile does not exist');
-      this.router.navigate(['/'])
+      if (e.status && e.status === 404) {
+        this.message.show('This profile does not exist');
+        this.router.navigate(['/']);
+      } else if (attempt < 3) {
+        return await this.reloadData(login, attempt+1);
+      } else {
+        this.message.show('Sorry, service is unavailable. We already fixing it. :c');
+        this.router.navigate(['/']);
+      }
     }
   }
 
