@@ -13,20 +13,26 @@ export interface HSL {
 }
 
 
-export interface IPalette {
-  dominantLight: HSL,
-  dominantDark: HSL
+export interface IImageInfo {
+  light: HSL,
+  dark: HSL,
+  lightMax: HSL,
+  darkMax: HSL,
+  isLight: boolean,
 }
 
 @Injectable({providedIn: 'root'})
 export class ColorService {
 
-  public defaultColors: IPalette = {
-    dominantDark: {h: 240, s: 14, l: 15},
-    dominantLight: {h: 240, s: 11, l: 40}
-  }
+  public defaultColors: IImageInfo = {
+    dark: {h: 240, s: 14, l: 15},
+    light: {h: 240, s: 11, l: 40},
+    darkMax: {h: 240, s: 14, l: 10},
+    lightMax: {h: 240, s: 11, l: 50},
+    isLight: false
+  };
 
-  async getPalette(imageURL: string): Promise<IPalette> {
+  async getPalette(imageURL: string): Promise<IImageInfo> {
     return new Promise(resolve => {
       const canvas = document.createElement('canvas');
       const context = canvas.getContext && canvas.getContext('2d');
@@ -49,9 +55,10 @@ export class ColorService {
         const worker = new Worker(new URL('http://localhost:4200/assets/image.worker.js'));
         worker.postMessage(data);
         worker.onmessage = ({data}) => {
-          if (data && data.dominantDark) {
-            resolve(data as IPalette);
+          if (data && data.darkMax) {
+            resolve(data as IImageInfo);
           } else {
+            console.log(data);
             resolve(this.defaultColors);
           }
         }
@@ -61,11 +68,14 @@ export class ColorService {
 
   createGray(c: HSL): HSL {
     const l = c.l > 40 ? c.l - 20 : c.l + 15;
-    return {
+    const color = {
       h: c.h,
       s: c.s / (1.1 + (90 - l) * 0.02),
-      l
+      l,
+      res: ''
     };
+    color.res = `hsl(${color.h}deg ${color.s}% ${color.l}%)`;
+    return color;
   }
 
   isTransparent(r: number, g: number, b: number): boolean {

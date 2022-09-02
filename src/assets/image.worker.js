@@ -82,12 +82,12 @@ addEventListener('message', ({data}) => {
     }
     dominantColors = dominantColors.sort((c1, c2) => c2.metTimes - c1.metTimes);
     const dominant = dominantColors[0].color;
-    const isDominantLight = getLightness(dominant) > 0.6;
+    const isDominantLight = getLightness(dominant) > 0.8;
     let accent;
     const contrastColors = dominantColors
       .filter(c => {
         const lightness = getLightness(c.color);
-        return (isDominantLight ? lightness < 0.6 : lightness > 0.6) && !isGray(c.color);
+        return (isDominantLight ? lightness < 0.8 : lightness > 0.8) && !isGray(c.color);
       });
     if (contrastColors.length > 0) {
       accent = contrastColors[0].color;
@@ -98,10 +98,23 @@ addEventListener('message', ({data}) => {
       });
       accent = dominantColors[0].color;
     }
+    const dark = rgbToHsl(isDominantLight ? accent : dominant);
+    const light = rgbToHsl(isDominantLight ? dominant : accent);
+    const darkMax = {...dark};
+    const lightMax = {...light};
+    const contrastLevel = light.l - dark.l;
+    let contrastDeficit = 40 - contrastLevel;
+    if (contrastDeficit < 0) contrastDeficit = 0;
+    lightMax.l += (1 + contrastDeficit * 0.5);
+    darkMax.l -= (1 + contrastDeficit * 0.5);
+    lightMax.l = lightMax.l * 0.7 + 70 * 0.3;
+    darkMax.l = darkMax.l * 0.55 + 7 * 0.45;
+    if (darkMax.l < 0) darkMax.l = 0;
+    if (lightMax.l > 100) lightMax.l = 100;
     const response = {
-      dominantDark: rgbToHsl(isDominantLight ? accent : dominant),
-      dominantLight: rgbToHsl(isDominantLight ? dominant : accent)
-    };
+      dark, light, darkMax, lightMax,
+      isLight: isDominantLight
+    }
     postMessage(response);
   }
   catch (e) {

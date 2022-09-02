@@ -6,11 +6,11 @@ import {IEducation, IExperience, IProfile, IProject, ISkill} from '../shared/mod
 import {ProfilesService} from '../shared/profiles.service';
 import {MessageService} from '../shared/message.service';
 import {DateService} from '../shared/date.service';
-import {ColorService, IPalette} from '../shared/color.service';
+import {ColorService, IImageInfo} from '../shared/color.service';
 
 
 type ISkillsGroup = {name: string, skills: ISkill[]};
-type IProjectView = IProject & {colors: IPalette, parsed: boolean};
+type IProjectView = IProject & {colors: IImageInfo, parsed: boolean};
 type IExperienceView = IExperience & {duration: string, period: string};
 type IEducationView = IEducation & {period: string};
 type IProfileView = Omit<IProfile, 'education'|'experience'|'skills'|'projects'> & {
@@ -21,6 +21,26 @@ type IProfileView = Omit<IProfile, 'education'|'experience'|'skills'|'projects'>
   projects: IProjectView[]
 };
 
+class Progress {
+  public current = 0;
+  private succeeded = 0;
+  private goal = 0;
+
+  setNextGoal(goal: number): void {
+    this.goal = goal;
+    this.succeeded = this.current;
+  }
+
+  update(): void {
+    const part = (this.current - this.succeeded) / (this.goal - this.succeeded);
+    this.current = Math.min(this.current + 1 - part, this.goal, 100);
+  }
+
+  finish(): void {
+    this.goal = 150;
+  }
+}
+
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
@@ -28,8 +48,10 @@ type IProfileView = Omit<IProfile, 'education'|'experience'|'skills'|'projects'>
 })
 export class ProfilePageComponent implements OnInit {
 
-  loadingProgress = 0;
+  progress = new Progress();
   isLoaded = false;
+  profileReady = false;
+
   data: IProfileView = {
     avatar: '', birthDay: 0, birthMonth: 0, birthYear: 0, currentLocation: '',
     fullName: '', login: '', email: '', role: '', introHTML: '', intro: '', id: 0,
@@ -50,10 +72,22 @@ export class ProfilePageComponent implements OnInit {
     this.reloadData(login).then(p => p && this.afterLoad(p));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.processLoading();
+  }
+
+  private processLoading(): void {
+    this.progress.update();
+    if (this.progress.current >= 100) {
+      this.isLoaded = true;
+    } else {
+      requestAnimationFrame(this.processLoading.bind(this));
+    }
+  }
 
   private async afterLoad(p: IProfile): Promise<void> {
-    this.loadingProgress = 50;
+    this.title.setTitle(p.fullName);
+    this.progress.setNextGoal(150);
     this.data = {...p,
       introHTML: this.getIntroHTML(p.intro),
       skills: this.aggregateSkills(p.skills),
@@ -67,21 +101,13 @@ export class ProfilePageComponent implements OnInit {
         return {...pr, colors: this.colorService.defaultColors, parsed: false};
       })
     };
+    this.profileReady = true;
     for (let pr of this.data.projects) {
       if (pr.image && pr.image.length > 10) {
         pr.colors = await this.colorService.getPalette(pr.image);
-        if (!this.isLoaded) {
-          this.loadingProgress = (this.loadingProgress + 10) * 0.5 + 50;
-          if (this.loadingProgress > 100)  {
-            this.loadingProgress = 100;
-            this.isLoaded = true;
-          }
-        }
       }
     }
-    this.title.setTitle(p.fullName);
-    this.loadingProgress = 100;
-    this.isLoaded = true;
+    this.progress.finish();
   }
 
   private aggregateSkills(skills: ISkill[]): ISkillsGroup[] {
@@ -115,7 +141,7 @@ export class ProfilePageComponent implements OnInit {
   }
 
   async reloadData(login: string, attempt = 1): Promise<IProfile|void> {
-    this.loadingProgress = (attempt - 1) * 0.1;
+    this.progress.setNextGoal(50);
     try {
       return await this.profilesService.getProfile(login);
     } catch (e: any) {

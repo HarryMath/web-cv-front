@@ -1,5 +1,13 @@
-<div *ngIf="!isLoaded">loading {{loadingProgress}}%</div>
-<div class="body" *ngIf="isLoaded">
+<div class="o" *ngIf="!isLoaded" >
+  <div class="a-center" style="text-align: center">
+    Loading...
+    <div class="p">
+      <div class="v" [style.width]="progress.current+'%'"></div>
+    </div>
+    {{progress.current.toFixed(0)}}%
+  </div>
+</div>
+<div class="body" *ngIf="profileReady">
   <div class="content" (scroll)="menuService.handleScroll(false)">
 <!--    <div class="h"></div>-->
 

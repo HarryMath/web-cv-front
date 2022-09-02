@@ -1,18 +1,35 @@
 <div class="pr">
   <div #el class="pr-b">
     <div class="d">
-      <div class="t">{{p.title}}<span class="pl" *ngIf="p.place && p.place.length > 1">({{p.place}})</span></div>
+      <div class="t">{{p.title}}<span class="pl">{{getPlace()}}</span></div>
       <div class="desc">{{p.description.substring(0, 70).trim() + '...'}}</div>
       <div class="btn view" (click)="openFullScreen()">view details</div>
     </div>
   </div>
 </div>
 
-<div class="pr-b" [style]="getRectStyle() " (click)="collapse()"
-     [ngClass]="(isVisible ? 'max ' : '') + (isFullScreen ? 'full ' : '') + (isOpened ? 'open' : '')">
-    <div class="inf">
-      <div>
-        <img *ngIf="p.image && p.image.length > 10" src="{{p.image}}" alt="{{p.title}}">
+<div class="o" *ngIf="isVisible" [style.opacity]="isFullScreen ? 1 : 0" (click)="collapse()"></div>
+<div class="pr-b a-center max" *ngIf="isVisible" [style]="getRectStyle() "
+     [ngClass]="(isFullScreen ? 'full ' : '') + (isOpened ? 'open' : '')">
+
+  <div class="d">
+    <div class="top" [style.height]="isFullScreen ? '15rem' : titleHeight">
+      <img *ngIf="p.image && p.image.length > 10" src="{{p.image}}" alt="{{p.title}}">
+      <div class="g" [style.background]="imageGradient"></div>
+      <div class="h" [style.color]="labelColor">
+        <div class="c" (click)="collapse()">
+          <svg class="a-center"><use xlink:href="#back"></use></svg>
+        </div>
+        <div>
+          <div class="t" [style.color]="isFullScreen ? titleColor : ''">{{p.title}}</div>
+          <div class="role">{{p.role}} {{getPlace()}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="b">
+      <div class="p-desc">{{p.description}}</div>
+      <div style="transition: opacity .2s" [style.opacity]="isOpened ? 1 : 0">
         <h4>Environment</h4>
         <div class="tags">
           <div class="tag" *ngFor="let t of p.tags">{{t}}</div>
@@ -25,11 +42,6 @@
         </div>
       </div>
     </div>
-    <div class="b">
-      <div class="d">
-        <div class="t" [style]="getTitleColor()">{{p.title}}<span class="pl" *ngIf="p.place && p.place.length > 1">({{p.place}})</span></div>
-        <div class="role">{{p.role}}</div>
-        <div class="p-desc">{{p.description}}</div>
-      </div>
-    </div>
+  </div>
+
 </div>
